@@ -2,6 +2,7 @@
 	const prerender = true;
 
 	import { base } from "$app/paths";
+	import { overlays, overlayers } from "$lib/layers";
   
 	export async function load({ params, stuff }) {
 		let lang = params.lang;
@@ -11,10 +12,9 @@
 		let place = places.features.find(f => f.properties.slug == slug);
 
 		let layers = stuff.layers; // layers loaded in same way as places
-		let layer = layers.find(l => l.is_default);
 
 		return {
-			props: { lang, layers, layer, places, place }
+			props: { lang, layers, places, place }
 		};
 	}
 </script>
@@ -26,6 +26,7 @@
 	import { Map, MapSource, MapLayer, MapTooltip } from "@onsvisual/svelte-maps";
 	import { makeDataset, i18n, makeStyle, sleep } from "$lib/utils";
 	import { statuses } from "$lib/config";
+	import maplibre from "maplibre-gl";
 	import Select from 'svelte-select';
 	import Icon from '$lib/ui/Icon.svelte';
 	import Accordion from '$lib/ui/Accordion.svelte';
@@ -33,7 +34,10 @@
 	import InfoBlock from "$lib/ui/InfoBlock.svelte";
 	import BarChart from '$lib/chart/BarChart.svelte';
 
-	export let lang, layers, layer, places, place;
+	export let lang, layers, places, place;
+
+	let layer = layers.find(l => l.is_default);
+	let overlay = overlays.find(l => l.is_default)
 
 	let map = null;
 	let showMap = false; // Prevents map from being initiated until app is mounted
@@ -46,8 +50,13 @@
 	let toggles = {
 		info: true,
 		places: true,
-		overlay: true,
-		split: true
+		overlay: false,
+		split: false
+	};
+	let overlay_groups = {
+		buildings: false,
+		transport: true,
+		place: true
 	};
 	let overlays_on = true;
 	$: filter = statuses_active ? ['any', ['in', 'change_2016', ...statuses_active.map(s => s.key)]] : [];
@@ -146,9 +155,23 @@
 		maxzoom={17}
 		controls
 		locate
+		on:load={() => maplibre.setRTLTextPlugin('https://www.unpkg.com/@mapbox/mapbox-gl-rtl-text@0.2.3/mapbox-gl-rtl-text.js')}
 		on:style={refreshOverlays}
 	>
 		{#if overlays_on}
+		<MapSource id="overlay" type="vector" url={overlay.url} maxzoom={14}>
+			{#each overlayers as l}
+			<MapLayer
+				id={l.id}
+				type={l.type}
+				sourceLayer={l['source-layer']}
+				filter={l.filter ? l.filter : null}
+				layout={l.layout ? l.layout : {}}
+				paint={l.paint}
+				order={["buildings", "transport"].includes(l.group) ? "overlays-div" : null}
+				visible={toggles.overlay && overlay_groups[l.group]}/>
+			{/each}
+		</MapSource>
 		<MapSource id="places" type="geojson" data={places} promoteId="id">
 			<MapLayer
 				id="places"
@@ -164,7 +187,8 @@
 				let:hovered
 				select
 				on:select={doSelect}
-				visible={toggles.places}>
+				visible={toggles.places}
+				order="places-div">
 				<MapTooltip
 					content={hovered
 						? places.features.find((f) => f.properties.id == hovered).properties.name_en
@@ -176,21 +200,10 @@
 	{/if}
 </div>
 <div id="toggles" class:toggles-rtl={rtl}>
-	<label class:checked={toggles.info}
-		><input type="checkbox" bind:checked={toggles.info} /><Icon type="info" /></label
-	>
-	<label class:checked={toggles.places}
-		><input type="checkbox" bind:checked={toggles.places} /><Icon type="marker" /></label
-	>
-	<label class:checked={toggles.overlay}
-		><input type="checkbox" bind:checked={toggles.overlay} /><Icon type="layers" /></label
-	>
-	<label class:checked={toggles.split}
-		><input type="checkbox" bind:checked={toggles.split} /><Icon
-			type="split"
-			rotation={90}
-		/></label
-	>
+	<label title="Layer information" class:checked={toggles.info}><input type="checkbox" bind:checked={toggles.info} /><Icon type="info" /></label>
+	<label title="Toggle localities" class:checked={toggles.places}><input type="checkbox" bind:checked={toggles.places} /><Icon type="marker" /></label>
+	<label title="Toggle overlays" class:checked={toggles.overlay}><input type="checkbox" bind:checked={toggles.overlay} /><Icon type="layers" /></label>
+	<label title="Toggle split-screen" class:checked={toggles.split}><input type="checkbox" bind:checked={toggles.split} /><Icon type="split" rotation={90}/></label>
 </div>
 {#if content_active}
 	<article id="content" class:content-rtl={rtl}>
@@ -283,11 +296,21 @@
 		{/each}
 	</Accordion>
 	<Accordion label="{text('overlays')}" {rtl}>
-		To be added
+		<label><input type="checkbox" bind:checked={toggles.overlay} /> Show overlays</label>
+		<hr/>
+		{#each overlays as l}
+		<label><input type="radio" disabled={!toggles.overlay} name="layers" bind:group={overlay} value={l} /> {l.name}</label>
+		{/each}
+		<hr/>
+		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.buildings} /> Buildings</label>
+		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.transport} /> Roads/rail</label>
+		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.place} /> Place names</label>
 	</Accordion>
 	<Accordion label="{text('localities')}" {rtl}>
+		<label><input type="checkbox" bind:checked={toggles.places} /> Show localities</label>
+		<hr/>
 		{#each statuses_arr as s}
-		<label><input type="checkbox" bind:group={statuses_active} value={s} /> {s.name}</label>
+		<label><input type="checkbox" disabled={!toggles.places} bind:group={statuses_active} value={s} /> {s.name}</label>
 		{/each}
 	</Accordion>
 	<Accordion label="{text('download')}" {rtl}>
@@ -479,5 +502,10 @@
 		font-size: 1.8em;
 		font-weight: bold;
 		line-height: 1;
+	}
+	#menu hr {
+		border: 0;
+		height: 0;
+		border-bottom: 1px solid lightgrey;
 	}
 </style>

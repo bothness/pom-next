@@ -62,6 +62,7 @@ export function makeDataset(place) {
 export function makeStyle(layer) {
 	return {
 		"version": 8,
+		"glyphs": "https://cdn.jsdelivr.net/gh/bothness/basemaps/fonts/{fontstack}/{range}.pbf",
 		"sources": {
 			"source": {
 				"type": "raster",
@@ -77,6 +78,16 @@ export function makeStyle(layer) {
 				"id": "base",
 				"type": "raster",
 				"source": "source"
+			},
+			{
+				"id": "overlays-div",
+				"type": "background",
+				"paint": {"background-opacity": 0}
+			},
+			{
+				"id": "places-div",
+				"type": "background",
+				"paint": {"background-opacity": 0}
 			}
 		]
 	}
