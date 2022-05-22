@@ -111,6 +111,30 @@
 	$: text = (key) => i18n(key, texts, lang);
 </script>
 
+<svelte:head>
+	{#if rtl}
+	<style>
+		html {
+			direction: rtl;
+		}
+		.maplibregl-ctrl-top-right, .maplibregl-ctrl-bottom-right {
+			left: 0;
+			right: auto !important;
+		}
+		.maplibregl-ctrl-top-right .maplibregl-ctrl {
+			margin: 10px 0 0 10px !important;
+		}
+		.selectContainer .selectedItem {
+			padding: 0 0 0 20px !important;
+		}
+		.selectContainer .clearSelect {
+			right: auto !important;
+			left: 10px !important;
+		}
+	</style>
+	{/if}
+</svelte:head>
+
 <div id="map-container">
 	{#if showMap}
 	<Map
@@ -283,30 +307,6 @@
 		{/if}
 	</Links>
 </nav>
-
-<svelte:head>
-	{#if rtl}
-	<style>
-		html {
-			direction: rtl;
-		}
-		.maplibregl-ctrl-top-right, .maplibregl-ctrl-bottom-right {
-			left: 0;
-			right: auto !important;
-		}
-		.maplibregl-ctrl-top-right .maplibregl-ctrl {
-			margin: 10px 0 0 10px;
-		}
-		.selectContainer .selectedItem {
-			padding: 0 0 0 20px !important;
-		}
-		.selectContainer .clearSelect {
-			right: auto !important;
-			left: 10px !important;
-		}
-	</style>
-	{/if}
-</svelte:head>
 
 <style>
 	h1 {
