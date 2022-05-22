@@ -1,0 +1,88 @@
+{
+  ".svelte-kit/runtime/client/start.js": {
+    "file": "start-5b2dcca0.js",
+    "src": ".svelte-kit/runtime/client/start.js",
+    "isEntry": true,
+    "imports": [
+      "_index-fcbd00fa.js",
+      "_index-295feb07.js",
+      "_singletons-1b661bce.js"
+    ],
+    "dynamicImports": [
+      "src/routes/__layout.svelte",
+      ".svelte-kit/runtime/components/error.svelte",
+      "src/routes/[lang]/[...slug]/index.svelte",
+      "src/routes/index.svelte"
+    ]
+  },
+  "src/routes/__layout.svelte": {
+    "file": "pages/__layout.svelte-8b1b248c.js",
+    "src": "src/routes/__layout.svelte",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-fcbd00fa.js",
+      "_config-d6f59395.js"
+    ],
+    "css": [
+      "assets/pages/__layout.svelte-7c1fbfde.css"
+    ]
+  },
+  ".svelte-kit/runtime/components/error.svelte": {
+    "file": "error.svelte-bc929dc1.js",
+    "src": ".svelte-kit/runtime/components/error.svelte",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-fcbd00fa.js"
+    ]
+  },
+  "src/routes/[lang]/[...slug]/index.svelte": {
+    "file": "pages/_lang_/_...slug_/index.svelte-41131fa3.js",
+    "src": "src/routes/[lang]/[...slug]/index.svelte",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-fcbd00fa.js",
+      "_singletons-1b661bce.js",
+      "_navigation-e9c37aec.js",
+      "_index-295feb07.js",
+      "_config-d6f59395.js"
+    ],
+    "css": [
+      "assets/pages/_lang_/_...slug_/index.svelte-ccecb96f.css"
+    ]
+  },
+  "src/routes/index.svelte": {
+    "file": "pages/index.svelte-2e43786b.js",
+    "src": "src/routes/index.svelte",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-fcbd00fa.js",
+      "_singletons-1b661bce.js",
+      "_navigation-e9c37aec.js"
+    ]
+  },
+  "_index-fcbd00fa.js": {
+    "file": "chunks/index-fcbd00fa.js"
+  },
+  "_index-295feb07.js": {
+    "file": "chunks/index-295feb07.js",
+    "imports": [
+      "_index-fcbd00fa.js"
+    ]
+  },
+  "_singletons-1b661bce.js": {
+    "file": "chunks/singletons-1b661bce.js"
+  },
+  "_config-d6f59395.js": {
+    "file": "chunks/config-d6f59395.js"
+  },
+  "_navigation-e9c37aec.js": {
+    "file": "chunks/navigation-e9c37aec.js",
+    "imports": [
+      "_singletons-1b661bce.js"
+    ]
+  }
+}
