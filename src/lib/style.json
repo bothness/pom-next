@@ -1,0 +1,20 @@
+{
+	"version": 8,
+	"sources": {
+		"pal1940": {
+			"type": "raster",
+			"tiles": ["https://palopenmaps.org/tiles/pal-1940s/{z}/{x}/{y}.jpg"],
+			"tileSize": 256,
+      "attribution": "Survey of Palestine, 1929-48",
+      "minzoom": 0,
+      "maxzoom": 17
+    }
+	},
+  "layers": [
+		{
+      "id": "pal1940",
+      "type": "raster",
+      "source": "pal1940"
+    }
+	]
+}

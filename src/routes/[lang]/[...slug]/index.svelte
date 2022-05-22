@@ -1,0 +1,483 @@
+<script context="module">
+	const prerender = true;
+
+	import { base } from "$app/paths";
+  
+	export async function load({ params, stuff }) {
+		let lang = params.lang;
+		let slug = params.slug;
+
+		let places = stuff.places; // places is loaded once in __layout.svelte and passed to this route
+		let place = places.features.find(f => f.properties.slug == slug);
+
+		let layers = stuff.layers; // layers loaded in same way as places
+		let layer = layers.find(l => l.is_default);
+
+		return {
+			props: { lang, layers, layer, places, place }
+		};
+	}
+</script>
+
+<script>
+	import { onMount } from "svelte";
+	import { page } from '$app/stores';
+	import { afterNavigate, goto } from "$app/navigation";
+	import { Map, MapSource, MapLayer, MapTooltip } from "@onsvisual/svelte-maps";
+	import { makeDataset, i18n, makeStyle, sleep } from "$lib/utils";
+	import { statuses } from "$lib/config";
+	import Select from 'svelte-select';
+	import Icon from '$lib/ui/Icon.svelte';
+	import Accordion from '$lib/ui/Accordion.svelte';
+	import Links from "$lib/ui/Links.svelte";
+	import InfoBlock from "$lib/ui/InfoBlock.svelte";
+	import BarChart from '$lib/chart/BarChart.svelte';
+
+	export let lang, layers, layer, places, place;
+
+	let map = null;
+	let showMap = false; // Prevents map from being initiated until app is mounted
+	let style = makeStyle(layer);
+	let menu_active = false;
+	let content_active = place ? true : false;
+	let statuses_arr = Object.keys(statuses).map(key => ({key, ...statuses[key]}));
+	let statuses_active = [...statuses_arr.filter(s => s.key != "Newly built")];
+	let location = place ? {lng: place.geometry.coordinates[0], lat: place.geometry.coordinates[1], zoom: 13} : {bounds: [[34.75, 31.75], [35.25, 32.25]]};
+	let toggles = {
+		info: true,
+		places: true,
+		overlay: true,
+		split: true
+	};
+	let overlays_on = true;
+	$: filter = statuses_active ? ['any', ['in', 'change_2016', ...statuses_active.map(s => s.key)]] : [];
+
+	async function refreshOverlays() {
+		overlays_on = false;
+		await sleep(50);
+		overlays_on = true;
+	}
+
+	function doSelect(e) {
+		let place = places.features.find((f) => f.properties.id == e.detail.id);
+		goto(`${base}/${lang}/${place.properties.slug}`);
+	}
+
+	function unSelect() {
+		goto(`${base}/${lang}`);
+	}
+
+	async function setStyle() {
+		sleep(100);
+		style = makeStyle(layer);
+	}
+
+	onMount(() => showMap = true);
+
+	afterNavigate(() => {
+		if (place) {
+			if (map) map.flyTo({center: place.geometry.coordinates, zoom: 13});
+			content_active = true;
+		} else {
+			content_active = false;
+		}
+	});
+
+	$: rtl = lang == "ar";
+
+	const texts = {
+		"en": {
+			"pom": "Palestine Open Maps",
+			"baseMaps": "Base maps",
+			"overlays": "Overlays", 
+			"localities": "Localities",
+			"getUpdates": "Get updates",
+			"download": "Download maps",
+			"about": "About"
+		}, 
+		"ar": {
+			"pom": "خرائط فلسطين المفتوحة",
+			"baseMaps": "الخرائط",
+			"overlays": "الطبقات الأخرى", 
+			"localities": "البلدات",
+			"getUpdates": "تابعوا آخر التحديثات",
+			"download": "تنزيل الخرائط",
+			"about": "عن المشروع"
+		}, 
+		"he": {
+			"hello": "shalom"
+		}
+	};
+	$: text = (key) => i18n(key, texts, lang);
+</script>
+
+<div id="map-container">
+	{#if showMap}
+	<Map
+		id="map"
+		bind:map
+		{style}
+		{location}
+		minzoom={5}
+		maxzoom={17}
+		controls
+		locate
+		on:style={refreshOverlays}
+	>
+		{#if overlays_on}
+		<MapSource id="places" type="geojson" data={places} promoteId="id">
+			<MapLayer
+				id="places"
+				type="circle"
+				paint={{
+					'circle-radius': {'base': 1, 'stops': [[5, 1], [12, 5]]},
+					'circle-color': ['get', 'color'],
+					'circle-stroke-color': 'rgba(0,0,0,0.2)',
+					'circle-stroke-width': {'base': 1, 'stops': [[5, 1], [12, 2]]}
+					}}
+				{filter}
+				hover
+				let:hovered
+				select
+				on:select={doSelect}
+				visible={toggles.places}>
+				<MapTooltip
+					content={hovered
+						? places.features.find((f) => f.properties.id == hovered).properties.name_en
+						: ''}/>
+			</MapLayer>
+		</MapSource>
+		{/if}
+	</Map>
+	{/if}
+</div>
+<div id="toggles" class:toggles-rtl={rtl}>
+	<label class:checked={toggles.info}
+		><input type="checkbox" bind:checked={toggles.info} /><Icon type="info" /></label
+	>
+	<label class:checked={toggles.places}
+		><input type="checkbox" bind:checked={toggles.places} /><Icon type="marker" /></label
+	>
+	<label class:checked={toggles.overlay}
+		><input type="checkbox" bind:checked={toggles.overlay} /><Icon type="layers" /></label
+	>
+	<label class:checked={toggles.split}
+		><input type="checkbox" bind:checked={toggles.split} /><Icon
+			type="split"
+			rotation={90}
+		/></label
+	>
+</div>
+{#if content_active}
+	<article id="content" class:content-rtl={rtl}>
+		<button class="content-toggle" class:content-toggle-rtl={rtl} on:click={unSelect}>
+			<Icon type="close" />
+		</button>
+		{#if place}
+			<h1>{rtl ? place.properties.name_ar : place.properties.name_en}</h1>
+			<h2>
+				{place.properties.group}
+				{place.properties.type} in
+				{place.properties.district_1945} district
+			</h2>
+			<InfoBlock label="Change since 1948">
+				<div>
+					<div class="bullet" style:background-color="{place.properties.color}"/>
+					{place.properties.change_2016}
+				</div>
+			</InfoBlock>
+			{#if place.properties.start || place.properties.end}
+			<InfoBlock label="Key dates">
+				{#if place.properties.start}
+				<div>
+					Founded<br/>
+					<span class="text-lrg">{place.properties.start}</span>
+				</div>
+				{/if}
+				{#if place.properties.end}
+				<div>
+					Depopulated<br/>
+					<span class="text-lrg">{place.properties.end.toLocaleDateString("en-GB", { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+				</div>
+				{/if}
+			</InfoBlock>
+			{/if}
+			{#if place.properties.pop_1945 || place.properties.pop_2016}
+			<InfoBlock label="Population">
+				{#if place.properties.pop_1945}
+				<div>
+					1945<br/>
+					<span class="text-lrg">{place.properties.pop_1945.toLocaleString()}</span>
+				</div>
+				{/if}
+				{#if place.properties.pop_2016}
+				<div>
+					2016<br/>
+					<span class="text-lrg">{place.properties.pop_2016.toLocaleString()}</span>
+				</div>
+				{/if}
+			</InfoBlock>
+			<InfoBlock label="Population by group" hr={false}>
+				<BarChart data={makeDataset(place)}/>
+			</InfoBlock>
+			{/if}
+			{#if place.properties.map_20k == 'yes' || place.properties.id_zo}
+			<InfoBlock label="Related links">
+				<div>
+					{#if place.properties.map_20k == 'yes'}<a href="https://today.visualizingpalestine.org/{place.properties.slug}" target="_blank">Palestine Today</a><br/>{/if}
+					{#if place.properties.id_zo}<a href="https://www.zochrot.org/villages/village_details/{place.properties.id_zo}/{lang}" target="_blank">Zochrot</a>{/if}
+				</div>
+			</InfoBlock>
+			{/if}
+		{/if}
+	</article>
+{/if}
+<div id="search" class:search-rtl={rtl} style="--selectedItemPadding: {rtl ? '0 20px 0 0' : '0 0 0 20px'}">
+	{#if places}
+		<Select
+			value={place ? place.properties : null}
+			items={places.features.map((f) => f.properties)}
+			optionIdentifier="id"
+			labelIdentifier="name_{lang}"
+			on:select={doSelect}
+			on:clear={unSelect}
+			showIndicator
+		/>
+	{/if}
+</div>
+{#if menu_active}
+	<div id="mask" />
+{/if}
+<nav id="menu" style:left={rtl ? 'auto' : menu_active ? '0' : '-320px'} style:right={lang != 'ar' ? 'auto' : menu_active ? '0' : '-320px'}>
+	<button class="menu-toggle" class:menu-toggle-rtl={rtl} on:click={() => (menu_active = !menu_active)}>
+		<Icon type={menu_active ? 'close' : 'menu'} />
+	</button>
+	<div class="title">{text('pom')}</div>
+	<Accordion label="{text('baseMaps')}" {rtl}>
+		{#each layers as l}
+		<label><input type="radio" name="layers" bind:group={layer} value={l} on:change={setStyle} /> {l.name}</label>
+		{/each}
+	</Accordion>
+	<Accordion label="{text('overlays')}" {rtl}>
+		To be added
+	</Accordion>
+	<Accordion label="{text('localities')}" {rtl}>
+		{#each statuses_arr as s}
+		<label><input type="checkbox" bind:group={statuses_active} value={s} /> {s.name}</label>
+		{/each}
+	</Accordion>
+	<Accordion label="{text('download')}" {rtl}>
+		To be added
+	</Accordion>
+	<Links>
+		<a href="{base}/{lang}/about"><Icon type="info"/> {text('about')}</a>
+		<a href="{base}/{lang}/blog"><Icon type="pen"/> Blog</a>
+		<a href="{base}/{lang}/support"><Icon type="heart"/> Support</a>
+		<a href="{base}/{lang}/contact"><Icon type="email"/> Contact</a>
+	</Links>
+	<Links>
+		{#if rtl}
+		<a href="{String($page.url).replace('ar', 'en')}"><Icon type="globe"/> English</a>
+		{:else}
+		<a href="{String($page.url).replace('en', 'ar')}"><Icon type="globe"/> عربي</a>
+		{/if}
+	</Links>
+</nav>
+
+<svelte:head>
+	{#if rtl}
+	<style>
+		html {
+			direction: rtl;
+		}
+		.maplibregl-ctrl-top-right, .maplibregl-ctrl-bottom-right {
+			left: 0;
+			right: auto !important;
+		}
+		.maplibregl-ctrl-top-right .maplibregl-ctrl {
+			margin: 10px 0 0 10px;
+		}
+		.selectContainer .selectedItem {
+			padding: 0 0 0 20px !important;
+		}
+		.selectContainer .clearSelect {
+			right: auto !important;
+			left: 10px !important;
+		}
+	</style>
+	{/if}
+</svelte:head>
+
+<style>
+	h1 {
+		font-weight: bold;
+		margin: 10px 0 0 0;
+	}
+	h2 {
+		font-weight: bold;
+		font-size: 1em;
+		margin: 0 0 20px 0;
+	}
+	button {
+		cursor: pointer;
+	}
+	#map-container {
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		background-color: #ddd;
+	}
+	#content {
+		position: absolute;
+		top: 0;
+		box-sizing: border-box;
+		left: 0;
+		padding: 40px 15px 10px 15px;
+		width: 408px;
+		max-width: 100vw;
+		height: 100%;
+		background-color: rgba(255, 255, 255, 0.8);
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+	.content-rtl {
+		left: auto !important;
+		right: 0;
+	}
+	#search {
+		position: absolute;
+		top: 0;
+		left: 40px;
+		width: 368px;
+		max-width: calc(100vw - 40px);
+		height: 40px;
+		background-color: white;
+		--height: 40px;
+		--borderRadius: 0px;
+		--border: 1px solid lightgrey;
+		--indicatorFill: grey;
+	}
+	:global(#search input) {
+		width: calc(100% - 30px);
+	}
+	.search-rtl {
+		left: auto !important;
+		right: 40px;
+	}
+	:global(.search-rtl .indicator) {
+		right: auto !important;
+		left: 10px;
+	}
+	#menu {
+		position: absolute;
+		top: 0;
+		width: 320px;
+		min-height: 100%;
+		background-color: white;
+		transition-duration: 0.3s;
+	}
+	#mask {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.1);
+		pointer-events: none;
+	}
+	#toggles {
+		position: absolute;
+		top: calc(100% - 40px);
+		left: 10px;
+	}
+	.toggles-rtl {
+		left: auto !important;
+		right: 10px;
+	}
+	#toggles input {
+		position: absolute;
+		appearance: none;
+		border: none;
+	}
+	#toggles > label {
+		position: relative;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+		width: 32px;
+		height: 32px;
+		margin-right: 2px;
+		background-color: grey;
+		border-radius: 50%;
+		font-size: 1.3em;
+	}
+	.toggles-rtl > label {
+		margin-left: 2px;
+		margin-right: 0 !important;
+	}
+	.checked {
+		background-color: white !important;
+	}
+	#menu label {
+		display: block;
+	}
+	.menu-toggle {
+		position: absolute;
+		top: 0;
+		left: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		background-color: white;
+		border: none;
+		border-radius: 0;
+		font-size: 1.5em;
+	}
+	.menu-toggle-rtl {
+		left: auto !important;
+		right: 100%;
+	}
+	.content-toggle {
+		position: absolute;
+		top: 40px !important;
+		left: calc(100% - 40px);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		background: none;
+		border: none;
+		font-size: 1.5em;
+	}
+	.content-toggle-rtl {
+		left: auto !important;
+		right: calc(100% - 40px);
+	}
+	.title {
+		box-sizing: border-box;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		height: 40px;
+		padding: 0 15px;
+		font-weight: bold;
+		font-size: 1.1em;
+	}
+  .bullet {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+	.text-lrg {
+		font-size: 1.8em;
+		font-weight: bold;
+		line-height: 1;
+	}
+</style>
