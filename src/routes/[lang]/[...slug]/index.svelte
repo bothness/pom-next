@@ -41,7 +41,6 @@
 
 	let map = null;
 	let showMap = false; // Prevents map from being initiated until app is mounted
-	let style = makeStyle(layer);
 	let menu_active = false;
 	let content_active = place ? true : false;
 	let statuses_arr = Object.keys(statuses).map(key => ({key, ...statuses[key]}));
@@ -59,6 +58,7 @@
 		place: true
 	};
 	let overlays_on = true;
+	$: style = makeStyle(layer, toggles.overlay);
 	$: filter = statuses_active ? ['any', ['in', 'change_2016', ...statuses_active.map(s => s.key)]] : [];
 
 	async function refreshOverlays() {
@@ -74,11 +74,6 @@
 
 	function unSelect() {
 		goto(`${base}/${lang}`);
-	}
-
-	async function setStyle() {
-		sleep(100);
-		style = makeStyle(layer);
 	}
 
 	onMount(() => showMap = true);
@@ -168,6 +163,8 @@
 				filter={l.filter ? l.filter : null}
 				layout={l.layout ? l.layout : {}}
 				paint={l.paint}
+				minzoom={l.minzoom ? l.minzoom : null}
+				maxzoom={l.maxzoom ? l.maxzoom : null}
 				order={["buildings", "transport"].includes(l.group) ? "overlays-div" : null}
 				visible={toggles.overlay && overlay_groups[l.group]}/>
 			{/each}
@@ -292,7 +289,7 @@
 	<div class="title">{text('pom')}</div>
 	<Accordion label="{text('baseMaps')}" {rtl}>
 		{#each layers as l}
-		<label><input type="radio" name="layers" bind:group={layer} value={l} on:change={setStyle} /> {l.name}</label>
+		<label><input type="radio" name="layers" bind:group={layer} value={l} /> {l.name}</label>
 		{/each}
 	</Accordion>
 	<Accordion label="{text('overlays')}" {rtl}>

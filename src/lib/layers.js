@@ -1071,7 +1071,7 @@ export const overlayers = [
   },
   {
     "id": "poi-railway",
-    "group": "transport",
+    "group": "place",
     "type": "symbol",
     "source-layer": "poi",
     "minzoom": 13,
@@ -1107,7 +1107,7 @@ export const overlayers = [
   },
   {
     "id": "highway-name-path",
-    "group": "transport",
+    "group": "place",
     "type": "symbol",
     "source-layer": "transportation_name",
     "minzoom": 15.5,
@@ -1171,7 +1171,7 @@ export const overlayers = [
   },
   {
     "id": "airport-label-major",
-    "group": "transport",
+    "group": "place",
     "type": "symbol",
     "source-layer": "aerodrome_label",
     "minzoom": 10,
@@ -1221,7 +1221,8 @@ export const overlayers = [
       "text-color": "#633",
       "text-halo-color": "rgba(255,255,255,0.8)",
       "text-halo-width": 1.2
-    }
+    },
+    "minzoom": 10
   },
   {
     "id": "place-village",
@@ -1239,7 +1240,8 @@ export const overlayers = [
       "text-color": "#333",
       "text-halo-color": "rgba(255,255,255,0.8)",
       "text-halo-width": 1.2
-    }
+    },
+    "minzoom": 10
   },
   {
     "id": "place-town",
@@ -1257,7 +1259,8 @@ export const overlayers = [
       "text-color": "#333",
       "text-halo-color": "rgba(255,255,255,0.8)",
       "text-halo-width": 1.2
-    }
+    },
+    "minzoom": 9
   },
   {
     "id": "place-city",

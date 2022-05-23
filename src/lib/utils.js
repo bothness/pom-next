@@ -59,7 +59,7 @@ export function makeDataset(place) {
 	}
 }
 
-export function makeStyle(layer) {
+export function makeStyle(layer, desaturate = false) {
 	return {
 		"version": 8,
 		"glyphs": "https://cdn.jsdelivr.net/gh/bothness/basemaps/fonts/{fontstack}/{range}.pbf",
@@ -77,7 +77,10 @@ export function makeStyle(layer) {
 			{
 				"id": "base",
 				"type": "raster",
-				"source": "source"
+				"source": "source",
+				"paint": {
+					"raster-saturation": desaturate ? -0.85 : 0
+				}
 			},
 			{
 				"id": "overlays-div",
