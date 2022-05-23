@@ -1,6 +1,6 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "start-fd10412e.js",
+    "file": "start-203366eb.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
@@ -16,13 +16,13 @@
     ]
   },
   "src/routes/__layout.svelte": {
-    "file": "pages/__layout.svelte-946eb6d6.js",
+    "file": "pages/__layout.svelte-8dfc434b.js",
     "src": "src/routes/__layout.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
       "_index-fcbd00fa.js",
-      "_config-22b80d27.js"
+      "_config-3527f49a.js"
     ],
     "css": [
       "assets/pages/__layout.svelte-7c1fbfde.css"
@@ -38,7 +38,7 @@
     ]
   },
   "src/routes/[lang]/[...slug]/index.svelte": {
-    "file": "pages/_lang_/_...slug_/index.svelte-59f6fc23.js",
+    "file": "pages/_lang_/_...slug_/index.svelte-2d9027c7.js",
     "src": "src/routes/[lang]/[...slug]/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -47,7 +47,7 @@
       "_singletons-1b661bce.js",
       "_navigation-e9c37aec.js",
       "_index-295feb07.js",
-      "_config-22b80d27.js"
+      "_config-3527f49a.js"
     ],
     "css": [
       "assets/pages/_lang_/_...slug_/index.svelte-064db1f7.css"
@@ -76,8 +76,8 @@
   "_singletons-1b661bce.js": {
     "file": "chunks/singletons-1b661bce.js"
   },
-  "_config-22b80d27.js": {
-    "file": "chunks/config-22b80d27.js"
+  "_config-3527f49a.js": {
+    "file": "chunks/config-3527f49a.js"
   },
   "_navigation-e9c37aec.js": {
     "file": "chunks/navigation-e9c37aec.js",
