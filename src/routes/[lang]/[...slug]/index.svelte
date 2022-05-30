@@ -21,12 +21,13 @@
 
 <script>
 	import { onMount } from "svelte";
+	import maplibre from "maplibre-gl"
 	import { page } from '$app/stores';
 	import { afterNavigate, goto } from "$app/navigation";
-	import { Map, MapSource, MapLayer, MapTooltip } from "@onsvisual/svelte-maps";
 	import { makeDataset, i18n, makeStyle, sleep } from "$lib/utils";
 	import { statuses } from "$lib/config";
-	import maplibre from "maplibre-gl";
+	import { Map, MapSource, MapLayer, MapTooltip } from "@onsvisual/svelte-maps";
+	import MapCompare from "$lib/map/MapCompare.svelte";
 	import Select from 'svelte-select';
 	import Icon from '$lib/ui/Icon.svelte';
 	import Accordion from '$lib/ui/Accordion.svelte';
@@ -39,7 +40,7 @@
 	let layer = layers.find(l => l.is_default);
 	let overlay = overlays.find(l => l.is_default)
 
-	let map = null;
+	let map = {};
 	let showMap = false; // Prevents map from being initiated until app is mounted
 	let menu_active = false;
 	let content_active = place ? true : false;
@@ -58,12 +59,13 @@
 		place: true
 	};
 	let overlays_on = true;
-	$: style = makeStyle(layer, toggles.overlay);
+	$: leftStyle = makeStyle(layer, toggles.overlay);
+	$: rightStyle = makeStyle(layers[0], toggles.overlay);
 	$: filter = statuses_active ? ['any', ['in', 'change_2016', ...statuses_active.map(s => s.key)]] : [];
 
 	async function refreshOverlays() {
 		overlays_on = false;
-		await sleep(50);
+		await sleep(100);
 		overlays_on = true;
 	}
 
@@ -76,11 +78,14 @@
 		goto(`${base}/${lang}`);
 	}
 
-	onMount(() => showMap = true);
+	onMount(() => {
+		showMap = true
+		maplibre.setRTLTextPlugin('https://www.unpkg.com/@mapbox/mapbox-gl-rtl-text@0.2.3/mapbox-gl-rtl-text.js');
+	});
 
 	afterNavigate(() => {
 		if (place) {
-			if (map) map.flyTo({center: place.geometry.coordinates, zoom: 13});
+			if (map['left']) map['left'].flyTo({center: place.geometry.coordinates, zoom: 13});
 			content_active = true;
 		} else {
 			content_active = false;
@@ -141,59 +146,64 @@
 
 <div id="map-container">
 	{#if showMap}
-	<Map
-		id="map"
-		bind:map
-		{style}
-		{location}
-		minzoom={5}
-		maxzoom={17}
-		controls
-		locate
-		on:load={() => maplibre.setRTLTextPlugin('https://www.unpkg.com/@mapbox/mapbox-gl-rtl-text@0.2.3/mapbox-gl-rtl-text.js')}
-		on:style={refreshOverlays}
-	>
-		{#if overlays_on}
-		<MapSource id="overlay" type="vector" url={overlay.url} maxzoom={14}>
-			{#each overlayers as l}
-			<MapLayer
-				id={l.id}
-				type={l.type}
-				sourceLayer={l['source-layer']}
-				filter={l.filter ? l.filter : null}
-				layout={l.layout ? l.layout : {}}
-				paint={l.paint}
-				minzoom={l.minzoom ? l.minzoom : null}
-				maxzoom={l.maxzoom ? l.maxzoom : null}
-				order={["buildings", "transport"].includes(l.group) ? "overlays-div" : null}
-				visible={toggles.overlay && overlay_groups[l.group]}/>
-			{/each}
-		</MapSource>
-		<MapSource id="places" type="geojson" data={places} promoteId="id">
-			<MapLayer
-				id="places"
-				type="circle"
-				paint={{
-					'circle-radius': {'base': 1, 'stops': [[5, 1], [12, 5]]},
-					'circle-color': ['get', 'color'],
-					'circle-stroke-color': 'rgba(0,0,0,0.2)',
-					'circle-stroke-width': {'base': 1, 'stops': [[5, 1], [12, 2]]}
-					}}
-				{filter}
-				hover
-				let:hovered
-				select
-				on:select={doSelect}
-				visible={toggles.places}
-				order="places-div">
-				<MapTooltip
-					content={hovered
-						? places.features.find((f) => f.properties.id == hovered).properties.name_en
-						: ''}/>
-			</MapLayer>
-		</MapSource>
+	<MapCompare mapLeft={map['left']} mapRight={map['right']}>
+		{#each ['left', 'right'] as side}
+		{#if side == 'left' || side == 'right' && toggles.split}
+		<Map
+			id="map-{side}"
+			bind:map={map[side]}
+			style={side == 'left' ? leftStyle : rightStyle}
+			{location}
+			minzoom={5}
+			maxzoom={17}
+			controls
+			locate
+			on:style={refreshOverlays}
+		>
+			{#if overlays_on}
+			<MapSource id="overlay" type="vector" url={overlay.url} maxzoom={14}>
+				{#each overlayers as l}
+				<MapLayer
+					id={l.id}
+					type={l.type}
+					sourceLayer={l['source-layer']}
+					filter={l.filter ? l.filter : null}
+					layout={l.layout ? l.layout : {}}
+					paint={l.paint}
+					minzoom={l.minzoom ? l.minzoom : null}
+					maxzoom={l.maxzoom ? l.maxzoom : null}
+					order={["buildings", "transport"].includes(l.group) ? "overlays-div" : null}
+					visible={toggles.overlay && overlay_groups[l.group]}/>
+				{/each}
+			</MapSource>
+			<MapSource id="places" type="geojson" data={places} promoteId="id">
+				<MapLayer
+					id="places"
+					type="circle"
+					paint={{
+						'circle-radius': {'base': 1, 'stops': [[5, 1], [12, 5]]},
+						'circle-color': ['get', 'color'],
+						'circle-stroke-color': 'rgba(0,0,0,0.2)',
+						'circle-stroke-width': {'base': 1, 'stops': [[5, 1], [12, 2]]}
+						}}
+					{filter}
+					hover
+					let:hovered
+					select
+					on:select={doSelect}
+					visible={toggles.places}
+					order="places-div">
+					<MapTooltip
+						content={hovered
+							? places.features.find((f) => f.properties.id == hovered).properties.name_en
+							: ''}/>
+				</MapLayer>
+			</MapSource>
+			{/if}
+		</Map>
 		{/if}
-	</Map>
+		{/each}
+	</MapCompare>
 	{/if}
 </div>
 <div id="toggles" class:toggles-rtl={rtl}>
