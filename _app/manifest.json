@@ -1,11 +1,11 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "start-203366eb.js",
+    "file": "start-d7247c90.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
-      "_index-fcbd00fa.js",
-      "_index-295feb07.js",
+      "_index-ac4747cc.js",
+      "_index-4c462429.js",
       "_singletons-1b661bce.js"
     ],
     "dynamicImports": [
@@ -16,12 +16,12 @@
     ]
   },
   "src/routes/__layout.svelte": {
-    "file": "pages/__layout.svelte-8dfc434b.js",
+    "file": "pages/__layout.svelte-03b9aaf2.js",
     "src": "src/routes/__layout.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-fcbd00fa.js",
+      "_index-ac4747cc.js",
       "_config-3527f49a.js"
     ],
     "css": [
@@ -29,48 +29,48 @@
     ]
   },
   ".svelte-kit/runtime/components/error.svelte": {
-    "file": "error.svelte-bc929dc1.js",
+    "file": "error.svelte-8a41786c.js",
     "src": ".svelte-kit/runtime/components/error.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-fcbd00fa.js"
+      "_index-ac4747cc.js"
     ]
   },
   "src/routes/[lang]/[...slug]/index.svelte": {
-    "file": "pages/_lang_/_...slug_/index.svelte-2d9027c7.js",
+    "file": "pages/_lang_/_...slug_/index.svelte-8791ff23.js",
     "src": "src/routes/[lang]/[...slug]/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-fcbd00fa.js",
+      "_index-ac4747cc.js",
       "_singletons-1b661bce.js",
       "_navigation-e9c37aec.js",
-      "_index-295feb07.js",
-      "_config-3527f49a.js"
+      "_config-3527f49a.js",
+      "_index-4c462429.js"
     ],
     "css": [
-      "assets/pages/_lang_/_...slug_/index.svelte-064db1f7.css"
+      "assets/pages/_lang_/_...slug_/index.svelte-75ad2ab8.css"
     ]
   },
   "src/routes/index.svelte": {
-    "file": "pages/index.svelte-2e43786b.js",
+    "file": "pages/index.svelte-4f5499df.js",
     "src": "src/routes/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-fcbd00fa.js",
+      "_index-ac4747cc.js",
       "_singletons-1b661bce.js",
       "_navigation-e9c37aec.js"
     ]
   },
-  "_index-fcbd00fa.js": {
-    "file": "chunks/index-fcbd00fa.js"
+  "_index-ac4747cc.js": {
+    "file": "chunks/index-ac4747cc.js"
   },
-  "_index-295feb07.js": {
-    "file": "chunks/index-295feb07.js",
+  "_index-4c462429.js": {
+    "file": "chunks/index-4c462429.js",
     "imports": [
-      "_index-fcbd00fa.js"
+      "_index-ac4747cc.js"
     ]
   },
   "_singletons-1b661bce.js": {
