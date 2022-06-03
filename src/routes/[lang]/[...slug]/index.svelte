@@ -145,9 +145,14 @@
 		html {
 			direction: rtl;
 		}
-		.maplibregl-ctrl-top-right, .maplibregl-ctrl-bottom-right {
+		.maplibregl-ctrl-top-right {
 			left: 0;
 			right: auto !important;
+		}
+		@media only screen and (max-width: 450px) {
+			.maplibregl-ctrl-top-right {
+				top: 40px !important;
+			}
 		}
 		.maplibregl-ctrl-top-right .maplibregl-ctrl {
 			margin: 10px 0 0 10px !important;
@@ -158,6 +163,14 @@
 		.selectContainer .clearSelect {
 			right: auto !important;
 			left: 10px !important;
+		}
+	</style>
+	{:else}
+	<style>
+		@media only screen and (max-width: 450px) {
+			.maplibregl-ctrl-top-right {
+				top: 40px !important;
+			}
 		}
 	</style>
 	{/if}
