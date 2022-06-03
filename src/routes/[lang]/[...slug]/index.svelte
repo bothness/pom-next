@@ -48,7 +48,7 @@
 	let zoom = {};
 	let showMap = false; // Prevents map from being initiated until app is mounted
 	let menu_active = false;
-	let content_active = place ? true : false;
+	let panel_status = place ? "place" : null; // Control status of #content panel (options: place, layer, null)
 	let statuses_arr = Object.keys(statuses).map(key => ({key, ...statuses[key]}));
 	let statuses_active = [...statuses_arr.filter(s => s.key != "Newly built")];
 	let location = place ? {lng: place.geometry.coordinates[0], lat: place.geometry.coordinates[1], zoom: 13} : {bounds: [[34.75, 31.75], [35.25, 32.25]]};
@@ -80,14 +80,21 @@
 		goto(`${base}/${lang}/${place.properties.slug}`);
 	}
 
-	function unSelect() {
-		content_active = false;
-		goto(`${base}/${lang}`);
+	function unSelect(layer = false) {
+		panel_status = layer ? "layer" : null;
+		if (place) goto(`${base}/${lang}`);
 	}
 
 	function filterSheets(sheets, layer, include = true) {
 		let layers = layer == 15 ? [6,8,9] : [layer];
 		return include ? sheets.filter(s => layers.includes(s.layer)) : sheets.filter(s => !layers.includes(s.layer));
+	}
+
+	function getDates(layer) {
+		let start = layer.start_year ? +layer.start_year.split("-")[0]: null;
+		let end = layer.end_year ? +layer.end_year.split("-")[0]: null;
+
+		return start && end ? `${start}&ndash;${end}` : start ? start : end;
 	}
 
 	onMount(() => {
@@ -98,9 +105,9 @@
 	afterNavigate(() => {
 		if (place) {
 			if (map['left']) map['left'].flyTo({center: place.geometry.coordinates, zoom: 13});
-			content_active = true;
-		} else {
-			content_active = false;
+			panel_status = "place";
+		} else if (panel_status != "layer") {
+			panel_status = null;
 		}
 	});
 
@@ -170,6 +177,7 @@
 			location={side == 'left' ? location : {...center['left'], zoom: zoom['left']}}
 			minzoom={5}
 			maxzoom={17}
+			attribution={false}
 			controls
 			locate
 			on:style={refreshOverlays}
@@ -241,17 +249,17 @@
 	{/if}
 </div>
 <div id="toggles" class:toggles-rtl={rtl}>
-	<label title="Layer information" class:checked={toggles.info}><input type="checkbox" bind:checked={toggles.info} /><Icon type="info" /></label>
 	<label title="Toggle localities" class:checked={toggles.places}><input type="checkbox" bind:checked={toggles.places} /><Icon type="marker" /></label>
 	<label title="Toggle overlays" class:checked={toggles.overlay}><input type="checkbox" bind:checked={toggles.overlay} /><Icon type="layers" /></label>
 	<label title="Toggle split-screen" class:checked={toggles.split}><input type="checkbox" bind:checked={toggles.split} /><Icon type="split" rotation={90}/></label>
+	<button title="Layer information" class:checked={toggles.info} on:click={() => unSelect(true)}><Icon type="info" /></button>
 </div>
-{#if content_active}
+{#if panel_status}
 	<article id="content" class:content-rtl={rtl}>
-		<button class="content-toggle" class:content-toggle-rtl={rtl} on:click={unSelect}>
+		<button class="content-toggle" class:content-toggle-rtl={rtl} on:click={() => unSelect()}>
 			<Icon type="close" />
 		</button>
-		{#if place}
+		{#if place && panel_status == 'place'}
 			<h1>{rtl ? place.properties.name_ar : place.properties.name_en}</h1>
 			<h2>
 				{place.properties.group}
@@ -307,6 +315,26 @@
 				</div>
 			</InfoBlock>
 			{/if}
+		{:else if panel_status == 'layer'}
+		<h1>{layer.name.slice(0, layer.name.lastIndexOf(','))}</h1>
+			<h2>
+				{layer.attribution.split(',')[0]}
+			</h2>
+			<InfoBlock label="Information">
+				<div>
+					Dates<br/>
+					<span class="text-lrg">{@html getDates(layer)}</span>
+				</div>
+				{#if sheets.features.filter(s => s.properties.layer == layer.id).length > 0}
+				<div>
+					No. of map sheets<br/>
+					<span class="text-lrg">{sheets.features.filter(s => s.properties.layer == layer.id).length}</span>
+				</div>
+				{/if}
+			</InfoBlock>
+			<InfoBlock label="Description">
+				<div>{layer.description}</div>
+			</InfoBlock>
 		{/if}
 	</article>
 {/if}
@@ -351,7 +379,7 @@
 		<label><input type="checkbox" bind:checked={toggles.places} /> Show localities</label>
 		<hr/>
 		{#each statuses_arr as s}
-		<label><input type="checkbox" disabled={!toggles.places} bind:group={statuses_active} value={s} /> {s.name}</label>
+		<label><input type="checkbox" disabled={!toggles.places} bind:group={statuses_active} value={s} /><div class="bullet" style:background-color="{s.color}"/> {s.name}</label>
 		{/each}
 	</Accordion>
 	<Accordion label="{text('download')}" {rtl} bind:open={toggles.download}>
@@ -391,7 +419,8 @@
 <style>
 	h1 {
 		font-weight: bold;
-		margin: 10px 0 0 0;
+		margin: 10px 0 6px 0;
+		line-height: 1.1;
 	}
 	h2 {
 		font-weight: bold;
@@ -468,13 +497,13 @@
 		pointer-events: none;
 	}
 	#toggles {
-		position: absolute;
-		top: calc(100% - 40px);
-		left: 10px;
+		position: fixed;
+		bottom: 10px;
+		right: 10px;
 	}
 	.toggles-rtl {
-		left: auto !important;
-		right: 10px;
+		right: auto !important;
+		left: 10px;
 	}
 	#toggles input {
 		position: absolute;
@@ -491,6 +520,20 @@
 		height: 32px;
 		margin-right: 2px;
 		background-color: grey;
+		border-radius: 50%;
+		font-size: 1.3em;
+	}
+	#toggles > button {
+		position: relative;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+		width: 32px;
+		height: 32px;
+		margin-right: 2px;
+		background-color: white;
+		border: none;
 		border-radius: 50%;
 		font-size: 1.3em;
 	}
