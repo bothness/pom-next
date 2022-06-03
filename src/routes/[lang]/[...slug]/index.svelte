@@ -12,9 +12,10 @@
 		let place = places.features.find(f => f.properties.slug == slug);
 
 		let layers = stuff.layers; // layers loaded in same way as places
+		let sheets = stuff.sheets; // sheets ditto
 
 		return {
-			props: { lang, layers, places, place }
+			props: { lang, layers, sheets, places, place }
 		};
 	}
 </script>
@@ -34,13 +35,17 @@
 	import Links from "$lib/ui/Links.svelte";
 	import InfoBlock from "$lib/ui/InfoBlock.svelte";
 	import BarChart from '$lib/chart/BarChart.svelte';
+	import Sheet from "$lib/ui/Sheet.svelte";
 
-	export let lang, layers, places, place;
+	export let lang, layers, sheets, places, place;
 
 	let layer = layers.find(l => l.is_default);
-	let overlay = overlays.find(l => l.is_default)
+	let overlay = overlays.find(l => l.is_default);
+	let sheets_selected = [];
 
 	let map = {};
+	let center = {};
+	let zoom = {};
 	let showMap = false; // Prevents map from being initiated until app is mounted
 	let menu_active = false;
 	let content_active = place ? true : false;
@@ -51,10 +56,11 @@
 		info: true,
 		places: true,
 		overlay: false,
-		split: false
+		split: false,
+		download: false,
 	};
 	let overlay_groups = {
-		buildings: false,
+		building: false,
 		transport: true,
 		place: true
 	};
@@ -75,7 +81,13 @@
 	}
 
 	function unSelect() {
+		content_active = false;
 		goto(`${base}/${lang}`);
+	}
+
+	function filterSheets(sheets, layer, include = true) {
+		let layers = layer == 15 ? [6,8,9] : [layer];
+		return include ? sheets.filter(s => layers.includes(s.layer)) : sheets.filter(s => !layers.includes(s.layer));
 	}
 
 	onMount(() => {
@@ -152,8 +164,10 @@
 		<Map
 			id="map-{side}"
 			bind:map={map[side]}
+			bind:center={center[side]}
+			bind:zoom={zoom[side]}
 			style={side == 'left' ? leftStyle : rightStyle}
-			{location}
+			location={side == 'left' ? location : {...center['left'], zoom: zoom['left']}}
 			minzoom={5}
 			maxzoom={17}
 			controls
@@ -172,7 +186,7 @@
 					paint={l.paint}
 					minzoom={l.minzoom ? l.minzoom : null}
 					maxzoom={l.maxzoom ? l.maxzoom : null}
-					order={["buildings", "transport"].includes(l.group) ? "overlays-div" : null}
+					order={["building", "transport"].includes(l.group) ? "overlays-div" : null}
 					visible={toggles.overlay && overlay_groups[l.group]}/>
 				{/each}
 			</MapSource>
@@ -199,6 +213,26 @@
 							: ''}/>
 				</MapLayer>
 			</MapSource>
+			{#if toggles.download}
+			<MapSource id="sheets" type="geojson" data={sheets} promoteId="id" maxzoom={14}>
+				<MapLayer
+					id="sheets-click"
+					type="fill"
+					paint={{
+						'fill-color': "rgba(255,255,255,0)"
+						}}
+					select
+					on:select={e => sheets_selected = e.detail.event.features[0] ? e.detail.event.features.map(f => f.properties) : []}/>
+				<MapLayer
+					id="sheets"
+					type="line"
+					filter={layer.id == 15 ? ["in", "layer", 6, 8, 9] : ["==", "layer", layer.id]}
+					paint={{
+						'line-color': "magenta",
+						'line-width': 1
+						}}/>
+			</MapSource>
+			{/if}
 			{/if}
 		</Map>
 		{/if}
@@ -309,7 +343,7 @@
 		<label><input type="radio" disabled={!toggles.overlay} name="layers" bind:group={overlay} value={l} /> {l.name}</label>
 		{/each}
 		<hr/>
-		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.buildings} /> Buildings</label>
+		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.building} /> Buildings</label>
 		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.transport} /> Roads/rail</label>
 		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.place} /> Place names</label>
 	</Accordion>
@@ -320,8 +354,24 @@
 		<label><input type="checkbox" disabled={!toggles.places} bind:group={statuses_active} value={s} /> {s.name}</label>
 		{/each}
 	</Accordion>
-	<Accordion label="{text('download')}" {rtl}>
-		To be added
+	<Accordion label="{text('download')}" {rtl} bind:open={toggles.download}>
+		{#if sheets_selected[0]}
+		{#if filterSheets(sheets_selected, layer.id)}
+		Sheets from this base map<br/>
+		{#each filterSheets(sheets_selected, layer.id) as sheet}
+		<Sheet {sheet}/>
+		{/each}
+		{/if}
+		{#if filterSheets(sheets_selected, layer.id, false)[0]}
+		Sheets from other base maps<br/>
+		{#each filterSheets(sheets_selected, layer.id, false) as sheet}
+		<Sheet {sheet}/>
+		{/each}
+		{/if}
+		{:else}
+		Click anywhere on the map to see sheets available to download covering that location.
+		{/if}
+		<button class="btn" on:click={() => {toggles.download = false; sheets_selected = [];}}>Close downloads</button>
 	</Accordion>
 	<Links>
 		<a href="{base}/{lang}/about"><Icon type="info"/> {text('about')}</a>
@@ -514,5 +564,17 @@
 		border: 0;
 		height: 0;
 		border-bottom: 1px solid lightgrey;
+	}
+	.btn {
+		display: block;
+		border: 1.5px solid black;
+		background-color: white;
+		color: black;
+		border-radius: 2px;
+		margin-top: 8px;
+	}
+	.btn:hover {
+		background-color: black;
+		color: white;
 	}
 </style>

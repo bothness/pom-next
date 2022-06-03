@@ -1,6 +1,7 @@
 export const locs_url =
 "https://docs.google.com/spreadsheets/d/1LejOouylx6u_TKF_1BxvV_B7uI34M4zIWyoc8LozATo/gviz/tq?tqx=out%3Acsv&sheet=database";
 export const layers_url = "https://palopenmaps.org/api/layers/?format=json";
+export const sheets_url = "https://palopenmaps.org/api/sheets/?format=json";
 
 export const statuses = {
 	Remaining: {

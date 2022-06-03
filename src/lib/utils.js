@@ -31,6 +31,29 @@ export async function getPlaces(url, statuses, fetch = window.fetch) {
 	return geojson;
 }
 
+export async function getSheets(url, layers, fetch = window.fetch) {
+	let res = await fetch(url);
+	let sheets = await res.json();
+	sheets.sort((a, b) => a.layer - b.layer);
+
+	let geojson = {
+		type: "FeatureCollection",
+		features: [],
+	};
+
+	for (const sheet of sheets) {
+		let props = Object.fromEntries(Object.entries(sheet).filter(([key]) => key != "boundaries"));
+		let layer = layers.find(l => l.id == sheet.layer);
+		props.year = props.year ? props.year.split("-")[0] : layer.start_year.split("-")[0];
+
+		geojson.features.push({
+			properties: {...props, scale: layer.scale, author: layer.attribution.split(",")[0]},
+			geometry: sheet.boundaries
+		});
+	}
+	return geojson;
+}
+
 export function i18n(key, texts, lang = "en", fallback = "en") {
 	if (texts[lang] && texts[lang][key]) {
 		return texts[lang][key];
