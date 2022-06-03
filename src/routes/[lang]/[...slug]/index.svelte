@@ -368,7 +368,7 @@
 		<label><input type="checkbox" bind:checked={toggles.overlay} /> Show overlays</label>
 		<hr/>
 		{#each overlays as l}
-		<label><input type="radio" disabled={!toggles.overlay} name="layers" bind:group={overlay} value={l} /> {l.name}</label>
+		<label><input type="radio" disabled={!toggles.overlay} name="overlays" bind:group={overlay} value={l} /> {l.name}</label>
 		{/each}
 		<hr/>
 		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.building} /> Buildings</label>
