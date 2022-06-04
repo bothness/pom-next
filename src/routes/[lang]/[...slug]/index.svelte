@@ -25,7 +25,8 @@
 	import maplibre from "maplibre-gl"
 	import { page } from '$app/stores';
 	import { afterNavigate, goto } from "$app/navigation";
-	import { makeDataset, i18n, makeStyle, sleep } from "$lib/utils";
+	import mapStyle from "$lib/style.json";
+	import { makeDataset, i18n, sleep } from "$lib/utils";
 	import { statuses } from "$lib/config";
 	import { Map, MapSource, MapLayer, MapTooltip } from "@onsvisual/svelte-maps";
 	import MapCompare from "$lib/map/MapCompare.svelte";
@@ -64,16 +65,7 @@
 		transport: true,
 		place: true
 	};
-	let overlays_on = true;
-	$: leftStyle = makeStyle(layer, toggles.overlay);
-	$: rightStyle = makeStyle(layers[0], toggles.overlay);
 	$: filter = statuses_active ? ['any', ['in', 'change_2016', ...statuses_active.map(s => s.key)]] : [];
-
-	async function refreshOverlays() {
-		overlays_on = false;
-		await sleep(100);
-		overlays_on = true;
-	}
 
 	function doSelect(e) {
 		let place = places.features.find((f) => f.properties.id == e.detail.id);
@@ -186,16 +178,21 @@
 			bind:map={map[side]}
 			bind:center={center[side]}
 			bind:zoom={zoom[side]}
-			style={side == 'left' ? leftStyle : rightStyle}
+			style={mapStyle}
 			location={side == 'left' ? location : {...center['left'], zoom: zoom['left']}}
 			minzoom={5}
 			maxzoom={17}
 			attribution={false}
 			controls
 			locate
-			on:style={refreshOverlays}
 		>
-			{#if overlays_on}
+			<MapSource id="basemap" type="raster" url={side == 'left' ? layer.url : layers[0].url} maxzoom={17}>
+				<MapLayer
+					id="basemap"
+					type="raster"
+					paint={{"raster-saturation": toggles.overlay ? -0.85 : 0}}
+					order="basemap-div"/>
+			</MapSource>
 			<MapSource id="overlay" type="vector" url={overlay.url} maxzoom={14}>
 				{#each overlayers as l}
 				<MapLayer
@@ -253,7 +250,6 @@
 						'line-width': 1
 						}}/>
 			</MapSource>
-			{/if}
 			{/if}
 		</Map>
 		{/if}
