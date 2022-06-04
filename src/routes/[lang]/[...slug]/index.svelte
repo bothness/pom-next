@@ -89,8 +89,18 @@
 		return start && end ? `${start}&ndash;${end}` : start ? start : end;
 	}
 
+	function updateHash(center, zoom) {
+		if (center && zoom) {
+			history.replaceState(undefined, undefined, `#${zoom.toFixed(2)},${center.lng.toFixed(4)},${center.lat.toFixed(4)}`);
+		}
+	}
+
 	onMount(() => {
-		showMap = true
+		let hash = $page.url.hash.slice(1).split(",");
+		if (hash[2]) {
+			location = {lng: +hash[1], lat: +hash[2], zoom: +hash[0]};
+		}
+		showMap = true;
 		maplibre.setRTLTextPlugin('https://www.unpkg.com/@mapbox/mapbox-gl-rtl-text@0.2.3/mapbox-gl-rtl-text.js');
 	});
 
@@ -104,6 +114,7 @@
 	});
 
 	$: rtl = lang == "ar";
+	$: updateHash(center.left, zoom.left);
 
 	const texts = {
 		"en": {
@@ -215,13 +226,18 @@
 					paint={{
 						'circle-radius': {'base': 1, 'stops': [[5, 1], [12, 5]]},
 						'circle-color': ['get', 'color'],
-						'circle-stroke-color': 'rgba(0,0,0,0.2)',
+						'circle-stroke-color': ['case',
+				  		['==', ['feature-state', 'selected'], true], 'black',
+							['==', ['feature-state', 'hovered'], true], 'black',
+				  		'rgba(0,0,0,0.2)'
+						],
 						'circle-stroke-width': {'base': 1, 'stops': [[5, 1], [12, 2]]}
 						}}
 					{filter}
 					hover
 					let:hovered
 					select
+					selected={place ? place.properties.id : null}
 					on:select={doSelect}
 					visible={toggles.places}
 					order="places-div">
@@ -388,12 +404,12 @@
 		<label><input type="checkbox" bind:checked={toggles.places} /> Show localities</label>
 		<hr/>
 		{#each statuses_arr as s}
-		<label><input type="checkbox" disabled={!toggles.places} bind:group={statuses_active} value={s} /><div class="bullet" style:background-color="{s.color}"/> {s.name}</label>
+		<label><input type="checkbox" disabled={!toggles.places} bind:group={statuses_active} value={s} /> <div class="bullet" style:background-color="{s.color}"/> {s.name}</label>
 		{/each}
 	</Accordion>
 	<Accordion label="{text('download')}" {rtl} bind:open={toggles.download}>
 		{#if sheets_selected[0]}
-		{#if filterSheets(sheets_selected, layer.id)}
+		{#if filterSheets(sheets_selected, layer.id)[0]}
 		Sheets from this base map<br/>
 		{#each filterSheets(sheets_selected, layer.id) as sheet}
 		<Sheet {sheet}/>
