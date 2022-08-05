@@ -6,11 +6,11 @@
 	onMount(() => {
 		let lang = navigator.language.slice(0, 2);
 		if (lang == "ar") {
-			goto(`${base}/${lang}`);
+			goto(`${base}/${lang}/`);
 		} else {
-			goto(`${base}/en`);
+			goto(`${base}/en/`);
 		}
 	});
 </script>
 
-<a href="en">Redirecting...</a>
+<a href="{base}/en/">Redirecting...</a>

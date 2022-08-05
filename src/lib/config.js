@@ -35,3 +35,24 @@ export const statuses = {
 		selected: false,
 	}
 };
+
+export const texts = {
+	"en": {
+		"pom": "Palestine Open Maps",
+		"baseMaps": "Base maps",
+		"overlays": "Overlays", 
+		"localities": "Localities",
+		"getUpdates": "Get updates",
+		"download": "Download maps",
+		"about": "About"
+	}, 
+	"ar": {
+		"pom": "خرائط فلسطين المفتوحة",
+		"baseMaps": "الخرائط",
+		"overlays": "الطبقات الأخرى", 
+		"localities": "البلدات",
+		"getUpdates": "تابعوا آخر التحديثات",
+		"download": "تنزيل الخرائط",
+		"about": "عن المشروع"
+	}
+};

@@ -19,7 +19,8 @@ const config = {
 		},
 		paths: {
 			base: production ? '/pom-next' : ''
-		}
+		},
+		trailingSlash: 'always'
 	}
 };
 

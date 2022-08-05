@@ -518,10 +518,6 @@ var maplibreGlCompare = createCommonjsModule(function(module) {
       this._controlContainer.remove();
     }
   };
-  if (window.maplibregl) {
-    maplibregl.Compare = Compare;
-  } else {
-    module.exports = Compare;
-  }
+  module.exports = Compare;
 });
 export default maplibreGlCompare;

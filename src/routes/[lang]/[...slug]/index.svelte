@@ -6,7 +6,7 @@
   
 	export async function load({ params, stuff }) {
 		let lang = params.lang;
-		let slug = params.slug;
+		let slug = params.slug.replace("/","");
 
 		let places = stuff.places; // places is loaded once in __layout.svelte and passed to this route
 		let place = places.features.find(f => f.properties.slug == slug);
@@ -30,6 +30,7 @@
 	import { statuses } from "$lib/config";
 	import { Map, MapSource, MapLayer, MapTooltip } from "@onsvisual/svelte-maps";
 	import MapCompare from "$lib/map/MapCompare.svelte";
+	import MapTerrain from "$lib/map/MapTerrain.svelte";
 	import Select from 'svelte-select';
 	import Icon from '$lib/ui/Icon.svelte';
 	import Accordion from '$lib/ui/Accordion.svelte';
@@ -47,6 +48,8 @@
 	let map = {};
 	let center = {};
 	let zoom = {};
+	let pitch = {};
+	let bearing = {};
 	let showMap = false; // Prevents map from being initiated until app is mounted
 	let menu_active = false;
 	let panel_status = place ? "place" : null; // Control status of #content panel (options: place, layer, null)
@@ -59,6 +62,7 @@
 		overlay: false,
 		split: false,
 		download: false,
+		threed: false
 	};
 	let overlay_groups = {
 		building: false,
@@ -69,12 +73,13 @@
 
 	function doSelect(e) {
 		let place = places.features.find((f) => f.properties.id == e.detail.id);
-		goto(`${base}/${lang}/${place.properties.slug}`);
+		menu_active = false;
+		goto(`${base}/${lang}/${place.properties.slug}/`);
 	}
 
-	function unSelect(layer = false) {
-		panel_status = layer ? "layer" : null;
-		if (place) goto(`${base}/${lang}`);
+	async function unSelect(status = null) {
+		panel_status = status;
+		if (place) goto(`${base}/${lang}/`);
 	}
 
 	function filterSheets(sheets, layer, include = true) {
@@ -100,8 +105,8 @@
 		if (hash[2]) {
 			location = {lng: +hash[1], lat: +hash[2], zoom: +hash[0]};
 		}
+		if (maplibre.getRTLTextPluginStatus() == "unavailable") maplibre.setRTLTextPlugin('https://www.unpkg.com/@mapbox/mapbox-gl-rtl-text@0.2.3/mapbox-gl-rtl-text.js');
 		showMap = true;
-		maplibre.setRTLTextPlugin('https://www.unpkg.com/@mapbox/mapbox-gl-rtl-text@0.2.3/mapbox-gl-rtl-text.js');
 	});
 
 	afterNavigate(() => {
@@ -134,12 +139,9 @@
 			"getUpdates": "تابعوا آخر التحديثات",
 			"download": "تنزيل الخرائط",
 			"about": "عن المشروع"
-		}, 
-		"he": {
-			"hello": "shalom"
 		}
 	};
-	$: text = (key) => i18n(key, texts, lang);
+	$: t = (key) => i18n(key, texts, lang);
 </script>
 
 <svelte:head>
@@ -154,7 +156,7 @@
 		}
 		@media only screen and (max-width: 450px) {
 			.maplibregl-ctrl-top-right {
-				top: 40px !important;
+				top: 50px !important;
 			}
 		}
 		.maplibregl-ctrl-top-right .maplibregl-ctrl {
@@ -172,13 +174,19 @@
 	<style>
 		@media only screen and (max-width: 450px) {
 			.maplibregl-ctrl-top-right {
-				top: 40px !important;
+				top: 50px !important;
 			}
 		}
 	</style>
 	{/if}
 </svelte:head>
 
+<header>
+	<button class="menu-toggle" class:menu-toggle-rtl={rtl} on:click={() => (menu_active = !menu_active)}>
+		<Icon type={menu_active ? 'close' : 'menu'} />
+	</button>
+	<div class="title">{t('pom')}</div>
+</header>
 <div id="map-container">
 	{#if showMap}
 	<MapCompare mapLeft={map['left']} mapRight={map['right']}>
@@ -189,13 +197,14 @@
 			bind:map={map[side]}
 			bind:center={center[side]}
 			bind:zoom={zoom[side]}
+			bind:pitch={pitch[side]}
+			bind:bearing={bearing[side]}
 			style={mapStyle}
-			location={side == 'left' ? location : {...center['left'], zoom: zoom['left']}}
+			location={side == 'left' || !zoom.left ? location : {...center.left, zoom: zoom.left, pitch: pitch.left, bearing: bearing.left}}
 			minzoom={5}
 			maxzoom={17}
 			attribution={false}
-			controls
-			locate
+			controls={['compass', 'pitch', 'locate']}
 		>
 			<MapSource id="basemap" type="raster" url={side == 'left' ? layer.url : layers[0].url} maxzoom={17}>
 				<MapLayer
@@ -253,10 +262,11 @@
 					id="sheets-click"
 					type="fill"
 					paint={{
-						'fill-color': "rgba(255,255,255,0)"
+						'fill-color': 'magenta',
+						'fill-opacity': 0.02
 						}}
 					select
-					on:select={e => sheets_selected = e.detail.event.features[0] ? e.detail.event.features.map(f => f.properties) : []}/>
+					on:select={e => {sheets_selected = e.detail.event.features[0] ? e.detail.event.features.map(f => f.properties) : []; menu_active = true}}/>
 				<MapLayer
 					id="sheets"
 					type="line"
@@ -265,6 +275,17 @@
 						'line-color': "magenta",
 						'line-width': 1
 						}}/>
+			</MapSource>
+			{/if}
+			<MapSource id="terrain" type="raster-dem" url="{"https://tile.nextzen.org/tilezen/terrain/v1/256/terrarium/{z}/{x}/{y}.png?api_key=_WbqOjpNS6-ug4JaHzHcdw"}">
+				{#if toggles.threed}
+				<MapLayer id="hillshade" type="hillshade" order="basemap-div" paint={{'hillshade-exaggeration': 0.1, 'hillshade-accent-color': 'rgba(0,0,0,0)', 'hillshade-shadow-color': 'rgba(0,0,0,0.7)', 'hillshade-highlight-color': 'rgba(255,255,255,0.3)'}}/>
+				<MapTerrain/>
+				{/if}
+			</MapSource>
+			{#if false}
+			<MapSource id="villages" type="geojson" url="./data/villages.json">
+				<MapLayer id="villages" type="line" paint={{'line-color': 'black', 'line-width': 1}}/>
 			</MapSource>
 			{/if}
 		</Map>
@@ -277,7 +298,8 @@
 	<label title="Toggle localities" class:checked={toggles.places}><input type="checkbox" bind:checked={toggles.places} /><Icon type="marker" /></label>
 	<label title="Toggle overlays" class:checked={toggles.overlay}><input type="checkbox" bind:checked={toggles.overlay} /><Icon type="layers" /></label>
 	<label title="Toggle split-screen" class:checked={toggles.split}><input type="checkbox" bind:checked={toggles.split} /><Icon type="split" rotation={90}/></label>
-	<button title="Layer information" class:checked={toggles.info} on:click={() => unSelect(true)}><Icon type="info" /></button>
+	<label title="Toggle 3D" class:checked={toggles.threed}><input type="checkbox" bind:checked={toggles.threed} on:change={() => map.left.flyTo(toggles.threed ? {pitch: 40} : {pitch: 0, bearing: 0})}/><Icon type="3d"/></label>
+	<button title="Layer information" class:checked={toggles.info} on:click={() => unSelect("layer")}><Icon type="info" /></button>
 </div>
 {#if panel_status}
 	<article id="content" class:content-rtl={rtl}>
@@ -363,33 +385,30 @@
 		{/if}
 	</article>
 {/if}
-<div id="search" class:search-rtl={rtl} style="--selectedItemPadding: {rtl ? '0 20px 0 0' : '0 0 0 20px'}">
-	{#if places}
-		<Select
-			value={place ? place.properties : null}
-			items={places.features.map((f) => f.properties)}
-			optionIdentifier="id"
-			labelIdentifier="name_{lang}"
-			on:select={doSelect}
-			on:clear={unSelect}
-			showIndicator
-		/>
-	{/if}
-</div>
 {#if menu_active}
 	<div id="mask" />
 {/if}
 <nav id="menu" style:left={rtl ? 'auto' : menu_active ? '0' : '-320px'} style:right={lang != 'ar' ? 'auto' : menu_active ? '0' : '-320px'}>
-	<button class="menu-toggle" class:menu-toggle-rtl={rtl} on:click={() => (menu_active = !menu_active)}>
-		<Icon type={menu_active ? 'close' : 'menu'} />
-	</button>
-	<div class="title">{text('pom')}</div>
-	<Accordion label="{text('baseMaps')}" {rtl}>
+	<div id="search" class:search-rtl={rtl} style="--selectedItemPadding: {rtl ? '0 20px 0 0' : '0 0 0 20px'}">
+		{#if places}
+			<Select
+				value={place ? place.properties : null}
+				items={places.features.map((f) => f.properties)}
+				optionIdentifier="id"
+				labelIdentifier="name_{lang}"
+				placeholder="Find a town or village"
+				on:select={doSelect}
+				on:clear={unSelect}
+				showIndicator
+			/>
+		{/if}
+	</div>
+	<Accordion label="{t('baseMaps')}" {rtl}>
 		{#each layers as l}
 		<label><input type="radio" name="layers" bind:group={layer} value={l} /> {l.name}</label>
 		{/each}
 	</Accordion>
-	<Accordion label="{text('overlays')}" {rtl}>
+	<Accordion label="{t('overlays')}" {rtl}>
 		<label><input type="checkbox" bind:checked={toggles.overlay} /> Show overlays</label>
 		<hr/>
 		{#each overlays as l}
@@ -400,14 +419,14 @@
 		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.transport} /> Roads/rail</label>
 		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.place} /> Place names</label>
 	</Accordion>
-	<Accordion label="{text('localities')}" {rtl}>
+	<Accordion label="{t('localities')}" {rtl}>
 		<label><input type="checkbox" bind:checked={toggles.places} /> Show localities</label>
 		<hr/>
 		{#each statuses_arr as s}
 		<label><input type="checkbox" disabled={!toggles.places} bind:group={statuses_active} value={s} /> <div class="bullet" style:background-color="{s.color}"/> {s.name}</label>
 		{/each}
 	</Accordion>
-	<Accordion label="{text('download')}" {rtl} bind:open={toggles.download}>
+	<Accordion label="{t('download')}" {rtl} bind:open={toggles.download}>
 		{#if sheets_selected[0]}
 		{#if filterSheets(sheets_selected, layer.id)[0]}
 		Sheets from this base map<br/>
@@ -427,10 +446,14 @@
 		<button class="btn" on:click={() => {toggles.download = false; sheets_selected = [];}}>Close downloads</button>
 	</Accordion>
 	<Links>
-		<a href="{base}/{lang}/about"><Icon type="info"/> {text('about')}</a>
-		<a href="{base}/{lang}/blog"><Icon type="pen"/> Blog</a>
-		<a href="{base}/{lang}/support"><Icon type="heart"/> Support</a>
-		<a href="{base}/{lang}/contact"><Icon type="email"/> Contact</a>
+		<label><input type="checkbox" bind:checked={toggles.split}/> Toggle split-screen</label>
+		<label><input type="checkbox" bind:checked={toggles.threed} on:change={() => map.left.flyTo(toggles.threed ? {pitch: 40} : {pitch: 0, bearing: 0})}/> Toggle 3D</label>
+	</Links>
+	<Links>
+		<a href="{base}/{lang}/about/"><Icon type="info"/> {t('about')}</a>
+		<a href="{base}/{lang}/blog/"><Icon type="pen"/> Blog</a>
+		<a href="{base}/{lang}/support/"><Icon type="heart"/> Support</a>
+		<a href="{base}/{lang}/contact/"><Icon type="email"/> Contact</a>
 	</Links>
 	<Links>
 		{#if rtl}
@@ -455,9 +478,20 @@
 	button {
 		cursor: pointer;
 	}
+	header {
+		position: fixed;
+		display: flex;
+		flex-direction: row;
+		left: 0;
+		right: 0;
+		top: 0;
+		height: 50px;
+		background-color: #333;
+		z-index: 1;	
+	}
 	#map-container {
 		position: fixed;
-		top: 0;
+		top: 50px;
 		left: 0;
 		bottom: 0;
 		right: 0;
@@ -468,7 +502,7 @@
 		top: 0;
 		box-sizing: border-box;
 		left: 0;
-		padding: 40px 15px 10px 15px;
+		padding: 50px 15px 10px 15px;
 		width: 408px;
 		max-width: 100vw;
 		height: 100%;
@@ -481,16 +515,12 @@
 		right: 0;
 	}
 	#search {
-		position: absolute;
-		top: 0;
-		left: 40px;
-		width: 368px;
-		max-width: calc(100vw - 40px);
-		height: 40px;
+		width: 100%;
+		height: 50px;
 		background-color: white;
-		--height: 40px;
+		--height: 50px;
 		--borderRadius: 0px;
-		--border: 1px solid lightgrey;
+		--border: 2px solid rgba(255,255,255,0);
 		--indicatorFill: grey;
 	}
 	:global(#search input) {
@@ -498,7 +528,7 @@
 	}
 	.search-rtl {
 		left: auto !important;
-		right: 40px;
+		right: 50px;
 	}
 	:global(.search-rtl .indicator) {
 		right: auto !important;
@@ -506,10 +536,10 @@
 	}
 	#menu {
 		position: absolute;
-		top: 0;
+		top: 50px;
 		width: 320px;
-		min-height: 100%;
-		background-color: white;
+		min-height: calc(100% - 50px);
+		background-color: #eee;
 		transition-duration: 0.3s;
 	}
 	#mask {
@@ -532,7 +562,7 @@
 	}
 	#toggles input {
 		position: absolute;
-		appearance: none;
+		opacity: 0;
 		border: none;
 	}
 	#toggles > label {
@@ -573,16 +603,15 @@
 		display: block;
 	}
 	.menu-toggle {
-		position: absolute;
-		top: 0;
-		left: 100%;
-		display: flex;
+		display: inline-flex;
 		justify-content: center;
 		align-items: center;
-		width: 40px;
-		height: 40px;
-		background-color: white;
+		width: 50px;
+		height: 50px;
+		background-color: #333;
+		color: white;
 		border: none;
+		border-right: 1px solid #777;
 		border-radius: 0;
 		font-size: 1.5em;
 	}
@@ -592,30 +621,31 @@
 	}
 	.content-toggle {
 		position: absolute;
-		top: 40px !important;
-		left: calc(100% - 40px);
+		top: 50px !important;
+		left: calc(100% - 50px);
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		width: 40px;
-		height: 40px;
+		width: 50px;
+		height: 50px;
 		background: none;
 		border: none;
 		font-size: 1.5em;
 	}
 	.content-toggle-rtl {
 		left: auto !important;
-		right: calc(100% - 40px);
+		right: calc(100% - 50px);
 	}
 	.title {
 		box-sizing: border-box;
 		width: 100%;
 		display: flex;
 		align-items: center;
-		height: 40px;
+		height: 50px;
 		padding: 0 15px;
 		font-weight: bold;
 		font-size: 1.1em;
+		color: white;
 	}
   .bullet {
     display: inline-block;
