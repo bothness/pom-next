@@ -6,18 +6,21 @@
 		<link rel="icon" href="/pom-next/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta http-equiv="content-security-policy" content="">
-	<link rel="modulepreload" href="/pom-next/_app/start-f7169bb7.js">
-	<link rel="modulepreload" href="/pom-next/_app/chunks/index-b5f4775f.js">
-	<link rel="modulepreload" href="/pom-next/_app/chunks/index-bf67f47d.js">
-	<link rel="modulepreload" href="/pom-next/_app/chunks/paths-396f020f.js">
-	<link rel="modulepreload" href="/pom-next/_app/chunks/singletons-d1fb5791.js">
+	<link rel="modulepreload" href="/pom-next/_app/immutable/start-1e3dc539.js">
+	<link rel="modulepreload" href="/pom-next/_app/immutable/chunks/index-b3aefbcd.js">
+	<link rel="modulepreload" href="/pom-next/_app/immutable/chunks/index-cd818830.js">
+	<link rel="modulepreload" href="/pom-next/_app/immutable/chunks/paths-b9644fda.js">
+	<link rel="modulepreload" href="/pom-next/_app/immutable/chunks/singletons-eca981c1.js">
 	</head>
 	<body>
 		<div>
-		<script type="module" data-hydrate="45h">
-		import { start } from "/pom-next/_app/start-f7169bb7.js";
+		<script type="module" data-sveltekit-hydrate="45h">
+		import { set_public_env, start } from "/pom-next/_app/immutable/start-1e3dc539.js";
+
+		set_public_env({});
+
 		start({
-			target: document.querySelector('[data-hydrate="45h"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="45h"]').parentNode,
 			paths: {"base":"/pom-next","assets":"/pom-next"},
 			session: {},
 			route: true,
