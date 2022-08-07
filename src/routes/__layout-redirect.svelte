@@ -16,3 +16,4 @@
 </script>
 
 <a href="{base}/{lang && lang == 'ar' ? 'ar' : 'en'}/maps/">Redirecting...</a>
+<slot/>

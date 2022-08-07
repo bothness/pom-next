@@ -31,7 +31,8 @@
 	.label {
 		box-sizing: border-box;
 		width: 100%;
-		padding: 12px 7px;
+		height: 48px;
+		padding: auto 7px;
 		margin: 0;
 		border: none;
 		background: none;

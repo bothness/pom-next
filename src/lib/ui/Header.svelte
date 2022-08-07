@@ -54,5 +54,7 @@
 	.menu-toggle-rtl {
 		left: auto !important;
 		right: 100%;
+		border-right: none !important;
+		border-left: 1px solid #777;
 	}
 </style>
