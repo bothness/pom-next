@@ -1,14 +1,16 @@
 <script>
+	import { getContext } from "svelte";
 	import Icon from "./Icon.svelte";
+
+	const rtl = getContext("rtl");
 	
 	export let label = "";
 	export let open = false;
-	export let rtl = false;
 </script>
 
 <div class="accordion">
-	<button class="label" class:label-rtl={rtl} on:click={() => open = !open}>
-		<Icon type="arrow" rotation="{open ? '90' : rtl ? '180' : '0'}"/> {label}
+	<button class="label" class:label-rtl={$rtl} on:click={() => open = !open}>
+		<Icon type="arrow" rotation="{open ? '90' : $rtl ? '180' : '0'}"/> {label}
 	</button>
 	{#if open}
 	<div class="content">
@@ -40,13 +42,21 @@
 	.label-rtl {
 		text-align: right !important;
 	}
-	:global(.label > svg) {
-    margin: 0 8px;
-	}
 	.content {
 		box-sizing: border-box;
 		width: 100%;
 		padding: 12px 15px 16px 15px;
 		border-top: 1px solid lightgrey;
+	}
+	:global(.accordion .label > svg) {
+    margin: 0 8px;
+	}
+	:global(.accordion label) {
+		display: block;
+	}
+	:global(.accordion hr) {
+		border: 0;
+		height: 0;
+		border-bottom: 1px solid lightgrey;
 	}
 </style>

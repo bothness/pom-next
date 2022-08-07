@@ -37,22 +37,38 @@ export const statuses = {
 };
 
 export const texts = {
-	"en": {
-		"pom": "Palestine Open Maps",
-		"baseMaps": "Base maps",
-		"overlays": "Overlays", 
-		"localities": "Localities",
-		"getUpdates": "Get updates",
-		"download": "Download maps",
-		"about": "About"
-	}, 
 	"ar": {
-		"pom": "خرائط فلسطين المفتوحة",
-		"baseMaps": "الخرائط",
-		"overlays": "الطبقات الأخرى", 
-		"localities": "البلدات",
-		"getUpdates": "تابعوا آخر التحديثات",
-		"download": "تنزيل الخرائط",
-		"about": "عن المشروع"
+		"Palestine Open Maps": "خرائط فلسطين المفتوحة",
+		"Base maps": "الخرائط",
+		"Overlays": "الطبقات الأخرى", 
+		"Places": "البلدات",
+		"Get updates": "تابعوا آخر التحديثات",
+		"Download maps": "تنزيل الخرائط",
+		"About": "عن المشروع",
+		"Blog": "مدونة",
+		"Project vision": "رؤيتنا للمشروع",
+		"Support us": "دعم المشروع",
+		"View maps": "الخرائط"
 	}
 };
+
+export const pages = [
+	{
+		key: "about",
+		label: "About",
+		icon: "info",
+		id: {en: 3, ar: 7}
+	},
+	{
+		key: "vision",
+		label: "Project vision",
+		icon: "stars",
+		id: {en: 5, ar: 8}
+	},
+	{
+		key: "support",
+		label: "Support us",
+		icon: "heart",
+		id: {en: 6, ar: 9}
+	}
+];

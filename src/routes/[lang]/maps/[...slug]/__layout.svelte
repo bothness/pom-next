@@ -17,19 +17,16 @@
 		};
 	}
 </script>
+<script>
+	import Header from "$lib/ui/Header.svelte";
+</script>
 
-<main>
-	<slot/>
-</main>
+<Header/>
+<slot/>
 
 <style>
 	:global(body) {
 		margin: 0;
 		padding: 0;
-	}
-	main {
-		position: relative;
-		width: 100vw;
-		height: 100vh;
 	}
 </style>

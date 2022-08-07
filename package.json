@@ -5,17 +5,17 @@
   "author": "Ahmad Barclay",
   "license": "MIT",
   "scripts": {
-    "dev": "svelte-kit dev",
-    "build": "svelte-kit build && touch build/.nojekyll",
-    "package": "svelte-kit package",
-    "preview": "svelte-kit preview",
+    "dev": "vite dev",
+    "build": "vite build && touch build/.nojekyll",
+    "package": "vite package",
+    "preview": "vite preview",
     "deploy": "gh-pages -d build -t true",
-    "prepare": "svelte-kit sync",
+    "prepare": "vite sync",
     "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
   },
   "devDependencies": {
-    "@onsvisual/svelte-maps": "^1.0.27",
+    "@onsvisual/svelte-maps": "^1.1.1",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/adapter-static": "^1.0.0-next.31",
     "@sveltejs/kit": "next",
@@ -29,7 +29,8 @@
     "prettier": "^2.5.1",
     "prettier-plugin-svelte": "^2.5.0",
     "svelte": "^3.46.0",
-    "svelte-select": "^4.4.7"
+    "svelte-select": "^4.4.7",
+    "vite": "^3.0.4"
   },
   "type": "module",
   "dependencies": {

@@ -11,7 +11,7 @@ export async function getPlaces(url, statuses, fetch = window.fetch) {
 		features: [],
 	};
 		
-	for (const loc of locs.filter(d => d["change_2016"] != "Built & abandoned")) {
+	for (const loc of locs.filter(d => d["change_2016"] != "Built & abandoned" && d["lng"])) {
 		let feature = {
 			type: "Feature",
 			geometry: {
@@ -54,11 +54,9 @@ export async function getSheets(url, layers, fetch = window.fetch) {
 	return geojson;
 }
 
-export function i18n(key, texts, lang = "en", fallback = "en") {
-	if (texts[lang] && texts[lang][key]) {
+export function i18n(key, texts, lang) {
+	if (lang != "en" && texts[lang] && texts[lang][key]) {
 		return texts[lang][key];
-	} else if (texts[fallback] && texts[fallback][key]) {
-		return texts[fallback][key];
 	} else {
 		return key;
 	}
