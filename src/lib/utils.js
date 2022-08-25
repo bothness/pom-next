@@ -11,7 +11,7 @@ export async function getPlaces(url, statuses, fetch = window.fetch) {
 		features: [],
 	};
 		
-	for (const loc of locs.filter(d => d["change_2016"] != "Built & abandoned" && d["lng"])) {
+	for (const loc of locs.filter(d => d["change_2016"] != "Built & abandoned" && d["grp_1945"] != "Syrian" && d["lng"])) {
 		let feature = {
 			type: "Feature",
 			geometry: {

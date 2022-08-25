@@ -8,9 +8,9 @@
 	onMount(() => {
 		lang = navigator.language.slice(0, 2);
 		if (lang == "ar") {
-			goto(`${base}/${lang}/maps/`);
+			goto(`${base}/${lang}/`);
 		} else {
-			goto(`${base}/en/maps/`);
+			goto(`${base}/en/`);
 		}
 	});
 </script>

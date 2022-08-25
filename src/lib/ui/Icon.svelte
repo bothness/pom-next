@@ -1,6 +1,7 @@
 <script>
 	export let type = "info";
 	export let rotation = 0;
+	export let scale = 1;
 	
 	const paths = {
 		info: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z",
@@ -22,7 +23,7 @@
 	}
 </script>
 
-<svg viewBox="0 0 24 24" fill-rule="evenodd" clip-rule="evenodd" style:transform="rotate({rotation}deg)">
+<svg viewBox="0 0 24 24" fill-rule="evenodd" clip-rule="evenodd" style:transform="rotate({rotation}deg) scale({scale})">
 	<path d={paths[type]}/>
 </svg>
 
@@ -32,7 +33,7 @@
     height: 1em;
     fill: currentColor;
     overflow: visible;
-    transition: all 0.3s ease-out;
+    transition: transform 0.3s ease-out;
 		vertical-align: middle;
   }
 </style>

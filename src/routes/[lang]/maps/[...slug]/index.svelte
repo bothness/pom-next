@@ -31,7 +31,7 @@
 	import MapCompare from "$lib/map/MapCompare.svelte";
 	import MapTerrain from "$lib/map/MapTerrain.svelte";
 	import Menu from "$lib/ui/Menu.svelte";
-	import Select from 'svelte-select';
+	import Select from "$lib/ui/Select.svelte";
 	import Icon from '$lib/ui/Icon.svelte';
 	import Accordion from '$lib/ui/Accordion.svelte';
 	import Links from "$lib/ui/Links.svelte";
@@ -160,20 +160,13 @@
 </svelte:head>
 
 <Menu>
-	<div id="search" class:search-rtl={$rtl} style="--selectedItemPadding: {$rtl ? '0 20px 0 0' : '0 0 0 20px'}">
-		{#if places}
-			<Select
-				value={place ? place.properties : null}
-				items={places.features.map((f) => f.properties)}
-				optionIdentifier="id"
-				labelIdentifier="name_{$lang}"
-				placeholder="{$t('Find a place')}"
-				on:select={doSelect}
-				on:clear={unSelect}
-				showIndicator
-			/>
-		{/if}
-	</div>
+	{#if places}
+	<Select
+		value={place ? place.properties : null}
+		items={places.features.map((f) => f.properties)}
+		on:select={doSelect}
+		on:clear={unSelect}/>
+	{/if}
 	<Accordion label="{$t('Base maps')}">
 		{#each layers as l}
 		<label><input type="radio" name="layers" bind:group={layer} value={l} /> {$t(l.name)}</label>
@@ -245,7 +238,7 @@
 					<MapLayer
 						id="basemap"
 						type="raster"
-						paint={{"raster-saturation": toggles.overlay ? -0.85 : 0}}
+						paint={{"raster-saturation": toggles.overlay ? -0.50 : 0}}
 						order="basemap-div"/>
 				</MapSource>
 				<MapSource id="overlay" type="vector" url={overlay.url} maxzoom={14}>
@@ -467,27 +460,6 @@
 	.content-rtl {
 		left: auto !important;
 		right: 0;
-	}
-	#search {
-		width: 100%;
-		height: 50px;
-		margin-top: 1px;
-		background-color: white;
-		--height: 50px;
-		--borderRadius: 0px;
-		--border: 2px solid rgba(255,255,255,0);
-		--indicatorFill: grey;
-	}
-	:global(#search input) {
-		width: calc(100% - 30px);
-	}
-	.search-rtl {
-		left: auto !important;
-		right: 50px;
-	}
-	:global(.search-rtl .indicator) {
-		right: auto !important;
-		left: 10px;
 	}
 	#toggles {
 		position: fixed;

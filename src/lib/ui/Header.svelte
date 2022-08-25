@@ -1,8 +1,10 @@
 <script>
   import { getContext } from "svelte";
+	import { base } from '$app/paths';
   import Icon from "$lib/ui/Icon.svelte";
 
   const menu_active = getContext("menu_active");
+  const lang = getContext("lang");
   const rtl = getContext("rtl");
   const t = getContext("t");
 </script>
@@ -11,7 +13,7 @@
 	<button class="menu-toggle" class:menu-toggle-rtl={$rtl} on:click={() => (menu_active.set(!$menu_active))}>
 		<Icon type={$menu_active ? 'close' : 'menu'} />
 	</button>
-	<div class="title">{$t('Palestine Open Maps')}</div>
+	<div class="title"><a href="{base}/{$lang}/">{$t('Palestine Open Maps')}</a></div>
 </header>
 
 <style>
@@ -35,7 +37,10 @@
 		padding: 0 15px;
 		font-weight: bold;
 		font-size: 1.1em;
+	}
+	.title > a {
 		color: white;
+		text-decoration: none;
 	}
 	.menu-toggle {
 		display: inline-flex;

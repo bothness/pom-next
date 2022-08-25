@@ -39,4 +39,13 @@
     top: 0;
     bottom: 0;
   }
+	:global(.maplibregl-compare) {
+		background: black !important;
+	}
+	:global(.compare-swiper-vertical) {
+		background-color: white !important;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' version='1.1' viewBox='0 0 60 60'%3E%3Cpath style='fill:black;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' d='M 25 24 L 16 30 L 25 36 L 25 24 z M 35 24 L 35 36 L 44 30 L 35 24 z'/%3E%3C/svg%3E") !important;
+		color: black !important;
+		box-shadow: inset 0 0 0 2px black !important;
+	}
 </style>

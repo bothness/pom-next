@@ -10,14 +10,16 @@
 	const rtl = getContext("rtl");
 	const menu_active = getContext("menu_active");
 	const t = getContext("t");
+
+	$: console.log($page.url.pathname);
 </script>
 
 <nav id="menu" class:shadow={$menu_active} style:left={$rtl ? 'auto' : $menu_active ? '0' : '-320px'} style:right={!rtl ? 'auto' : $menu_active ? '0' : '-320px'}>
 	<slot/>
 	<Links>
-		<a href="{base}/{$lang}/maps/"><Icon type="map"/> {$t('View maps')}</a>
-		{#each pages as page}
-			<a href="{base}/{$lang}/{page.key}/"><Icon type="{page.icon}"/> {$t(page.label)}</a>
+		<a href="{base}/{$lang}/maps/" class:active={$page.url.pathname.includes('maps')}><Icon type="map"/> {$t('View maps')}</a>
+		{#each pages as pg}
+			<a href="{base}/{$lang}/{pg.key}/" class:active={$page.url.pathname == `${base}/${$lang}/${pg.key}/`}><Icon type="{pg.icon}"/> {$t(pg.label)}</a>
 		{/each}
 		<a href="https://medium.com/palopenmaps"><Icon type="pen"/> {$t('Blog')}</a>
 		<a href="mailto:palopenmaps@gmail.com"><Icon type="email"/> {$t('Contact')}</a>
@@ -44,5 +46,8 @@
 	}
 	.shadow {
 		box-shadow: 0 0 8px rgba(0,0,0,0.5);
+	}
+	a.active {
+		font-weight: bold;
 	}
 </style>

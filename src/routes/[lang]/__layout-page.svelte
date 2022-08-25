@@ -3,6 +3,7 @@
   import { afterNavigate } from "$app/navigation";
   import Header from "$lib/ui/Header.svelte";
   import Menu from "$lib/ui/Menu.svelte";
+  import VPLogo from "$lib/ui/VPLogo.svelte";
 
   const rtl = getContext("rtl");
   const menu_active = getContext("menu_active");
@@ -16,6 +17,9 @@
   <article>
     <slot/>
   </article>
+  <footer>
+    Initiated and supported by <a href="https://visualizingpalestine.org" target="_blank"><VPLogo/></a>
+  </footer>
 </main>
 
 <style>
@@ -34,5 +38,12 @@
     main.rtl {
       margin: 70px auto 0 12px !important;
     }
+  }
+  footer {
+    margin: 30px 0 12px;
+    padding-top: 10px; 
+    border-top: 1px solid black;
+    color: #555;
+    font-size: 0.9em;
   }
 </style>
