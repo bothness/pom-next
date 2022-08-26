@@ -55,6 +55,12 @@
 	:global(.accordion label) {
 		display: block;
 	}
+	:global(.accordion label > a) {
+		color: #333;
+	}
+	:global(.accordion label > a:hover) {
+		color: black;
+	}
 	:global(.accordion hr) {
 		border: 0;
 		height: 0;

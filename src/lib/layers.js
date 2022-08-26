@@ -5,6 +5,7 @@ export const overlays = [
     attribution: "Palestine Open Maps Community / Survey of Palestine",
     description: "Crowd sourced digitisation of \"Palestine 1:20,000\" Survey of Palestine map series from the 1940s.",
     url: "https://ahmadbarclay.com/tiles/pal1940/{z}/{x}/{y}.pbf",
+    edit: "http://data.palopenmaps.org/edit#background=custom:http://palopenmaps.org/tiles/pal20k-1940s/{z}/{x}/{y}@2x.jpg&disable_features=boundaries&map=",
     is_default: true
   },
   {

@@ -16,7 +16,7 @@
       Scale: 1:{sheet.scale.toLocaleString()}<br/>
       Date: {sheet.year}
     </p>
-    <button name="Download sheet"><Icon type="download"/></button>
+    <button name="Download sheet"><Icon type="download"/> Download</button>
   </div>
 </div>
 
@@ -43,17 +43,16 @@
     margin: 0;
   }
   button {
-    border: 1.5px solid black;
-    border-radius: 50%;
     background-color: white;
-    width: 32px;
-    height: 32px;
-    margin-top: 6px;
-    font-size: 1.2em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    color: #333;
+    border: 2px solid #333;
+    height: 34px;
+    margin: 8px 0 0;
+    padding: 2px 8px;
+    text-decoration: none;
+    white-space: nowrap;
+    font-size: 0.85em;
+    font-weight: bold;
   }
   button:hover {
     color: white;

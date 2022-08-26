@@ -17,7 +17,8 @@
 <nav id="menu" class:shadow={$menu_active} style:left={$rtl ? 'auto' : $menu_active ? '0' : '-320px'} style:right={!rtl ? 'auto' : $menu_active ? '0' : '-320px'}>
 	<slot/>
 	<Links>
-		<a href="{base}/{$lang}/maps/" class:active={$page.url.pathname.includes('maps')}><Icon type="map"/> {$t('View maps')}</a>
+		<a href="{base}/{$lang}/" class:active={$page.url.pathname == `${base}/${$lang}/`}><Icon type="home"/> {$t('Home')}</a>
+		<a href="{base}/{$lang}/maps/" class:active={$page.url.pathname.includes('maps')}><Icon type="map"/> {$t('Explore maps')}</a>
 		{#each pages as pg}
 			<a href="{base}/{$lang}/{pg.key}/" class:active={$page.url.pathname == `${base}/${$lang}/${pg.key}/`}><Icon type="{pg.icon}"/> {$t(pg.label)}</a>
 		{/each}
@@ -48,6 +49,7 @@
 		box-shadow: 0 0 8px rgba(0,0,0,0.5);
 	}
 	a.active {
+		color: black;
 		font-weight: bold;
 	}
 </style>

@@ -176,7 +176,13 @@
 		<label><input type="checkbox" bind:checked={toggles.overlay} /> {$t('Show overlays')}</label>
 		<hr/>
 		{#each overlays as l}
-		<label><input type="radio" disabled={!toggles.overlay} name="overlays" bind:group={overlay} value={l} /> {$t(l.name)}</label>
+		<label>
+			<input type="radio" disabled={!toggles.overlay} name="overlays" bind:group={overlay} value={l} /> 
+			{$t(l.name)}
+			{#if l.edit}
+			<a href="{l.edit}{zoom.left}/{center.left.lat}/{center.left.lng}" target="_blank"><Icon type="pen" title="{$t('edit layer')}"/></a>
+			{/if}
+		</label>
 		{/each}
 		<hr/>
 		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.building} /> {$t('Buildings')}</label>
@@ -207,7 +213,7 @@
 		{:else}
 		Click anywhere on the map to see sheets available to download covering that location.
 		{/if}
-		<button class="btn" on:click={() => {toggles.download = false; sheets_selected = [];}}>{$t('Close downloads')}</button>
+		<button class="btn btn-primary" on:click={() => {toggles.download = false; sheets_selected = [];}}>{$t('Close downloads')}</button>
 	</Accordion>
 	<Links>
 		<label><input type="checkbox" bind:checked={toggles.split}/> {$t('Toggle split-screen')}</label>
@@ -537,16 +543,24 @@
 		font-weight: bold;
 		line-height: 1;
 	}
-	.btn {
-		display: block;
-		border: 1.5px solid black;
-		background-color: white;
-		color: black;
-		border-radius: 2px;
-		margin-top: 8px;
-	}
-	.btn:hover {
-		background-color: black;
+  .btn {
+    background-color: white;
+    color: #333;
+    border: 2px solid #333;
+    height: 40px;
+    margin: 8px 0 0;
+    padding: 5px 12px;
+    font-weight: bold;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+	.btn-primary {
+		background-color: #333;
 		color: white;
 	}
+  .btn:hover {
+    background-color: black;
+    border-color: black;
+    color: white;
+  }
 </style>

@@ -15,6 +15,6 @@
     margin: 10px 0;
   }
   :global(.linkbox > a > svg) {
-    margin: 0 8px 0 0;
+    margin: 0 8px 2px 0;
   }
 </style>

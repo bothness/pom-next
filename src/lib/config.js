@@ -36,6 +36,27 @@ export const statuses = {
 	}
 };
 
+export const pages = [
+	{
+		key: "about",
+		label: "About",
+		icon: "info",
+		id: {en: 3, ar: 7}
+	},
+	// {
+	// 	key: "vision",
+	// 	label: "Project vision",
+	// 	icon: "stars",
+	// 	id: {en: 5, ar: 8}
+	// },
+	{
+		key: "get-involved",
+		label: "Get involved",
+		icon: "hand",
+		id: {en: 6, ar: 9}
+	}
+];
+
 export const texts = {
 	"ar": {
 		"Palestine Open Maps": "خرائط فلسطين المفتوحة",
@@ -44,31 +65,16 @@ export const texts = {
 		"Places": "البلدات",
 		"Get updates": "تابعوا آخر التحديثات",
 		"Download maps": "تنزيل الخرائط",
+		"Home": "صفحة رئيسية",
 		"About": "عن المشروع",
+		"Get involved": "الانخراط",
 		"Blog": "مدونة",
+		"Contact": "اتصال",
 		"Project vision": "رؤيتنا للمشروع",
 		"Support us": "دعم المشروع",
-		"View maps": "الخرائط"
+		"Explore maps": "الخرائط",
+		"Toggle split-screen": "تبديل تقسيم الشاشة",
+		"Toggle 3D": "تبديل ثلاثي الأبعاد",
+		"Find a place": "ابحث عن مكان"
 	}
 };
-
-export const pages = [
-	{
-		key: "about",
-		label: "About",
-		icon: "info",
-		id: {en: 3, ar: 7}
-	},
-	{
-		key: "vision",
-		label: "Project vision",
-		icon: "stars",
-		id: {en: 5, ar: 8}
-	},
-	{
-		key: "support",
-		label: "Support us",
-		icon: "heart",
-		id: {en: 6, ar: 9}
-	}
-];

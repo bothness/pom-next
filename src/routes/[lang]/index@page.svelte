@@ -35,8 +35,8 @@
 <p class="text-big">{$t('Explore, search and download historical maps and spatial data on Palestine')}</p>
 
 <div class="buttons">
-  <a class="btn" class:rtl={$rtl} href="{base}/{$lang}/maps/"><Icon type="map" scale={1.5}/><span>{$t('Explore maps')}</span></a>
-  <a class="btn btn-secondary" class:rtl={$rtl} href="{base}/{$lang}/about/"><Icon type="info" scale={1.5}/><span>{$t('Read more')}</span></a>
+  <a class="btn btn-primary" class:rtl={$rtl} href="{base}/{$lang}/maps/"><Icon type="map" scale={1.5}/><span>{$t('Explore maps')}</span></a>
+  <a class="btn" class:rtl={$rtl} href="{base}/{$lang}/about/"><Icon type="info" scale={1.5}/><span>{$t('Read more')}</span></a>
   <div class="select">
     <Select
       items={places.features.map((f) => f.properties)}
@@ -62,8 +62,8 @@
 		margin: 50px 0 0 0;
 	}
   .btn {
-    background-color: #333;
-    color: white;
+    background-color: white;
+    color: #333;
     border: 2px solid #333;
     height: 50px;
     margin: 4px 4px 0 0;
@@ -75,9 +75,9 @@
   .btn.rtl {
     margin: 4px 0 0 4px !important;
   }
-  .btn-secondary {
-    background-color: white;
-    color: #333;
+  .btn-primary {
+    background-color: #333;
+    color: white;
   }
   .btn:hover {
     background-color: black;
