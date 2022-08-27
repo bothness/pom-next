@@ -10,8 +10,6 @@
 	const rtl = getContext("rtl");
 	const menu_active = getContext("menu_active");
 	const t = getContext("t");
-
-	$: console.log($page.url.pathname);
 </script>
 
 <nav id="menu" class:shadow={$menu_active} style:left={$rtl ? 'auto' : $menu_active ? '0' : '-320px'} style:right={!rtl ? 'auto' : $menu_active ? '0' : '-320px'}>
@@ -23,7 +21,7 @@
 			<a href="{base}/{$lang}/{pg.key}/" class:active={$page.url.pathname == `${base}/${$lang}/${pg.key}/`}><Icon type="{pg.icon}"/> {$t(pg.label)}</a>
 		{/each}
 		<a href="https://medium.com/palopenmaps"><Icon type="pen"/> {$t('Blog')}</a>
-		<a href="mailto:palopenmaps@gmail.com"><Icon type="email"/> {$t('Contact')}</a>
+		<a href="mailto:hello@palopenmaps.org"><Icon type="email"/> {$t('Contact')}</a>
 	</Links>
 	<Links>
 		{#if $rtl}

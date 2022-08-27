@@ -1,4 +1,6 @@
 <script context="module">
+	const prerender = false;
+
 	import { base } from '$app/paths';
 	
 	export async function load() {
@@ -8,6 +10,3 @@
 		};
 	}
 </script>
-
-<a href="{base}/en/">Redirecting...</a>
-<slot/>
