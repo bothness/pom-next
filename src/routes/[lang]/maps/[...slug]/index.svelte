@@ -25,8 +25,8 @@
 	import { page } from '$app/stores';
 	import { afterNavigate, goto } from "$app/navigation";
 	import mapStyle from "$lib/style.json";
-	import { makeDataset, i18n, sleep } from "$lib/utils";
-	import { statuses, texts } from "$lib/config";
+	import { makeDataset } from "$lib/utils";
+	import { statuses, maxBounds } from "$lib/config";
 	import { Map, MapSource, MapLayer, MapTooltip } from "@onsvisual/svelte-maps";
 	import MapCompare from "$lib/map/MapCompare.svelte";
 	import MapTerrain from "$lib/map/MapTerrain.svelte";
@@ -225,7 +225,7 @@
 		{#if showMap}
 		<MapCompare mapLeft={map['left']} mapRight={map['right']}>
 			{#each ['left', 'right'] as side}
-			{#if side == 'left' || side == 'right' && toggles.split}
+			{#if side == 'left' || (side == 'right' && toggles.split)}
 			<Map
 				id="map-{side}"
 				bind:map={map[side]}
@@ -239,7 +239,7 @@
 				maxzoom={17}
 				attribution={false}
 				controls={['compass', 'pitch', 'locate']}
-			>
+				options={{ maxBounds }}>
 				<MapSource id="basemap" type="raster" url={side == 'left' ? layer.url : layers[0].url} maxzoom={17}>
 					<MapLayer
 						id="basemap"

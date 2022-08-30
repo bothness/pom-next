@@ -3,6 +3,8 @@ export const locs_url =
 export const layers_url = "https://palopenmaps.org/api/layers/?format=json";
 export const sheets_url = "https://palopenmaps.org/api/sheets/?format=json";
 
+export const maxBounds = [[33.5, 29.0], [36.4, 33.9]];
+
 export const statuses = {
 	Remaining: {
 		name: "Remaining",
