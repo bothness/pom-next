@@ -10,7 +10,7 @@
 
 <div class="accordion">
 	<button class="label" class:label-rtl={$rtl} on:click={() => open = !open}>
-		<Icon type="arrow" rotation="{open ? '90' : $rtl ? '180' : '0'}"/> {label}
+		<Icon type="arrow" rotation="{open ? '90' : $rtl ? '180' : '0'}"/><span>{label}</span>
 	</button>
 	{#if open}
 	<div class="content">
@@ -43,10 +43,13 @@
 	.label-rtl {
 		text-align: right !important;
 	}
+	.label span {
+		margin-left: 2px;
+	}
 	.content {
 		box-sizing: border-box;
 		width: 100%;
-		padding: 12px 15px 16px 15px;
+		padding: 12px 12px 16px;
 		border-top: 1px solid lightgrey;
 	}
 	:global(.accordion .label > svg) {

@@ -13,7 +13,6 @@ const config = {
 			fallback: '404.html'
 		}),
 		prerender: {
-			default: true,
 			enabled: production,
 			onError: 'continue'
 		},

@@ -1,15 +1,3 @@
-<script context="module">
-	const prerender = true;
-  
-	export async function load({ stuff }) {
-		let places = stuff.places; // places is loaded once in __layout.svelte and passed to this route
-
-		return {
-			props: { places }
-		};
-	}
-</script>
-
 <script>
   import { getContext } from "svelte";
 	import { goto } from "$app/navigation";
@@ -18,7 +6,9 @@
   import Tile from "$lib/ui/Tile.svelte";
   import Icon from "$lib/ui/Icon.svelte";
 
-  export let places;
+  export let data;
+  let  { places } = data;
+  $: ({ places } = data);
 
   const lang = getContext("lang");
   const rtl = getContext("rtl");

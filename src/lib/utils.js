@@ -2,6 +2,7 @@ import { csvParse, autoType } from "d3-dsv";
 
 export async function getPlaces(url, statuses, fetch = window.fetch) {
 	let res = await fetch(url);
+
 	let str = await res.text();
 	let locs = csvParse(str, autoType);
 	locs.sort((a, b) => a["name_en"].localeCompare(b["name_en"]));

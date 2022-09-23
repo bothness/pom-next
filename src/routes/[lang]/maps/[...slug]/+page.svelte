@@ -1,25 +1,6 @@
-<script context="module">
-	const prerender = true;
-
+<script>
 	import { base } from "$app/paths";
 	import { overlays, overlayers } from "$lib/layers";
-  
-	export async function load({ params, stuff }) {
-		let slug = params.slug.replace("/","");
-
-		let places = stuff.places; // places is loaded once in __layout.svelte and passed to this route
-		let place = places.features.find(f => f.properties.slug == slug);
-
-		let layers = stuff.layers; // layers loaded in same way as places
-		let sheets = stuff.sheets; // sheets ditto
-
-		return {
-			props: { layers, sheets, places, place }
-		};
-	}
-</script>
-
-<script>
 	import { onMount, getContext } from "svelte";
 	import maplibre from "maplibre-gl";
 	import { page } from '$app/stores';
@@ -39,7 +20,9 @@
 	import BarChart from '$lib/chart/BarChart.svelte';
 	import Sheet from "$lib/ui/Sheet.svelte";
 
-	export let layers, sheets, places, place;
+	export let data;
+	let { layers, sheets, places, place } = data;
+	$: ({ layers, sheets, places, place } = data);
 
 	const lang = getContext("lang");
 	const rtl = getContext("rtl");
@@ -169,31 +152,33 @@
 	{/if}
 	<Accordion label="{$t('Base maps')}">
 		{#each layers as l}
-		<label><input type="radio" name="layers" bind:group={layer} value={l} /> {$t(l.name)}</label>
+		<label><input type="radio" name="layers" bind:group={layer} value={l} /><span>{$t(l.name)}</span></label>
 		{/each}
 	</Accordion>
 	<Accordion label="{$t('Overlays')}">
-		<label><input type="checkbox" bind:checked={toggles.overlay} /> {$t('Show overlays')}</label>
+		<label><input type="checkbox" bind:checked={toggles.overlay} /><span>{$t('Show overlays')}</span></label>
 		<hr/>
 		{#each overlays as l}
 		<label>
 			<input type="radio" disabled={!toggles.overlay} name="overlays" bind:group={overlay} value={l} /> 
-			{$t(l.name)}
-			{#if l.edit}
-			<a href="{l.edit}{zoom.left}/{center.left.lat}/{center.left.lng}" target="_blank"><Icon type="pen" title="{$t('edit layer')}"/></a>
-			{/if}
+			<span>
+				{$t(l.name)}
+				{#if l.edit}
+				<a href="{l.edit}{zoom.left}/{center.left.lat}/{center.left.lng}" target="_blank"><Icon type="pen" title="{$t('edit layer')}"/></a>
+				{/if}
+			</span>
 		</label>
 		{/each}
 		<hr/>
-		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.building} /> {$t('Buildings')}</label>
-		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.transport} /> {$t('Roads/rail')}</label>
-		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.place} /> {$t('Place names')}</label>
+		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.building} /><span>{$t('Buildings')}</span></label>
+		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.transport} /><span>{$t('Roads/rail')}</span></label>
+		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.place} /><span>{$t('Place names')}</span></label>
 	</Accordion>
 	<Accordion label="{$t('Places')}">
-		<label><input type="checkbox" bind:checked={toggles.places} /> {$t('Show places')}</label>
+		<label><input type="checkbox" bind:checked={toggles.places} /><span>{$t('Show places')}</span></label>
 		<hr/>
 		{#each statuses_arr as s}
-		<label><input type="checkbox" disabled={!toggles.places} bind:group={statuses_active} value={s} /> <div class="bullet" style:background-color="{s.color}"/> {$t(s.name)}</label>
+		<label><input type="checkbox" disabled={!toggles.places} bind:group={statuses_active} value={s} /><span><div class="bullet" style:background-color="{s.color}"/>{$t(s.name)}</span></label>
 		{/each}
 	</Accordion>
 	<Accordion label="{$t('Download maps')}" bind:open={toggles.download}>
@@ -216,8 +201,8 @@
 		<button class="btn btn-primary" on:click={() => {toggles.download = false; sheets_selected = [];}}>{$t('Close downloads')}</button>
 	</Accordion>
 	<Links>
-		<label><input type="checkbox" bind:checked={toggles.split}/> {$t('Toggle split-screen')}</label>
-		<label><input type="checkbox" bind:checked={toggles.threed} on:change={() => map.left.flyTo(toggles.threed ? {pitch: 40} : {pitch: 0, bearing: 0})}/> {$t('Toggle 3D')}</label>
+		<label><input type="checkbox" bind:checked={toggles.split}/><span>{$t('Toggle split-screen')}</span></label>
+		<label><input type="checkbox" bind:checked={toggles.threed} on:change={() => map.left.flyTo(toggles.threed ? {pitch: 40} : {pitch: 0, bearing: 0})}/><span>{$t('Toggle 3D')}</span></label>
 	</Links>
 </Menu>
 <main>
@@ -537,6 +522,7 @@
     width: 12px;
     height: 12px;
     border-radius: 50%;
+		margin-inline-end: 4px;
   }
 	.text-lrg {
 		font-size: 1.8em;
