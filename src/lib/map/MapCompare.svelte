@@ -33,6 +33,7 @@
     position: relative;
     width: 100%;
     height: 100%;
+		direction: ltr;
   }
   :global(.map) {
     position: absolute !important;
