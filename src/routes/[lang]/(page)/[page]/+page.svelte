@@ -9,4 +9,6 @@
 </script>
 
 <h1>{title}</h1>
+{#if content}
 {@html render(content)}
+{/if}

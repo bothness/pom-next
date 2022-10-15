@@ -1,5 +1,6 @@
 <script>
   export let data;
+  export let t = text => text;
 
   const isNull = (val) => val == null ? 0 : val;
 </script>
@@ -10,42 +11,42 @@
       {#if data.p2016.pal}<div class="bar" style:left="0" style:width="{data.p2016.pal}%" style:background-color="#5EBD4C"/>{/if}
       {#if data.p2016.oth}<div class="bar" style:left="{isNull(data.p2016.pal)}%" style:width="{data.p2016.oth}%" style:background-color="#aaa"/>{/if}
       {#if data.p2016.jsh}<div class="bar" style:left="{isNull(data.p2016.pal + data.p2016.oth)}%" style:width="{data.p2016.jsh}%" style:background-color="#0485A8"/>{/if}
-      <div class="bar-label white">2016{#if !data.p2016.pop}: No data{/if}</div>
+      <div class="bar-label white">2016{#if !data.p2016.pop}: {$t('No data')}{/if}</div>
     </div>
     <div class="bar-group" style:height="20px" style:margin-top="2px">
       {#if data.p1945.pal}<div class="bar" style:left="0" style:width="{data.p1945.pal}%" style:background-color="#5EBD4C"/>{/if}
       {#if data.p1945.jsh}<div class="bar" style:left="{isNull(data.p1945.pal)}%" style:width="{data.p1945.jsh}%" style:background-color="#0485A8"/>{/if}
-      <div class="bar-label white">1945{#if !data.p1945.pop}: No data{/if}</div>
+      <div class="bar-label white">1945{#if !data.p1945.pop}: {$t('No data')}{/if}</div>
     </div>
   </div>
   <table class="table">
     <thead>
       <tr>
         <th>%</th>
-        <th class="right">1945</th>
-        <th class="right">2016</th>
+        <th class="end">1945</th>
+        <th class="end">2016</th>
       </tr>
     </thead>
     <tbody>
       {#if data.p1945.pal || data.p2016.pal}
       <tr>
-        <td><div class="bullet" style:background-color="#5EBD4C"/> Palestinian</td>
-        <td class="right" class:muted={!data.p1945.pal}>{data.p1945.pal ? data.p1945.pal.toFixed(0) : 'N/A'}</td>
-        <td class="right" class:muted={!data.p2016.pal}>{data.p2016.pal ? data.p2016.pal.toFixed(0) : 'N/A'}</td>
+        <td><div class="bullet" style:background-color="#5EBD4C"/> {$t('Palestinian')}</td>
+        <td class="end" class:muted={!data.p1945.pal}>{data.p1945.pal ? data.p1945.pal.toFixed(0) : $t('N/A')}</td>
+        <td class="end" class:muted={!data.p2016.pal}>{data.p2016.pal ? data.p2016.pal.toFixed(0) : $t('N/A')}</td>
       </tr>
       {/if}
       {#if data.p1945.jsh || data.p2016.jsh}
       <tr>
-        <td><div class="bullet" style:background-color="#0485A8"/> Jewish</td>
-        <td class="right" class:muted={!data.p1945.jsh}>{data.p1945.jsh ? data.p1945.jsh.toFixed(0) : 'N/A'}</td>
-        <td class="right" class:muted={!data.p2016.jsh}>{data.p2016.jsh ? data.p2016.jsh.toFixed(0) : 'N/A'}</td>
+        <td><div class="bullet" style:background-color="#0485A8"/> {$t('Jewish')}</td>
+        <td class="end" class:muted={!data.p1945.jsh}>{data.p1945.jsh ? data.p1945.jsh.toFixed(0) : $t('N/A')}</td>
+        <td class="end" class:muted={!data.p2016.jsh}>{data.p2016.jsh ? data.p2016.jsh.toFixed(0) : $t('N/A')}</td>
       </tr>
       {/if}
       {#if data.p2016.oth}
       <tr>
-        <td><div class="bullet" style:background-color="#aaa"/> Other</td>
-        <td class="right muted">N/A</td>
-        <td class="right" class:muted={!data.p2016.oth}>{data.p2016.oth ? data.p2016.oth.toFixed(0) : 'N/A'}</td>
+        <td><div class="bullet" style:background-color="#aaa"/> {$t('Other')}</td>
+        <td class="end muted">{$t('N/A')}</td>
+        <td class="end" class:muted={!data.p2016.oth}>{data.p2016.oth ? data.p2016.oth.toFixed(0) : $t('N/A')}</td>
       </tr>
       {/if}
     </tbody>
@@ -74,12 +75,12 @@
     left: 2px;
   }
   th {
-    text-align: left;
+    text-align: start;
     font-weight: normal;
     color: #444;
   }
-  .right {
-    text-align: right;
+  .end {
+    text-align: end;
   }
   .muted {
     color: rgba(0,0,0,0.4);

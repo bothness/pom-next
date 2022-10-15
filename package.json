@@ -20,7 +20,7 @@
     "@onsvisual/svelte-maps": "^1.1.1",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/adapter-static": "^1.0.0-next.31",
-    "@sveltejs/kit": "^1.0.0-next.476",
+    "@sveltejs/kit": "^1.0.0-next.516",
     "@turf/boolean-point-in-polygon": "^6.5.0",
     "cookie": "^0.4.1",
     "d3-dsv": "^3.0.1",

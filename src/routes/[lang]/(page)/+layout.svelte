@@ -7,6 +7,7 @@
 
   const rtl = getContext("rtl");
   const menu_active = getContext("menu_active");
+	const t = getContext("t");
 
   afterNavigate(() => menu_active.set(false));
 </script>
@@ -18,7 +19,7 @@
     <slot/>
   </article>
   <footer>
-    Initiated and supported by <a href="https://visualizingpalestine.org" target="_blank"><VPLogo/></a>
+    {$t('Initiated and supported by')} <a href="https://visualizingpalestine.org" target="_blank"><VPLogo/></a>
   </footer>
 </main>
 

@@ -8,6 +8,7 @@ export async function load({ fetch }) {
 	// const config = { method: 'get', headers: { origin: 'http://localhost:5173' } };
 
 	let places = await getPlaces(locs_url, statuses, fetch);
+	// let places = await getPlaces(new Request(locs_url, config), statuses, fetch);
 	let layers_res = await fetch(layers_url);
 	let layers = await layers_res.json();
 	layers = layers.filter(l => l.is_active && !l.is_overlay);

@@ -118,3 +118,29 @@ article blockquote {
 	font-size: 1.4em;
 	color: #555;
 }
+
+article	ol {
+  counter-reset: my-awesome-counter;
+  list-style: none;
+  padding-inline-start: 40px;
+}
+article	ol li {
+  margin: 0 0 0.8em 0;
+  counter-increment: my-awesome-counter;
+  position: relative;
+}
+article ol li::before {
+  content: counter(my-awesome-counter);
+  font-size: 1.5em;
+  font-weight: bold;
+  position: absolute;
+  --size: 32px;
+  margin-inline-start: calc(-1 * var(--size) - 10px);
+  line-height: var(--size);
+  width: var(--size);
+  height: var(--size);
+  top: 4px;
+  text-align: center;
+  border: 2px solid #222;
+  border-radius: 50%;
+}

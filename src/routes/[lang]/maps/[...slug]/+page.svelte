@@ -271,7 +271,7 @@
 						order="places-div">
 						<MapTooltip
 							content={hovered
-								? places.features.find((f) => f.properties.id == hovered).properties.name_en
+								? places.features.find((f) => f.properties.id == hovered).properties[`name_${$lang}`]
 								: ''}/>
 					</MapLayer>
 				</MapSource>
@@ -332,16 +332,22 @@
 			<Icon type="close" />
 		</button>
 		{#if place && panel_status == 'place'}
-			<h1>{$rtl ? place.properties.name_ar : place.properties.name_en}</h1>
+			<h1>{place.properties[`name_${$lang}`]}</h1>
 			<h2>
-				{place.properties.group}
+				{#if $lang == "ar"}
+				{$t(place.properties.type)}
+				{$t(place.properties.group)} {$t('in')}
+				{$t('sub-district')} {$t(place.properties.district_1945)}
+				{:else}
+				{place.properties.group.toLowerCase()}
 				{place.properties.type} in
 				{place.properties.district_1945} sub-district
+				{/if}
 			</h2>
 			<InfoBlock label="{$t('Change since 1948')}">
 				<div>
 					<div class="bullet" style:background-color="{place.properties.color}"/>
-					{place.properties.change_2016}
+					{$t(place.properties.change_2016)}
 				</div>
 			</InfoBlock>
 			{#if place.properties.start || place.properties.end}
@@ -355,13 +361,13 @@
 				{#if place.properties.end}
 				<div>
 					{$t('Depopulated')}<br/>
-					<span class="text-lrg">{place.properties.end.toLocaleDateString("en-GB", { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+					<span class="text-lrg">{place.properties.end.toLocaleDateString($lang == 'ar' ? 'ar-PS' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
 				</div>
 				{/if}
 			</InfoBlock>
 			{/if}
 			{#if place.properties.pop_1945 || place.properties.pop_2016}
-			<InfoBlock label="Population">
+			<InfoBlock label="{$t('Population')}">
 				{#if place.properties.pop_1945}
 				<div>
 					1945<br/>
@@ -375,16 +381,16 @@
 				</div>
 				{/if}
 			</InfoBlock>
-			<InfoBlock label="Population by group" hr={false}>
-				<BarChart data={makeDataset(place)}/>
+			<InfoBlock label="{$t('Population by group')}" hr={false}>
+				<BarChart data={makeDataset(place)} {t}/>
 			</InfoBlock>
 			{/if}
 			{#if place.properties.map_20k == 'yes' || place.properties.id_zo}
-			<InfoBlock label="{place.properties.name_en} on other sites">
+			<InfoBlock label="{place.properties[`name_${$lang}`]} {$t('on other sites')}">
 				<div>
-					{#if place.properties.url_pr}<a href="https://www.palestineremembered.com/{place.properties.url_pr}/{$lang == 'ar' ? 'ar/' : ''}" target="_blank">Palestine Remembered</a><br/>{/if}
-					{#if place.properties.id_zo}<a href="https://www.zochrot.org/villages/village_details/{place.properties.id_zo}/{$lang}" target="_blank">Zochrot</a><br/>{/if}
-					{#if place.properties.map_20k == 'yes'}<a href="https://today.visualizingpalestine.org/{place.properties.slug}" target="_blank">Palestine, Today</a>{/if}
+					{#if place.properties.url_pr}<a href="https://www.palestineremembered.com/{place.properties.url_pr}/{$lang == 'ar' ? 'ar/' : ''}" target="_blank">{$t('Palestine Remembered')}</a><br/>{/if}
+					{#if place.properties.id_zo}<a href="https://www.zochrot.org/villages/village_details/{place.properties.id_zo}/{$lang}" target="_blank">{$t('Zochrot')}</a><br/>{/if}
+					{#if place.properties.map_20k == 'yes'}<a href="https://today.visualizingpalestine.org/{place.properties.slug}" target="_blank">{$t('Palestine, Today')}</a>{/if}
 				</div>
 			</InfoBlock>
 			{/if}
