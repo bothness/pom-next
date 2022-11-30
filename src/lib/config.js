@@ -1,8 +1,9 @@
-export const locs_url =
-"https://docs.google.com/spreadsheets/d/1LejOouylx6u_TKF_1BxvV_B7uI34M4zIWyoc8LozATo/gviz/tq?tqx=out%3Acsv&sheet=database";
-export const redirect_url = "https://docs.google.com/spreadsheets/d/1LejOouylx6u_TKF_1BxvV_B7uI34M4zIWyoc8LozATo/gviz/tq?tqx=out%3Acsv&sheet=redirect";
-export const layers_url = "https://palopenmaps.org/api/layers/?format=json";
-export const sheets_url = "https://palopenmaps.org/api/sheets/?format=json";
+import { base } from "$app/paths";
+
+export const locs_url = `${base}/data/places.csv`;
+export const redirect_url = `${base}/data/redirects.csv`;
+export const layers_url = `${base}/data/layers.json`;
+export const sheets_url = `${base}/data/sheets.json`;
 
 export const maxBounds = [[33.5, 29.0], [36.4, 33.9]];
 
