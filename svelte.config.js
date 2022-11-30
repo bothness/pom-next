@@ -11,8 +11,7 @@ const config = node ?
     adapter: adapter_node(),
     paths: {
       base: ''
-		},
-		trailingSlash: 'always'
+		}
 	}
 } :
 {
