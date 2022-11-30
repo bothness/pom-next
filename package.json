@@ -6,8 +6,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build && touch build/.nojekyll",
-    "build:node": "APP_ENV=node vite build",
+    "build-static": "vite build && touch build/.nojekyll",
+    "build": "APP_ENV=node vite build",
     "package": "vite package",
     "preview": "vite preview",
     "deploy": "gh-pages -d build -t true",
