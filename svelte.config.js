@@ -1,9 +1,21 @@
 /** @type {import('@sveltejs/kit').Config} */
 import adapter from '@sveltejs/adapter-static';
+import adapter_node from '@sveltejs/adapter-node';
 
 const production = process.env.NODE_ENV === 'production';
+const node = process.env.APP_ENV === 'node';
 
-const config = {
+const config = node ? 
+{
+	kit: {
+    adapter: adapter_node(),
+    paths: {
+      base: ''
+		},
+		trailingSlash: 'always'
+	}
+} :
+{
 	kit: {
 		// hydrate the <div id="svelte"> element in src/app.html
 		adapter: adapter({
@@ -13,13 +25,11 @@ const config = {
 			fallback: '404.html'
 		}),
 		prerender: {
-			enabled: production,
-			onError: 'continue'
+			handleHttpError: 'warn'
 		},
 		paths: {
 			base: production ? '/pom-next' : ''
-		},
-		trailingSlash: 'always'
+		}
 	}
 };
 
