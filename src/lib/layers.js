@@ -4,7 +4,7 @@ export const overlays = [
     name: "Vector overlay, 1940s",
     attribution: "Palestine Open Maps Community / Survey of Palestine",
     description: "Crowd sourced digitisation of \"Palestine 1:20,000\" Survey of Palestine map series from the 1940s.",
-    url: "https://ahmadbarclay.com/tiles/pal1940/{z}/{x}/{y}.pbf",
+    url: "https://cdn.jsdelivr.net/gh/bothness/pom-tiles/pal1940s/{z}/{x}/{y}.pbf",
     edit: "http://data.palopenmaps.org/edit#background=custom:http://palopenmaps.org/tiles/pal20k-1940s/{z}/{x}/{y}@2x.jpg&disable_features=boundaries&map=",
     is_default: true
   },
@@ -13,7 +13,7 @@ export const overlays = [
     name: "Vector overlay, 2020",
     attribution: "OpenMapTiles / &copy; OpenStreetMap Contributors",
     description: "Geographic features derived from OpenStreetMap, Wikidata and Natural Earth using OpenMapTiles tools.",
-    url: "https://ahmadbarclay.com/tiles/pal2020/{z}/{x}/{y}.pbf"
+    url: "https://cdn.jsdelivr.net/gh/bothness/pom-tiles/pal2020s/{z}/{x}/{y}.pbf"
   }
 ];
 
