@@ -57,9 +57,20 @@
 		display: flex;
 		flex-direction: row;
 		align-items: flex-start;
+		width: 100%;
 	}
 	:global(#menu label span) {
 		margin: 0 11px;
+	}
+	:global(#menu label button) {
+		display: inline-flex;
+		margin-left: auto;
+		border: none;
+		background: none;
+		padding: 3px;
+	}
+	:global(#menu label button:disabled) {
+		color: #ccc;
 	}
 	:global(#menu input[type=radio], #menu input[type=checkbox]) {
 		margin: 5px 1px 3px;

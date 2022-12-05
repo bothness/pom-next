@@ -97,6 +97,10 @@ button {
 	cursor: pointer;
 }
 
+button:disabled {
+	cursor: default !important;
+}
+
 button:focus:not(:focus-visible) {
 	outline: none;
 }

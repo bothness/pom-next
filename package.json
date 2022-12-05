@@ -25,6 +25,7 @@
     "@turf/boolean-point-in-polygon": "^6.5.0",
     "cookie": "^0.4.1",
     "d3-dsv": "^3.0.1",
+    "debounce": "^1.2.1",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-svelte3": "^3.2.1",

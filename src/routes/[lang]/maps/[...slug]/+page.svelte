@@ -3,12 +3,14 @@
 	import { overlays, overlayers } from "$lib/layers";
 	import { onMount, getContext } from "svelte";
 	import maplibre from "maplibre-gl";
+	import debounce from "debounce";
 	import { page } from '$app/stores';
 	import { afterNavigate, goto } from "$app/navigation";
 	import mapStyle from "$lib/style.json";
 	import { makeDataset } from "$lib/utils";
 	import { statuses, maxBounds } from "$lib/config";
 	import { Map, MapSource, MapLayer, MapTooltip } from "@onsvisual/svelte-maps";
+
 	import MapCompare from "$lib/map/MapCompare.svelte";
 	import MapTerrain from "$lib/map/MapTerrain.svelte";
 	import Menu from "$lib/ui/Menu.svelte";
@@ -81,9 +83,9 @@
 		return start && end ? `${start}&ndash;${end}` : start ? start : end;
 	}
 
-	function updateHash(center, zoom) {
-		if (center && zoom) {
-			history.replaceState(undefined, undefined, `#${zoom.toFixed(2)},${center.lng.toFixed(4)},${center.lat.toFixed(4)}`);
+	function updateHash() {
+		if (center.left && zoom.left) {
+			history.replaceState(undefined, undefined, `#${zoom.left.toFixed(2)},${center.left.lng.toFixed(4)},${center.left.lat.toFixed(4)}`);
 		}
 	}
 
@@ -104,8 +106,6 @@
 			panel_status = null;
 		}
 	});
-
-	$: updateHash(center.left, zoom.left);
 </script>
 
 <svelte:head>
@@ -152,7 +152,11 @@
 	{/if}
 	<Accordion label="{$t('Base maps')}">
 		{#each layers as l}
-		<label><input type="radio" name="layers" bind:group={layer} value={l} /><span>{$t(l.name)}</span></label>
+		<label>
+			<input type="radio" name="layers" bind:group={layer} value={l} />
+			<span>{$t(l.name)}</span>
+			<button on:click={() => {unSelect("layer"); menu_active.set(false);}} disabled={layer !== l}><Icon type="info"/></button>
+		</label>
 		{/each}
 	</Accordion>
 	<Accordion label="{$t('Overlays')}">
@@ -163,10 +167,8 @@
 			<input type="radio" disabled={!toggles.overlay} name="overlays" bind:group={overlay} value={l} /> 
 			<span>
 				{$t(l.name)}
-				{#if l.edit}
-				<a href="{l.edit}{zoom.left}/{center.left.lat}/{center.left.lng}" target="_blank"><Icon type="pen" title="{$t('edit layer')}"/></a>
-				{/if}
 			</span>
+			<button on:click={() => {unSelect("layer"); menu_active.set(false);}} disabled={!toggles.overlay || overlay !== l}><Icon type="info"/></button>
 		</label>
 		{/each}
 		<hr/>
@@ -218,6 +220,7 @@
 				bind:zoom={zoom[side]}
 				bind:pitch={pitch[side]}
 				bind:bearing={bearing[side]}
+				on:load={() => { if (side === 'left') map.left.on("moveend", debounce(updateHash, 500))}}
 				style={mapStyle}
 				location={side == 'left' || !zoom.left ? location : {...center.left, zoom: zoom.left, pitch: pitch.left, bearing: bearing.left}}
 				minzoom={5}
@@ -341,7 +344,7 @@
 				{:else}
 				{place.properties.group.toLowerCase()}
 				{place.properties.type} in
-				{place.properties.district_1945} sub-district
+				{place.properties.district_1945} {$t('sub-district')}
 				{/if}
 			</h2>
 			<InfoBlock label="{$t('Change since 1948')}">
@@ -395,7 +398,7 @@
 			</InfoBlock>
 			{/if}
 		{:else if panel_status == 'layer'}
-		<h1>{layer.name.slice(0, layer.name.lastIndexOf(','))}</h1>
+			<h1>{layer.name.slice(0, layer.name.lastIndexOf(','))}</h1>
 			<h2>
 				{layer.attribution.split(',')[0]}
 			</h2>
@@ -414,6 +417,16 @@
 			<InfoBlock label="Description">
 				<div>{layer.description}</div>
 			</InfoBlock>
+			{#if toggles.overlay}
+				<hr/>
+				<h1>{overlay.name}</h1>
+				<h2>
+					{overlay.attribution}
+				</h2>
+				<InfoBlock label="Description">
+					<div>{overlay.description}</div>
+				</InfoBlock>
+			{/if}
 		{/if}
 	</article>
 	{/if}
