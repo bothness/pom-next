@@ -121,7 +121,6 @@
 	}
 
 	function updateQuery(layer, overlay, toggles) {
-		console.log("updating query");
 		let search = `?basemap=${layer.id}&overlay=${overlay.key}&toggles=${
 			Object.keys(toggles).filter(key => toggles[key] && !["info", "download"].includes(key)).join('|')
 		}`;
