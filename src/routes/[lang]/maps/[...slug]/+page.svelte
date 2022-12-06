@@ -40,7 +40,7 @@
 	let zoom = {};
 	let pitch = {};
 	let bearing = {};
-	let showMap = false; // Prevents map from being initiated until app is mounted
+	let loaded = false; // Prevents map from being initiated until app is mounted
 	let panel_status = place ? "place" : null; // Control status of #content panel (options: place, layer, null)
 	let statuses_arr = Object.keys(statuses).map(key => ({key, ...statuses[key]}));
 	let statuses_active = [...statuses_arr.filter(s => s.key != "Newly built")];
@@ -63,12 +63,12 @@
 	function doSelect(e) {
 		let place = places.features.find((f) => f.properties.id == e.detail.id);
 		menu_active.set(false);
-		goto(`${base}/${$lang}/maps/${place.properties.slug}/`);
+		goto(`${base}/${$lang}/maps/${place.properties.slug}/${window.location.search}`);
 	}
 
 	async function unSelect(status = null) {
 		panel_status = status;
-		if (place) goto(`${base}/${$lang}/maps/`);
+		if (place) goto(`${base}/${$lang}/maps/${$page.url.search}${window.location.hash}`);
 	}
 
 	function filterSheets(sheets, layer, include = true) {
@@ -85,17 +85,18 @@
 
 	function updateHash() {
 		if (center.left && zoom.left) {
-			history.replaceState(undefined, undefined, `#${zoom.left.toFixed(2)},${center.left.lng.toFixed(4)},${center.left.lat.toFixed(4)}`);
+			history.replaceState(null, "", `#${zoom.left.toFixed(2)},${center.left.lng.toFixed(4)},${center.left.lat.toFixed(4)}`);
 		}
 	}
 
 	onMount(() => {
+		readQuery();
 		let hash = $page.url.hash.slice(1).split(",");
 		if (hash[2]) {
 			location = {lng: +hash[1], lat: +hash[2], zoom: +hash[0]};
 		}
 		if (maplibre.getRTLTextPluginStatus() == "unavailable") maplibre.setRTLTextPlugin('https://www.unpkg.com/@mapbox/mapbox-gl-rtl-text@0.2.3/mapbox-gl-rtl-text.js');
-		showMap = true;
+		loaded = true;
 	});
 
 	afterNavigate(() => {
@@ -106,6 +107,30 @@
 			panel_status = null;
 		}
 	});
+
+	function readQuery() {
+		let params = $page.url.searchParams;
+		if (params.get("basemap")) layer = layers.find(l => +l.id === +params.get("basemap"));
+		if (params.get("overlay")) overlay = overlays.find(l => l.key === params.get("overlay"));
+		if (params.get("toggles")) {
+			let togs = params.get("toggles").split("|");
+			Object.keys(toggles).forEach(key => {
+				if (!["info", "download"].includes(key)) toggles[key] = togs.includes(key);
+			});
+		}
+	}
+
+	function updateQuery(layer, overlay, toggles) {
+		console.log("updating query");
+		let search = `?basemap=${layer.id}&overlay=${overlay.key}&toggles=${
+			Object.keys(toggles).filter(key => toggles[key] && !["info", "download"].includes(key)).join('|')
+		}`;
+		let loc = $page.url;
+		let url = `${loc.protocol}//${loc.host}${loc.pathname}${search}${loc.hash}`;
+		history.replaceState(null, "", url);
+	}
+
+	$: if (loaded) updateQuery(layer, overlay, toggles);
 </script>
 
 <svelte:head>
@@ -209,7 +234,7 @@
 </Menu>
 <main>
 	<div id="map-container">
-		{#if showMap}
+		{#if loaded}
 		<MapCompare mapLeft={map['left']} mapRight={map['right']}>
 			{#each ['left', 'right'] as side}
 			{#if side == 'left' || (side == 'right' && toggles.split)}
