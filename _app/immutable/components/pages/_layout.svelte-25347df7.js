@@ -1,4 +1,4 @@
-import{S as v,i as E,s as q,B as C,e as h,a as S,C as w,h as f,c as L,D as b,b as g,E as B,F as D,G as F,f as G,t as H,H as p,I as _,k as I,q as N,l as T,m as Y,r as j}from"../../chunks/index-bf619a6a.js";import{w as u}from"../../chunks/singletons-6d08455d.js";import{p as x}from"../../chunks/stores-85c99f0f.js";import{t as z}from"../../chunks/config-5b04729c.js";import{i as A}from"../../chunks/utils-b90f6efb.js";function y(l){let a,o;return{c(){a=I("style"),o=N(`html {
+import{S as v,i as E,s as q,B as C,e as h,a as S,C as w,h as f,c as L,D as b,b as g,E as B,F as D,G as F,f as G,t as H,H as p,I as _,k as I,q as N,l as T,m as Y,r as j}from"../../chunks/index-bf619a6a.js";import{w as u}from"../../chunks/singletons-6d08455d.js";import{p as x}from"../../chunks/stores-85c99f0f.js";import{t as z}from"../../chunks/config-af6c78b8.js";import{i as A}from"../../chunks/utils-b90f6efb.js";function y(l){let a,o;return{c(){a=I("style"),o=N(`html {
 			direction: rtl;
 		}`)},l(s){a=T(s,"STYLE",{});var t=Y(a);o=j(t,`html {
 			direction: rtl;
