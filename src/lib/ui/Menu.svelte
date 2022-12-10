@@ -21,7 +21,7 @@
 			<a href="{base}/{$lang}/{pg.key}/" class:active={$page.url.pathname == `${base}/${$lang}/${pg.key}/`}><Icon type="{pg.icon}"/><span>{$t(pg.label)}</span></a>
 		{/each}
 		<a href="https://medium.com/palopenmaps"><Icon type="pen"/><span>{$t('Blog')}</span></a>
-		<a href="mailto:hello@palopenmaps.org"><Icon type="email"/><span>{$t('Contact')}</span></a>
+		<a href="https://visualizingpalestine.org/vp-contacts#about"><Icon type="email"/><span>{$t('Contact')}</span></a>
 	</Links>
 	<Links>
 		{#if $rtl}

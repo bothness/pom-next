@@ -19,6 +19,7 @@
 	import Accordion from '$lib/ui/Accordion.svelte';
 	import Links from "$lib/ui/Links.svelte";
 	import InfoBlock from "$lib/ui/InfoBlock.svelte";
+	import InfoHeader from "$lib/ui/InfoHeader.svelte";
 	import BarChart from '$lib/chart/BarChart.svelte';
 	import Sheet from "$lib/ui/Sheet.svelte";
 
@@ -210,13 +211,14 @@
 	<Accordion label="{$t('Download maps')}" bind:open={toggles.download}>
 		{#if sheets_selected[0]}
 		{#if filterSheets(sheets_selected, layer.id)[0]}
-		Sheets from this base map<br/>
+		<InfoHeader label="{$t('Sheets from this base map')}"/>
 		{#each filterSheets(sheets_selected, layer.id) as sheet}
 		<Sheet {sheet}/>
 		{/each}
 		{/if}
 		{#if filterSheets(sheets_selected, layer.id, false)[0]}
-		Sheets from other base maps<br/>
+		<hr/>
+		<InfoHeader label="{$t('Sheets from other base maps')}"/>
 		{#each filterSheets(sheets_selected, layer.id, false) as sheet}
 		<Sheet {sheet}/>
 		{/each}
@@ -228,7 +230,7 @@
 	</Accordion>
 	<Links>
 		<label><input type="checkbox" bind:checked={toggles.split}/><span>{$t('Toggle split-screen')}</span></label>
-		<label><input type="checkbox" bind:checked={toggles.threed} on:change={() => map.left.flyTo(toggles.threed ? {pitch: 40} : {pitch: 0, bearing: 0})}/><span>{$t('Toggle 3D')}</span></label>
+		<label><input type="checkbox" bind:checked={toggles.threed} on:change={() => map.left.flyTo(toggles.threed ? {pitch: 40} : {pitch: 0, bearing: 0})}/><span>{$t('Toggle 3D (experimental)')}</span></label>
 	</Links>
 </Menu>
 <main>
@@ -366,15 +368,15 @@
 				{$t(place.properties.group)} {$t('in')}
 				{$t('sub-district')} {$t(place.properties.district_1945)}
 				{:else}
-				{place.properties.group.toLowerCase()}
-				{place.properties.type} in
+				{place.properties.group}
+				{place.properties.type.toLowerCase()} in
 				{place.properties.district_1945} {$t('sub-district')}
 				{/if}
 			</h2>
 			<InfoBlock label="{$t('Change since 1948')}">
 				<div>
 					<div class="bullet" style:background-color="{place.properties.color}"/>
-					{$t(place.properties.change_2016)}
+					{$t(statuses[place.properties.change_2016].name)}
 				</div>
 			</InfoBlock>
 			{#if place.properties.start || place.properties.end}
@@ -450,6 +452,9 @@
 				<InfoBlock label="Description">
 					<div>{overlay.description}</div>
 				</InfoBlock>
+				{#if overlay.edit}
+				<a href="{overlay.edit}{zoom.left + 1}/{center.left.lat}/{center.left.lng}" target="_blank"><Icon type="pen" title="{$t('edit layer')}"/></a>
+				{/if}
 			{/if}
 		{/if}
 	</article>
