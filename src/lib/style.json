@@ -4,6 +4,11 @@
   "sources": {},
   "layers": [
     {
+      "id": "background",
+      "type": "background",
+      "paint": {"background-color": "black"}
+    },
+    {
       "id": "basemap-div",
       "type": "background",
       "paint": {"background-opacity": 0}
