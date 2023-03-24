@@ -1,5 +1,12 @@
 export const overlays = [
   {
+    key: "pal2020",
+    name: "Vector overlay, 2020s",
+    attribution: "OpenMapTiles / OpenStreetMap Contributors",
+    description: "Present day geographic features derived from OpenStreetMap, Wikidata and Natural Earth. Vector tiles generated using OpenMapTiles tools.",
+    url: "https://cdn.jsdelivr.net/gh/bothness/pom-tiles/pal2020s/{z}/{x}/{y}.pbf"
+  },
+  {
     key: "pal1940",
     name: "Vector overlay, 1940s",
     attribution: "Palestine Open Maps community",
@@ -7,13 +14,6 @@ export const overlays = [
     url: "https://cdn.jsdelivr.net/gh/bothness/pom-tiles/pal1940s/{z}/{x}/{y}.pbf",
     edit: "http://data.palopenmaps.org/edit#background=custom:http://palopenmaps.org/tiles/pal20k-1940s/{z}/{x}/{y}@2x.jpg&disable_features=boundaries&map=",
     is_default: true
-  },
-  {
-    key: "pal2020",
-    name: "Vector overlay, 2020s",
-    attribution: "OpenMapTiles / &copy; OpenStreetMap Contributors",
-    description: "Present day geographic features derived from OpenStreetMap, Wikidata and Natural Earth. Vector tiles generated using OpenMapTiles tools.",
-    url: "https://cdn.jsdelivr.net/gh/bothness/pom-tiles/pal2020s/{z}/{x}/{y}.pbf"
   }
 ];
 

@@ -224,7 +224,7 @@
 		{/each}
 		{/if}
 		{:else}
-		Click anywhere on the map to see sheets available to download covering that location.
+		{$t('Click anywhere on the map to see sheets available to download covering that location')}
 		{/if}
 		<button class="btn btn-primary" on:click={() => {toggles.download = false; sheets_selected = [];}}>{$t('Close downloads')}</button>
 	</Accordion>
@@ -352,8 +352,8 @@
 		<label title="{$t('Toggle places')}" class:checked={toggles.places}><input type="checkbox" bind:checked={toggles.places} /><Icon type="marker" /></label>
 		<label title="{$t('Toggle overlays')}" class:checked={toggles.overlay}><input type="checkbox" bind:checked={toggles.overlay} /><Icon type="layers" /></label>
 		<label title="{$t('Toggle split-screen')}" class:checked={toggles.split}><input type="checkbox" bind:checked={toggles.split} /><Icon type="split" rotation={90}/></label>
-		<label title="{$t('Toggle 3D')}" class:checked={toggles.threed}><input type="checkbox" bind:checked={toggles.threed} on:change={() => map.left.flyTo(toggles.threed ? {pitch: 40} : {pitch: 0, bearing: 0})}/><Icon type="3d"/></label>
-		<button title="{$t('Layer information')}" class:checked={toggles.info} on:click={() => {unSelect("layer"); menu_active.set(false);}}><Icon type="info" /></button>
+		<label title="{$t('Toggle 3D (experimental)')}" class:checked={toggles.threed}><input type="checkbox" bind:checked={toggles.threed} on:change={() => map.left.flyTo(toggles.threed ? {pitch: 40} : {pitch: 0, bearing: 0})}/><Icon type="3d"/></label>
+		<button title="{$t('Show layer information')}" class:checked={toggles.info} on:click={() => {unSelect("layer"); menu_active.set(false);}}><Icon type="info" /></button>
 	</div>
 	{#if panel_status}
 	<article id="content" class:content-rtl={$rtl}>
@@ -424,11 +424,11 @@
 			</InfoBlock>
 			{/if}
 		{:else if panel_status == 'layer'}
-			<h1>{layer.name.slice(0, layer.name.lastIndexOf(','))}</h1>
+			<h1>{$t(layer.name.slice(0, layer.name.lastIndexOf(',')))}</h1>
 			<h2>
-				{layer.attribution.split(',')[0]}
+				{@html $t(layer.attribution.split(',')[0])}
 			</h2>
-			<InfoBlock label="Information">
+			<InfoBlock label="{$t('Information')}">
 				<div>
 					{$t('Dates')}<br/>
 					<span class="text-lrg">{@html getDates(layer)}</span>
@@ -440,17 +440,17 @@
 				</div>
 				{/if}
 			</InfoBlock>
-			<InfoBlock label="Description">
-				<div>{layer.description}</div>
+			<InfoBlock label="{$t('Description')}">
+				<div>{$t(layer.description)}</div>
 			</InfoBlock>
 			{#if toggles.overlay}
 				<hr/>
-				<h1>{overlay.name}</h1>
+				<h1>{$t(overlay.name)}</h1>
 				<h2>
-					{overlay.attribution}
+					{@html $t(overlay.attribution)}
 				</h2>
-				<InfoBlock label="Description">
-					<div>{overlay.description}</div>
+				<InfoBlock label="{$t('Description')}">
+					<div>{$t(overlay.description)}</div>
 				</InfoBlock>
 				{#if overlay.edit}
 				<a href="{overlay.edit}{zoom.left + 1}/{center.left.lat}/{center.left.lng}" target="_blank"><Icon type="pen" title="{$t('edit layer')}"/></a>

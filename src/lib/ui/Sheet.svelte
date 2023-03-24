@@ -1,6 +1,9 @@
 <script>
+  import { getContext } from "svelte";
   import Icon from "./Icon.svelte";
   export let sheet;
+
+	const t = getContext("t");
 </script>
 
 <div class="sheet">
@@ -12,11 +15,11 @@
   <div class="sheet-info">
     <h3>{sheet.name}</h3>
     <p>
-      <strong>{sheet.author}</strong>
-      Scale: 1:{sheet.scale.toLocaleString()}<br/>
-      Date: {sheet.year}
+      <strong>{$t(sheet.author)}</strong>
+      {$t('Scale')}: 1:{sheet.scale.toLocaleString()}<br/>
+      {$t('Date')}: {sheet.year}
     </p>
-    <button name="Download sheet"><Icon type="download"/> Download</button>
+    <button name="Download sheet"><Icon type="download"/> {$t('Download')}</button>
   </div>
 </div>
 
