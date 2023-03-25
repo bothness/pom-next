@@ -5,6 +5,7 @@
 	import { page } from '$app/stores';
   import { texts } from "$lib/config";
   import { i18n } from "$lib/utils";
+  import Header from "$lib/ui/Header.svelte";
 
   let lang = writable();
   $: lang.set($page.params.lang ? $page.params.lang : "en");
@@ -32,4 +33,12 @@
 	{/if}
 </svelte:head>
 
+<Header/>
 <slot/>
+
+<style>
+	:global(body) {
+		margin: 0;
+		padding: 0;
+	}
+</style>

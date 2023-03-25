@@ -1,6 +1,7 @@
 <script>
   import { getContext } from "svelte";
 	import { base } from '$app/paths';
+	import { page } from "$app/stores";
   import Icon from "$lib/ui/Icon.svelte";
 
   const menu_active = getContext("menu_active");
@@ -14,6 +15,12 @@
 		<Icon type={$menu_active ? 'close' : 'menu'} />
 	</button>
 	<div class="title"><a href="{base}/{$lang}/">{$t('Palestine Open Maps')}</a></div>
+	<a class="lang-toggle"
+		class:lang-toggle-rtl={$rtl}
+		title="{$t('العربية')}"
+		href="{String($page.url).replace(...($lang === 'en' ? ['en', 'ar'] : ['ar', 'en']))}">
+		{$t('ع')}
+	</a>
 </header>
 
 <style>
@@ -42,7 +49,7 @@
 		color: white;
 		text-decoration: none;
 	}
-	.menu-toggle {
+	.menu-toggle, .lang-toggle {
 		display: inline-flex;
 		justify-content: center;
 		align-items: center;
@@ -55,11 +62,25 @@
 		border-right: 1px solid #777;
 		border-radius: 0;
 		font-size: 1.5em;
+		cursor: pointer;
+		text-decoration: none;
+	}
+	.lang-toggle {
+		font-size: 1em;
+		border: 0;
+		/* border-left: 1px solid #777; */
+	}
+	.menu-toggle:hover, .lang-toggle:hover {
+		background-color: #444;
 	}
 	.menu-toggle-rtl {
 		left: auto !important;
 		right: 100%;
 		border-right: none !important;
 		border-left: 1px solid #777;
+	}
+	.lang-toggle-rtl {
+		/* border-right: 1px solid #777;
+		border-left: none !important; */
 	}
 </style>

@@ -63,6 +63,8 @@ export const pages = [
 
 export const texts = {
 	"ar": {
+		"العربية": "English",
+		"ع": "en",
 		"Palestine Open Maps": "خرائط فلسطين المفتوحة",
 		"Palestine Open Maps community": "مجتمع خرائط فلسطين المفتوحة",
 		"Base maps": "الخرائط",

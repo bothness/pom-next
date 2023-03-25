@@ -23,13 +23,13 @@
 		<a href="https://medium.com/palopenmaps"><Icon type="pen"/><span>{$t('Blog')}</span></a>
 		<a href="https://visualizingpalestine.org/vp-contacts#about"><Icon type="email"/><span>{$t('Contact')}</span></a>
 	</Links>
-	<Links>
+	<!-- <Links>
 		{#if $rtl}
 		<a href="{String($page.url).replace('ar', 'en')}"><Icon type="globe"/><span>English</span></a>
 		{:else}
 		<a href="{String($page.url).replace('en', 'ar')}"><Icon type="globe"/><span>عربي</span></a>
 		{/if}
-	</Links>
+	</Links> -->
 </nav>
 
 <style>
@@ -64,7 +64,7 @@
 	}
 	:global(#menu label button) {
 		display: inline-flex;
-		margin-left: auto;
+		margin-inline-start: auto;
 		border: none;
 		background: none;
 		padding: 3px;

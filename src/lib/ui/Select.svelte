@@ -35,9 +35,9 @@
 		--height: 50px;
 		--borderRadius: 0px;
 	}
-	:global(#search input) {
+	/* :global(#search input) {
 		width: calc(100% - 30px);
-	}
+	} */
 	.search-rtl {
 		left: auto !important;
 		right: 50px;

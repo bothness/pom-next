@@ -1,7 +1,6 @@
 <script>
   import { getContext } from "svelte";
   import { afterNavigate } from "$app/navigation";
-  import Header from "$lib/ui/Header.svelte";
   import Menu from "$lib/ui/Menu.svelte";
   import VPLogo from "$lib/ui/VPLogo.svelte";
 
@@ -12,14 +11,13 @@
   afterNavigate(() => menu_active.set(false));
 </script>
 
-<Header/>
 <Menu/>
 <main class:rtl={$rtl}>
   <article>
     <slot/>
   </article>
   <footer>
-    {$t('Initiated and supported by')} <a href="https://visualizingpalestine.org" target="_blank"><VPLogo/></a>
+    {$t('Initiated and supported by')} <a href="https://visualizingpalestine.org" target="_blank" title={$t('Visualizing Palestine')}><VPLogo/></a>
   </footer>
 </main>
 
