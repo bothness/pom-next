@@ -1,0 +1,1 @@
+import"../chunks/index.1de1fe79.js";import"../chunks/paths.84df98e0.js";import"../chunks/config.d21f7c26.js";import"../chunks/autoType.b63cf35c.js";import{l as a}from"../chunks/_page.bede2b1c.js";export{a as load};
