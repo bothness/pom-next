@@ -8,6 +8,11 @@
   }
 </script>
 
+<svelte:head>
+  <title>{title} - Palestine Open Maps</title>
+  <meta property="og:title" content="{title} - Palestine Open Maps" />
+</svelte:head>
+
 <h1>{title}</h1>
 {#if content}
 {@html render(content)}

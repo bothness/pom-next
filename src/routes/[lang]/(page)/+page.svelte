@@ -20,6 +20,11 @@
 	}
 </script>
 
+<svelte:head>
+  <title>Palestine Open Maps</title>
+  <meta property="og:title" content="Palestine Open Maps" />
+</svelte:head>
+
 <h1>{@html $t('Welcome to<br>Palestine Open Maps')}</h1>
 
 <p class="text-big">{$t('Explore, search and download historical maps and spatial data on Palestine')}</p>

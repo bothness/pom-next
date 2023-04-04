@@ -3,7 +3,7 @@
   import { writable } from 'svelte/store';
 	import { setContext } from "svelte";
 	import { page } from '$app/stores';
-  import { texts } from "$lib/config";
+  import { texts, base_url } from "$lib/config";
   import { i18n } from "$lib/utils";
   import Header from "$lib/ui/Header.svelte";
 
@@ -21,9 +21,17 @@
 
   let menu_active = writable(false);
   setContext("menu_active", menu_active);
+  $: console.log($page.url);
 </script>
 
 <svelte:head>
+  <meta name="description" content="Palestine Open Maps is a new platform for map-based exploration and immersive storytelling. This alpha version of the platform allows you to navigate historic maps and search for localities." />
+  <meta property="og:description" content="Palestine Open Maps is a new platform for map-based exploration and immersive storytelling. This alpha version of the platform allows you to navigate historic maps and search for localities." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="{base_url}{$page.url.pathname}" />
+  <meta property="og:url" content="{base_url}{$page.url.pathname}" />
+  <meta property="og:image" content="{base_url}/img/haifa-crop.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
 	{#if $rtl}
 	<style>
 		html {

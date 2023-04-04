@@ -134,6 +134,8 @@
 </script>
 
 <svelte:head>
+	<title>{place ? place.properties[`name_${$lang}`] : 'Historical map viewer'} - Palestine Open Maps</title>
+  <meta property="og:title" content="{place ? place.properties[`name_${$lang}`] : 'Explore historical maps'} - Palestine Open Maps" />
 	{#if $rtl}
 	<style>
 		.maplibregl-ctrl-top-right {
