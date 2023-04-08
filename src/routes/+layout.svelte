@@ -21,7 +21,6 @@
 
   let menu_active = writable(false);
   setContext("menu_active", menu_active);
-  $: console.log($page.url);
 </script>
 
 <svelte:head>
@@ -30,7 +29,6 @@
   <meta property="og:type" content="website" />
   <link rel="canonical" href="{base_url}{$page.url.pathname}" />
   <meta property="og:url" content="{base_url}{$page.url.pathname}" />
-  <meta property="og:image" content="{base_url}/img/haifa-crop.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
 	{#if $rtl}
 	<style>

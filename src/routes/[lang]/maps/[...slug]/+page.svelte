@@ -8,7 +8,7 @@
 	import { afterNavigate, goto } from "$app/navigation";
 	import mapStyle from "$lib/style.json";
 	import { makeDataset } from "$lib/utils";
-	import { statuses, maxBounds } from "$lib/config";
+	import { statuses, maxBounds, base_url } from "$lib/config";
 	import { Map, MapSource, MapLayer, MapTooltip } from "@onsvisual/svelte-maps";
 
 	import MapCompare from "$lib/map/MapCompare.svelte";
@@ -136,6 +136,7 @@
 <svelte:head>
 	<title>{place ? place.properties[`name_${$lang}`] : 'Historical map viewer'} - Palestine Open Maps</title>
   <meta property="og:title" content="{place ? place.properties[`name_${$lang}`] : 'Explore historical maps'} - Palestine Open Maps" />
+  <meta property="og:image" content="{base_url}/img/{place ? `og/${place.properties.slug}` : 'haifa-crop'}.jpg" />
 	{#if $rtl}
 	<style>
 		.maplibregl-ctrl-top-right {

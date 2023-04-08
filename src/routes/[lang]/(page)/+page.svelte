@@ -1,7 +1,7 @@
 <script>
   import { getContext } from "svelte";
 	import { goto } from "$app/navigation";
-	import { base } from '$app/paths';
+	import { base } from "$app/paths";
   import Select from "$lib/ui/Select.svelte";
   import Tile from "$lib/ui/Tile.svelte";
   import Icon from "$lib/ui/Icon.svelte";

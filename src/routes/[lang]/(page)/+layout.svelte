@@ -1,6 +1,7 @@
 <script>
   import { getContext } from "svelte";
   import { afterNavigate } from "$app/navigation";
+  import { base_url } from "$lib/config";
   import Menu from "$lib/ui/Menu.svelte";
   import VPLogo from "$lib/ui/VPLogo.svelte";
 
@@ -10,6 +11,10 @@
 
   afterNavigate(() => menu_active.set(false));
 </script>
+
+<svelte:head>
+  <meta property="og:image" content="{base_url}/img/haifa-crop.jpg" />
+</svelte:head>
 
 <Menu/>
 <main class:rtl={$rtl}>

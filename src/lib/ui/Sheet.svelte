@@ -1,5 +1,6 @@
 <script>
   import { getContext } from "svelte";
+  import { base } from "$app/paths";
   import Icon from "./Icon.svelte";
   export let sheet;
 
@@ -9,7 +10,7 @@
 <div class="sheet">
   <div>
     <a href="{sheet.dropbox_link}">
-      <img src="https://palopenmaps.org/static/images/thumbs/{sheet.layer}/{sheet.file_name}" alt="{sheet.name}">
+      <img src="{base}/img/thumb/{sheet.layer}/{sheet.file_name}" alt="{sheet.name}">
     </a>
   </div>
   <div class="sheet-info">
