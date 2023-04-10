@@ -1,6 +1,6 @@
 import { base } from "$app/paths";
 
-export const locs_url = `${base}/data/places.csv`;
+export const locs_url = `${base}/data/places.json`;
 export const redirect_url = `${base}/data/redirects.csv`;
 export const layers_url = `${base}/data/layers.json`;
 export const sheets_url = `${base}/data/sheets.json`;

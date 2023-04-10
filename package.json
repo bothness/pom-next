@@ -14,7 +14,9 @@
     "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
     "get-data": "node ./scripts/get-data.js",
-    "get-og-images": "node ./scripts/get-og-images.js"
+    "get-poha": "node ./scripts/get-poha.js",
+    "get-og-images": "node ./scripts/get-og-images.js",
+    "make-places": "node ./scripts/make-places.js"
   },
   "devDependencies": {
     "@fontsource/fira-mono": "^4.5.0",

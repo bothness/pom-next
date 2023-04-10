@@ -18,7 +18,7 @@
 	style:--indicatorFill="{colorIndicator}">
     <Select
       {value} {items}
-      optionIdentifier="id"
+      optionIdentifier="slug"
       labelIdentifier="name_{$lang}"
       placeholder="{$t('Find a place')}"
       on:select on:clear

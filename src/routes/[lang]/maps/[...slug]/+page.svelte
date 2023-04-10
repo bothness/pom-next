@@ -7,7 +7,7 @@
 	import { page } from '$app/stores';
 	import { afterNavigate, goto } from "$app/navigation";
 	import mapStyle from "$lib/style.json";
-	import { makeDataset } from "$lib/utils";
+	import { makeDataset, makeColors } from "$lib/utils";
 	import { statuses, maxBounds, base_url } from "$lib/config";
 	import { Map, MapSource, MapLayer, MapTooltip } from "@onsvisual/svelte-maps";
 
@@ -59,12 +59,13 @@
 		transport: true,
 		place: true
 	};
-	$: filter = statuses_active ? ['any', ['in', 'change_2016', ...statuses_active.map(s => s.key)]] : [];
+	$: filter = statuses_active ? ['any', ['in', 'status', ...statuses_active.map(s => s.key)]] : [];
 
 	function doSelect(e) {
-		let place = places.features.find((f) => f.properties.id == e.detail.id);
+		const slug = e.detail.slug ? e.detail.slug : e.detail.id;
+		let place = places.features.find((f) => f.properties.slug == slug);
 		menu_active.set(false);
-		goto(`${base}/${$lang}/maps/${place.properties.slug}/${window.location.search}`);
+		goto(`${base}/${$lang}/maps/${slug}/${window.location.search}`);
 	}
 
 	async function unSelect(status = null) {
@@ -279,13 +280,13 @@
 						visible={toggles.overlay && overlay_groups[l.group]}/>
 					{/each}
 				</MapSource>
-				<MapSource id="places" type="geojson" data={places} promoteId="id">
+				<MapSource id="places" type="geojson" data={places} promoteId="slug">
 					<MapLayer
 						id="places"
 						type="circle"
 						paint={{
 							'circle-radius': {'base': 1, 'stops': [[5, 1], [12, 5]]},
-							'circle-color': ['get', 'color'],
+							'circle-color': makeColors(statuses),
 							'circle-stroke-color': ['case',
 								['==', ['feature-state', 'selected'], true], 'black',
 								['==', ['feature-state', 'hovered'], true], 'black',
@@ -297,13 +298,13 @@
 						hover
 						let:hovered
 						select
-						selected={place ? place.properties.id : null}
+						selected={place ? place.properties.slug : null}
 						on:select={doSelect}
 						visible={toggles.places}
 						order="places-div">
 						<MapTooltip
 							content={hovered
-								? places.features.find((f) => f.properties.id == hovered).properties[`name_${$lang}`]
+								? places.features.find((f) => f.properties.slug == hovered).properties[`name_${$lang}`]
 								: ''}/>
 					</MapLayer>
 				</MapSource>
@@ -393,7 +394,7 @@
 				{#if place.properties.end}
 				<div>
 					{$t('Depopulated')}<br/>
-					<span class="text-lrg">{place.properties.end.toLocaleDateString($lang == 'ar' ? 'ar-PS' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+					<span class="text-lrg">{(new Date(place.properties.end)).toLocaleDateString($lang == 'ar' ? 'ar-PS' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
 				</div>
 				{/if}
 			</InfoBlock>

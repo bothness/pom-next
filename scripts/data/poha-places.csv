@@ -1,0 +1,150 @@
+landmark_id,name,category,type,name_ar,category_ar,type_ar,interviews,lon,lat,pom_id
+2001,ʻAmqā,Town/Village,Village,عمقا,مدينة وقرية,قرية,16,35.166916,32.978128,30
+2002,Akka,Town/Village,Town,عكا,مدينة وقرية,مدينة,18,35.068248,32.921781,29
+2003,al-Baṣṣah,Town/Village,Village,البصّة,مدينة وقرية,قرية,12,35.142962,33.078079,33
+2004,al-Biʻnah,Town/Village,Village,بعنة,مدينة وقرية,قرية,3,35.271464,32.931793,35
+2005,al-Birwah,Town/Village,Village,البروة,مدينة وقرية,قرية,9,35.178674,32.905473,36
+2006,al-Buwayzīyah,Town/Village,Village,البُوَيزيّة,مدينة وقرية,قرية,8,35.569148,33.158274,815
+2007,al-Dāmūn,Town/Village,Village,الدامون,مدينة وقرية,قرية,13,35.18229,32.876842,38
+2008,al-Dawwārah,Town/Village,Village,الدوّارة,مدينة وقرية,قرية,1,35.6324,33.178265,819
+2009,al-Farrāḍīyah,Town/Village,Village,الفرّاضيّة,مدينة وقرية,قرية,1,35.427222,32.931646,824
+2010,al-Furaydīs,Town/Village,Village,الفريديس,مدينة وقرية,قرية,1,34.95066,32.595582,9
+2011,al-Ghābisīyah,Town/Village,Village,الغابسيّة,مدينة وقرية,قرية,12,35.149629,33.000162,42
+2012,al-Harrāwī,Town/Village,Village,هرّاوي,مدينة وقرية,قرية,1,35.557647,33.090898,828
+2013,al-Ḥusaynīyah,Town/Village,Village,الحسينية,مدينة وقرية,قرية,8,35.582,33.0394,1162
+2014,al-ʻAlmānīyah,Town/Village,Village,الألمانية,مدينة وقرية,قرية,1,,,
+2015,al-Jāʻūnah,Town/Village,Village,الجاعونة,مدينة وقرية,قرية,2,35.532379,32.971605,835
+2016,al-Jish,Town/Village,Village,الجش,مدينة وقرية,قرية,9,35.44625,33.024065,836
+2017,al-Kābrī,Town/Village,Village,الكابري,مدينة وقرية,قرية,6,35.1464,33.0167,1038
+2018,al-Karmil,Town/Village,Village,الكَرْمِل,مدينة وقرية,قرية,1,35.131552,31.426041,11605
+2019,al-Khāliṣah,Town/Village,Village,الخالصـة,مدينة وقرية,قرية,9,35.567408,33.214046,839
+2020,al-Khiṣāṣ,Town/Village,Village,الخصاص,مدينة وقرية,قرية,2,35.619308,33.224154,841
+2021,al-Kurdānah,Town/Village,Village,al-Kurdānah,مدينة وقرية,قرية,1,,,
+2022,al-Lidd,Town/Village,Village,اللد,مدينة وقرية,قرية,1,34.891891,31.954784,139
+2023,al-Maghār,Town/Village,Village,المغار,مدينة وقرية,قرية,1,34.781967,31.838366,140
+2024,al-Mālikīyah,Town/Village,Village,المالكيّة,مدينة وقرية,قرية,5,35.506638,33.104559,847
+2025,al-Manshīyah,Town/Village,Village,المنشيـّة,مدينة وقرية,قرية,8,35.090089,32.931594,58
+2026,al-Manṣūrah,Town/Village,Village,المنصورة,مدينة وقرية,قرية,1,35.3352,33.0644,1039
+2027,al-Mazraʻah,Town/Village,Village,المزرعه,مدينة وقرية,قرية,2,35.097601,32.983584,59
+2028,al-Mujaydil,Town/Village,Village,المجيدل,مدينة وقرية,قرية,1,35.243671,32.678116,730
+2029,al-Nahr,Town/Village,Village,النهر,مدينة وقرية,قرية,3,35.140168,33.005986,63
+2030,al-Nāʻimah,Town/Village,Village,الناعمة,مدينة وقرية,قرية,2,35.594967,33.188168,859
+2031,al-Qasṭal,Town/Village,Village,القسطل,مدينة وقرية,قرية,2,35.143155,31.795353,531
+2032,al-Qubaybah,Town/Village,Village,القُبَيْبَة,مدينة وقرية,قرية,1,35.136539,31.83999,534
+2033,al-Ramlah,Town/Village,Village,الرملة,مدينة وقرية,قرية,2,34.872346,31.925447,157
+2034,al-Rās al-Aḥmar,Town/Village,Village,الراس الأحمر,مدينة وقرية,قرية,4,35.468343,33.039235,865
+2035,al-Raynah,Town/Village,Village,al-Raynah,مدينة وقرية,قرية,1,,,
+2036,al-Ruwayyis,Town/Village,Village,الرويـس,مدينة وقرية,قرية,1,35.177826,32.864435,66
+2037,al-Ṣafṣāf,Town/Village,Village,صفصاف,مدينة وقرية,قرية,17,35.445174,33.011185,870
+2038,al-Sammūʻī,Town/Village,Village,السمّوعي,مدينة وقرية,قرية,2,35.452397,32.957855,873
+2039,al-Shaʻb,Town/Village,Village,شعب,مدينة وقرية,قرية,1,35.242328,32.888994,69
+2040,al-Shaykh Dāwūd,Town/Village,Village,الشيخ دنون,مدينة وقرية,قرية,11,35.147948,32.993424,11150
+2041,al-Sumayrīyah,Town/Village,Village,السميريـّة,مدينة وقرية,قرية,18,35.092674,32.9723,71
+2042,al-Tall,Town/Village,Village,التلّ,مدينة وقرية,قرية,2,35.1372,33.0074,1041
+2043,al-Ṭanṭūrah,Town/Village,Village,الطنطورة,مدينة وقرية,قرية,2,34.9174,32.6094,8
+2044,al-Ṭīrah,Town/Village,Village,الطيرة,مدينة وقرية,قرية,16,34.974355,32.762317,358
+2045,al-Yāmūn,Town/Village,Village,اليَامُون,مدينة وقرية,قرية,1,35.229579,32.483778,605
+2046,al-Ẓāhirīyah,Town/Village,Village,الظاهرية التحتا,مدينة وقرية,قرية,7,35.486893,32.963334,887
+2047,al-Zīb,Town/Village,Village,الزيب,مدينة وقرية,قرية,24,35.101429,33.04785,78
+2048,al-Zūq al-Taḥtānī,Town/Village,Village,الزوق التحتاني,مدينة وقرية,قرية,3,35.59972,33.215287,891
+2049,Balad al-Shaykh,Town/Village,Village,بلد الشيخ,مدينة وقرية,قرية,5,35.042177,32.772368,314
+2050,Baṣṣat al-Fāliq,Town/Village,Village,بصّة الفالق,مدينة وقرية,قرية,1,34.8568,32.2473,1176
+2051,Baysamūn,Town/Village,Village,بيسمون,مدينة وقرية,قرية,1,35.579413,33.097581,813
+2052,Bethlehem,Town/Village,Town,بيت لحم,مدينة وقرية,مدينة,1,35.203585,31.709386,488
+2053,Bīr al-Maksūr,Town/Village,Village,بئر المكسور,مدينة وقرية,قرية,1,35.222269,32.782352,10139
+2054,Bīrīyā,Town/Village,Village,بيريا,مدينة وقرية,قرية,5,35.497619,32.979672,814
+2056,Dabbūrīyah,Town/Village,Village,دبورية,مدينة وقرية,قرية,1,35.371515,32.6917,708
+2057,Dallātah,Town/Village,Village,دلاّتة,مدينة وقرية,قرية,4,35.498041,33.022338,817
+2058,Dāmūn,Town/Village,Village,الدامون,مدينة وقرية,قرية,14,35.18229,32.876842,38
+2059,Dannūn,Town/Village,Village,الشيخ دنون,مدينة وقرية,قرية,1,35.147948,32.993424,11150
+2060,Dayr al-Asad,Town/Village,Village,دير الاسد,مدينة وقرية,قرية,11,35.269402,32.935508,39
+2061,Dayr al-Qāsī,Town/Village,Village,دير القاسي,مدينة وقرية,قرية,4,35.323342,33.034573,41
+2062,Dayshūm,Town/Village,Village,ديشوم,مدينة وقرية,قرية,5,35.505913,33.079456,820
+2063,Fārah,Town/Village,Village,فارة,مدينة وقرية,قرية,5,35.456548,33.065222,823
+2064,Firʻim,Town/Village,Village,فرعم,مدينة وقرية,قرية,6,35.532638,32.985268,825
+2065,Gaza,Town/Village,Town,أبو مدين,مدينة وقرية,مدينة,2,34.466,31.501873,245
+2066,Ghuwayr Abū Shūshah,Town/Village,Village,غوير ابو شوشة,مدينة وقرية,قرية,3,35.507154,32.853131,904
+2067,Haifa,Town/Village,Town,حيفا,مدينة وقرية,مدينة,37,35.00154,32.815367,329
+2068,Ḥajjah,Town/Village,Village,حجة,مدينة وقرية,قرية,1,35.131153,32.204784,643
+2069,Ḥamāmah,Town/Village,Village,حمامة,مدينة وقرية,قرية,1,34.590774,31.691834,267
+2070,Hawshah,Town/Village,Village,هوشة,مدينة وقرية,قرية,2,35.1427,32.7929,1138
+2071,Ḥawwāsah,Town/Village,Village,Ḥawwāsah,مدينة وقرية,قرية,3,,,
+2072,Ḥiṭṭīn,Town/Village,Village,حطّين,مدينة وقرية,قرية,7,35.453827,32.807383,907
+2073,Hūnīn,Town/Village,Village,هونين,مدينة وقرية,قرية,3,35.545197,33.218837,832
+2074,ʻAkbarah,Town/Village,Village,عكبرة,مدينة وقرية,قرية,5,35.498979,32.938914,808
+2075,ʻAlmā,Town/Village,Village,علما,مدينة وقرية,قرية,12,35.490981,33.055618,809
+2076,ʻAmmūqah,Town/Village,Village,عمّوقة,مدينة وقرية,قرية,1,35.519146,33.005339,810
+2077,ʻArab al-Samnīyah,Town/Village,Village,عرب السّمنية,مدينة وقرية,قرية,1,35.179054,33.047056,31
+2078,ʻArab al-Suyyād,Town/Village,Village,ʻArab al-Suyyād,مدينة وقرية,قرية,1,,,
+2079,ʻArab al-Zubayd,Town/Village,Village,عرب الزبيد,مدينة وقرية,قرية,5,35.5675,33.079,1164
+2080,ʻArrābah,Town/Village,Village,عرابة,مدينة وقرية,قرية,2,35.338329,32.850728,32
+2081,ʻAylūṭ,Town/Village,Village,عيلوط,مدينة وقرية,قرية,5,35.259064,32.716764,713
+2082,ʻAyn al-Zaytūn,Town/Village,Village,عين الزيتون,مدينة وقرية,قرية,6,35.491161,32.9875,812
+2083,ʻAyn Māhil,Town/Village,Village,عين ماهل ‎,مدينة وقرية,قرية,1,35.352716,32.723321,705
+2084,ʻIbilīn,Town/Village,Village,إعبلين,مدينة وقرية,قرية,2,35.191637,32.82135,332
+2085,Ibṭin,Town/Village,Village,إبطن,مدينة وقرية,قرية,2,35.112985,32.76149,10005
+2086,Ijzim,Town/Village,Village,إجزم,مدينة وقرية,قرية,1,34.988225,32.644571,4
+2087,Iksāl,Town/Village,Village,إكسال,مدينة وقرية,قرية,1,35.3238,32.68255,712
+2088,Indūr,Town/Village,Village,إندور,مدينة وقرية,قرية,1,35.381946,32.637269,714
+2089,Jabāliyā,Town/Village,Village,جبالية,مدينة وقرية,قرية,1,34.483669,31.526429,276
+2090,Jaffa,Town/Village,Town,يافا,مدينة وقرية,مدينة,8,34.74754,32.049293,420
+2091,Jāḥūlā,Town/Village,Village,جاحولا,مدينة وقرية,قرية,5,35.567193,33.124865,834
+2092,Jazāyir al-Ḥindāj,Town/Village,Village,جزاير الهنداج,مدينة وقرية,قرية,2,35.556393,33.039906,
+2093,Jerusalem,Town/Village,Town,القدس,مدينة وقرية,مدينة,7,35.233067,31.775988,509
+2094,Jidrū,Town/Village,Village,Jidrū,مدينة وقرية,قرية,1,,,
+2095,Kafr Kannā,Town/Village,Village,كفركنا,مدينة وقرية,قرية,2,35.338951,32.745466,715
+2096,Kafr Birʻim,Town/Village,Village,كفر برعم,مدينة وقرية,قرية,2,35.412777,33.04324,838
+2097,Kafr ʻAnān,Town/Village,Village,كفر عنان,مدينة وقرية,قرية,4,35.418237,32.922658,50
+2098,Kafr Qariʻ,Town/Village,Village,كفر قرع,مدينة وقرية,قرية,1,35.051989,32.506772,334
+2099,Kawkab Abū al-Hayjāʼ,Town/Village,Village,كوكب الهوا,مدينة وقرية,قرية,2,35.249632,32.829901,717
+2100,Khirbat al-Kasāyir,Town/Village,Village,خربة الكسائر,مدينة وقرية,قرية,7,35.1381,32.7933,1139
+2101,Khirbat al-Waʻrah al-Sawdā,Town/Village,Village,خربة الوعرة السوداء,مدينة وقرية,قرية,2,35.480946,32.833843,934
+2102,Khirbat Jaʻtūn,Town/Village,Village,Khirbat Jaʻtūn,مدينة وقرية,قرية,1,35.194638,33.012543,
+2103,Khirbat Jālīn,Town/Village,Village,Khirbat Jālīn,مدينة وقرية,قرية,2,,,
+2104,Khirbat Jiddīn,Town/Village,Village,خربة جدّين,مدينة وقرية,قرية,1,35.221327,32.993957,47
+2105,Saʻsaʻ,Town/Village,Village,سعسع,مدينة وقرية,قرية,15,35.393812,33.028544,875
+2106,Khirbat Wādī al-Ḥamām,Town/Village,Village,وادي الحمام,مدينة وقرية,قرية,1,35.4908,32.8278,1175
+2107,Kufayrāt,Town/Village,Village,كفيرات,مدينة وقرية,قرية,1,35.200821,32.443196,582
+2108,Kufrītā,Town/Village,Village,Kufrītā,مدينة وقرية,قرية,1,,,
+2109,Kuwaykāt,Town/Village,Village,كويكات,مدينة وقرية,قرية,9,35.146962,32.970631,55
+2110,Lazāzah,Town/Village,Village,لزّازة,مدينة وقرية,قرية,1,35.611413,33.206033,845
+2111,Lūbyā,Town/Village,Village,لوبيا,مدينة وقرية,قرية,21,35.42816,32.776115,913
+2112,Maʻdhar,Town/Village,Village,معذر,مدينة وقرية,قرية,3,35.464232,32.693155,914
+2113,Maʻlūl,Town/Village,Village,معلول,مدينة وقرية,قرية,1,35.240798,32.696483,724
+2114,Majd al-Kurūm,Town/Village,Village,مجد الكروم,مدينة وقرية,قرية,7,35.251496,32.920452,56
+2115,Mallāḥah,Town/Village,Village,ملاّحة,مدينة وقرية,قرية,1,35.581969,33.090381,848
+2116,Mayrūn,Town/Village,Village,ميرون,مدينة وقرية,قرية,4,35.43829,32.981991,853
+2117,Mīʻār,Town/Village,Village,ميعار,مدينة وقرية,قرية,3,35.245984,32.875309,60
+2118,Mughr al-Khayṭ,Town/Village,Village,مغر الخيط,مدينة وقرية,قرية,5,35.538653,32.988321,857
+2119,Nablus,Town/Village,Town,نابلس,مدينة وقرية,مدينة,4,35.263793,32.223845,668
+2120,Nahariya,Town/Village,Village,نهاريا,مدينة وقرية,قرية,1,35.097535,33.008629,64
+2121,Naḥf,Town/Village,Village,نحف,مدينة وقرية,قرية,14,35.31544,32.935848,62
+2122,Nāʻimah,Town/Village,Village,الناعمة,مدينة وقرية,قرية,5,35.594967,33.188168,859
+2123,Nazareth,Town/Village,Town,النَّاصِرَة,مدينة وقرية,مدينة,6,35.29524,32.70143,733
+2124,Nimrīn,Town/Village,Village,نمرين,مدينة وقرية,قرية,4,35.426006,32.804043,921
+2125,Qabbāʻah,Town/Village,Village,قبّاعة,مدينة وقرية,قرية,4,35.536741,32.999057,860
+2126,Qadas,Town/Village,Village,قدس,مدينة وقرية,قرية,10,35.527032,33.113142,861
+2127,Qaddītā,Town/Village,Village,قدّيتا,مدينة وقرية,قرية,3,35.467105,33.004512,862
+2128,Qāqūn,Town/Village,Village,قاقون,مدينة وقرية,قرية,1,34.994539,32.360258,1014
+2129,Qaysārīyah,Town/Village,Village,قيسارية,مدينة وقرية,قرية,1,34.907753,32.50752,11026
+2130,Sabalān,Town/Village,Village,سبلان,مدينة وقرية,قرية,2,35.340693,33.011281,868
+2131,Safad,Town/Village,Village,صفد,مدينة وقرية,قرية,14,35.497927,32.966521,869
+2132,Ṣaffūrīyah,Town/Village,Village,صفوريّة,مدينة وقرية,قرية,40,35.277792,32.751888,736
+2133,Saida,Town/Village,Village,صيدا,مدينة وقرية,قرية,1,,,
+2134,Ṣalḥah,Town/Village,Village,صالحة,مدينة وقرية,قرية,5,35.45513,33.075662,871
+2135,Sannīrīyah,Town/Village,Village,سنيرية,مدينة وقرية,قرية,1,35.046466,32.128758,683
+2136,Shafā ʻAmrū,Town/Village,Town,شفاعمرو,مدينة وقرية,مدينة,15,35.16942,32.805046,356
+2137,Shaʻb,Town/Village,Village,شعب‎,مدينة وقرية,قرية,11,35.238428,32.88974,11164
+2138,Suḥmātā,Town/Village,Village,سحماتا,مدينة وقرية,قرية,20,35.302365,33.005814,70
+2139,Tarbīkhā,Town/Village,Village,تربيخا,مدينة وقرية,قرية,2,35.284478,33.08256,73
+2140,Tarshīḥā,Town/Village,Village,ترشيحا,مدينة وقرية,قرية,18,35.266972,33.005496,74
+2141,Ṭayṭabāh,Town/Village,Village,طيطبا,مدينة وقرية,قرية,3,35.47571,33.012986,879
+2142,Tiberias,Town/Village,Town,طبريه,مدينة وقرية,مدينة,4,35.541156,32.786895,932
+2143,Ṭurʻān,Town/Village,Village,طرعان,مدينة وقرية,قرية,1,35.369706,32.776679,741
+2144,Umm al-Faraj,Town/Village,Village,ام الفرج,مدينة وقرية,قرية,11,35.121064,33.004934,75
+2145,Umm al-Faḥm,Town/Village,Village,أمّ الفحم‎,مدينة وقرية,قرية,1,35.152152,32.515857,602
+2146,Wādī al-Ḥundāj,Town/Village,Village,وادي الهنداج,مدينة وقرية,قرية,2,,,
+2147,Waldheim (Umm al-ʻAmad),Town/Village,Village,ام العمد,مدينة وقرية,قرية,1,35.171184,32.728083,363
+2148,Yaʻbad,Town/Village,Village,يعبد,مدينة وقرية,قرية,1,35.168906,32.446068,604
+2149,Yājūr,Town/Village,Village,ياجور,مدينة وقرية,قرية,2,35.056934,32.75863,17
+2150,Yibnah,Town/Village,Village,يبنة,مدينة وقرية,قرية,1,34.745681,31.865781,177

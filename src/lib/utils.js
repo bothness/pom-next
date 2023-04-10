@@ -1,35 +1,24 @@
-import { csvParse, autoType } from "d3-dsv";
+// import { csvParse, autoType } from "d3-dsv";
+import { base } from "$app/paths";
 
-export async function getPlaces(url, statuses, fetch = window.fetch) {
+export async function getPlaces(url, fetch = window.fetch) {
 	let res = await fetch(url);
+	return await res.json();
+}
 
-	let str = await res.text();
-	let locs = csvParse(str, autoType);
-	locs.sort((a, b) => a["name_en"].localeCompare(b["name_en"]));
-	
-	let geojson = {
-		type: "FeatureCollection",
-		features: [],
-	};
-		
-	for (const loc of locs.filter(d => d["change_2016"] != "Built & abandoned" && d["grp_1945"] != "Syrian" && d["lng"])) {
-		let feature = {
-			type: "Feature",
-			geometry: {
-				type: "Point",
-				coordinates: [loc["lng"], loc["lat"]],
-			},
-			properties: {
-				type: loc["type_2016"] ? loc["type_2016"] : loc["type_1945"],
-				group: loc["grp_2016"] ? loc["grp_2016"] : loc["grp_1945"],
-				color: statuses[loc["change_2016"]].color,
-				...loc
-			},
-		};
-		feature.properties["name_ar"] = loc["name_ar"] ? loc["name_ar"] : loc["name_en"];
-		geojson.features.push(feature);
-	}
-	return geojson;
+export async function getPlace(slug, fetch = window.fetch) {
+	let res = await fetch(`${base}/data/places/${slug}.json`);
+	return res ? await res.json() : null;
+}
+
+export function makeColors(statuses) {
+	let cols = ["match", ["get", "status"]];
+	Object.keys(statuses).forEach((s) => {
+		cols.push(s);
+		cols.push(statuses[s].color);
+	});
+	cols.push("rgba(0,0,0,0)");
+	return cols;
 }
 
 export async function getSheets(url, layers, fetch = window.fetch) {

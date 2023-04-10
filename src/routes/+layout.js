@@ -7,7 +7,7 @@ export async function load({ fetch }) {
 	// Load places spreadsheet and convert to geojson
 	// const config = { method: 'get', headers: { origin: 'http://localhost:5173' } };
 
-	let places = await getPlaces(locs_url, statuses, fetch);
+	let places = await getPlaces(locs_url, fetch);
 	// let places = await getPlaces(new Request(locs_url, config), statuses, fetch);
 	let layers_res = await fetch(layers_url);
 	let layers = await layers_res.json();
