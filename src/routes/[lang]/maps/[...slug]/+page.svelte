@@ -420,6 +420,18 @@
 				<BarChart data={makeDataset(place)} {t}/>
 			</InfoBlock>
 			{/if}
+			{#if place.properties.poha}
+			<InfoBlock label="{place.properties[`name_${$lang}`]} {$t('on Palestinian Oral History Archive')}">
+				{#each place.properties.poha as item}
+				<div><img src="https://libraries.aub.edu.lb/poha-viewer/content/thumbnails/{item.thumbnail}" class="thumbnail" alt=""/></div>
+				<div>
+					<a href="https://libraries.aub.edu.lb/poha/Record/{item.interview_id}" target="_blank">{item[`name_${$lang}`]}</a><br/>
+					<small>{$t('Language')}: {$t(item.language)}</small><br/>
+					<small>{$t('Duration')}: {item.duration}</small>
+				</div>
+				{/each}
+			</InfoBlock>
+			{/if}
 			{#if place.properties.map_20k == 'yes' || place.properties.id_zo}
 			<InfoBlock label="{place.properties[`name_${$lang}`]} {$t('on other sites')}">
 				<div>
@@ -602,5 +614,8 @@
     background-color: black;
     border-color: black;
     color: white;
+  }
+	img.thumbnail {
+    width: 100% !important;
   }
 </style>

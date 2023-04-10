@@ -23,7 +23,9 @@
   }
   .content {
     display: grid;
-    grid-auto-flow: column;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-gap: 8px;
     margin-bottom: 16px;
   }
 </style>
