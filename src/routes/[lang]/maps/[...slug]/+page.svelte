@@ -63,9 +63,11 @@
 
 	function doSelect(e) {
 		const slug = e.detail.slug ? e.detail.slug : e.detail.id;
-		let place = places.features.find((f) => f.properties.slug == slug);
-		menu_active.set(false);
-		goto(`${base}/${$lang}/maps/${slug}/${window.location.search}`);
+		const valid = places.features.find((f) => f.properties.slug == slug);
+		if (valid && !(place && slug === place.properties.slug)) {
+			menu_active.set(false);
+			goto(`${base}/${$lang}/maps/${slug}/${window.location.search}`);
+		}
 	}
 
 	async function unSelect(status = null) {
