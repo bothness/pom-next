@@ -1,1 +1,0 @@
-async function p({params:l,parent:s}){const e=await s();let a=l.slug.replace("/",""),t=e.places,r=t.features.find(n=>n.properties.slug==a),o=e.layers,c=e.sheets;return{layers:o,sheets:c,places:t,place:r}}const u=Object.freeze(Object.defineProperty({__proto__:null,load:p},Symbol.toStringTag,{value:"Module"}));export{u as _,p as l};
