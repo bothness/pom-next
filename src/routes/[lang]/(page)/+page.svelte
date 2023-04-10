@@ -15,14 +15,14 @@
   const t = getContext("t");
 
   function doSelect(e) {
-		let place = places.features.find((f) => f.properties.id == e.detail.id);
+		let place = places.features.find((f) => f.properties.slug == e.detail.slug);
 		goto(`${base}/${$lang}/maps/${place.properties.slug}/`);
 	}
 </script>
 
 <svelte:head>
-  <title>Palestine Open Maps</title>
-  <meta property="og:title" content="Palestine Open Maps" />
+  <title>{$t('Palestine Open Maps')}</title>
+  <meta property="og:title" content="{$t('Palestine Open Maps')}" />
 </svelte:head>
 
 <h1>{@html $t('Welcome to<br>Palestine Open Maps')}</h1>
@@ -34,7 +34,7 @@
   <a class="btn" class:rtl={$rtl} href="{base}/{$lang}/about/"><Icon type="info" scale={1.5}/><span>{$t('Read more')}</span></a>
   <div class="select">
     <Select
-      items={places.features.map((f) => f.properties)}
+      items={places.features.map((f) => f.properties).sort((a, b) => a[`name_${$lang}`].localeCompare(b[`name_${$lang}`]))}
       on:select={doSelect}
       colorBorder="#333" colorIndicator="#333"/>
   </div>

@@ -24,8 +24,8 @@
 </script>
 
 <svelte:head>
-  <meta name="description" content="Palestine Open Maps is a new platform for map-based exploration and immersive storytelling. This alpha version of the platform allows you to navigate historic maps and search for localities." />
-  <meta property="og:description" content="Palestine Open Maps is a new platform for map-based exploration and immersive storytelling. This alpha version of the platform allows you to navigate historic maps and search for localities." />
+  <meta name="description" content="{$t('Explore, search and download historical maps and spatial data on Palestine')}" />
+  <meta property="og:description" content="{$t('Explore, search and download historical maps and spatial data on Palestine')}" />
   <meta property="og:type" content="website" />
   <link rel="canonical" href="{base_url}{$page.url.pathname}" />
   <meta property="og:url" content="{base_url}{$page.url.pathname}" />

@@ -137,8 +137,8 @@
 </script>
 
 <svelte:head>
-	<title>{place ? place.properties[`name_${$lang}`] : 'Historical map viewer'} - Palestine Open Maps</title>
-  <meta property="og:title" content="{place ? place.properties[`name_${$lang}`] : 'Explore historical maps'} - Palestine Open Maps" />
+	<title>{place ? place.properties[`name_${$lang}`] : 'Historical map viewer'} - {$t('Palestine Open Maps')}</title>
+  <meta property="og:title" content="{place ? place.properties[`name_${$lang}`] : 'Explore historical maps'} - ${$t('Palestine Open Maps')}" />
   <meta property="og:image" content="{base_url}/img/{place ? `og/${place.properties.slug}` : 'haifa-crop'}.jpg" />
 	{#if $rtl}
 	<style>
@@ -177,7 +177,7 @@
 	{#if places}
 	<Select
 		value={place ? place.properties : null}
-		items={places.features.map((f) => f.properties)}
+		items={places.features.map((f) => f.properties).sort((a, b) => a[`name_${$lang}`].localeCompare(b[`name_${$lang}`]))}
 		on:select={doSelect}
 		on:clear={unSelect}/>
 	{/if}

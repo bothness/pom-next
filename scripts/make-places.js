@@ -15,11 +15,12 @@ for (const loc of locs.filter(d => d["change_2016"] != "Built & abandoned" && d[
     status: loc["change_2016"],
     ...loc
   };
+  props["name_ar"] = props["name_ar"] ? props["name_ar"] : props["name_en"];
   const properties = {};
   ["name_en", "name_ar", "slug", "type", "group", "status"].forEach(key => properties[key] = props[key]);
   geojson.features.push({type: "Feature", geometry, properties});
   
-  const path= `./static/data/places/${loc.slug}.json`;
+  const path = `./static/data/places/${loc.slug}.json`;
   const poha_path = `./raw-data/poha/${loc.slug}.json`;
   if (fs.existsSync(poha_path)) props.poha =  JSON.parse(fs.readFileSync(poha_path, {encoding:'utf8', flag:'r'}));
   fs.writeFileSync(path, JSON.stringify({type: "Feature", geometry, properties: props}));
