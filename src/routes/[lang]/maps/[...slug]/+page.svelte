@@ -436,6 +436,7 @@
 			<InfoBlock label="{place.properties[`name_${$lang}`]} {$t('on other sites')}">
 				<div>
 					{#if place.properties.url_pr}<a href="https://www.palestineremembered.com/{place.properties.url_pr}/{$lang == 'ar' ? 'ar/' : ''}" target="_blank">{$t('Palestine Remembered')}</a><br/>{/if}
+					{#if place.properties.url_pq_en}<a href="https://www.palquest.org/{$lang}/place/{place.properties[`url_pq_${$lang}`]}/" target="_blank">{$t('Encyclopedia of the Palestine Question')}</a><br/>{/if}
 					{#if place.properties.id_zo}<a href="https://www.zochrot.org/villages/village_details/{place.properties.id_zo}/{$lang}" target="_blank">{$t('Zochrot')}</a><br/>{/if}
 					{#if place.properties.map_20k == 'yes'}<a href="https://today.visualizingpalestine.org/{place.properties.slug}" target="_blank">{$t('Palestine, Today')}</a>{/if}
 				</div>

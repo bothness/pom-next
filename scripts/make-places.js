@@ -1,11 +1,12 @@
 import fs from "fs";
-import { csvParse, autoType } from "d3-dsv";
-import { locs_path, places_path } from "./config.js";
+import { csvParse, csvFormat, autoType } from "d3-dsv";
+import { locs_path, places_path, redirect_path } from "./config.js";
 
 const locs = csvParse(fs.readFileSync(locs_path, {encoding:'utf8', flag:'r'}), autoType);
 
 // Make geojson for all places
 const geojson = {type: "FeatureCollection", features: []};
+const redirect = [];
 
 for (const loc of locs.filter(d => d["change_2016"] != "Built & abandoned" && d["grp_1945"] != "Syrian" && d["lng"])) {
   const geometry = {type: "Point", coordinates: [loc["lng"], loc["lat"]]};
@@ -19,6 +20,7 @@ for (const loc of locs.filter(d => d["change_2016"] != "Built & abandoned" && d[
   const properties = {};
   ["name_en", "name_ar", "slug", "type", "group", "status"].forEach(key => properties[key] = props[key]);
   geojson.features.push({type: "Feature", geometry, properties});
+  redirect.push({id_old: props.id_old, id_new: props.id, slug: props.slug})
   
   const path = `./static/data/places/${loc.slug}.json`;
   const poha_path = `./raw-data/poha/${loc.slug}.json`;
@@ -28,3 +30,6 @@ for (const loc of locs.filter(d => d["change_2016"] != "Built & abandoned" && d[
 }
 fs.writeFileSync(places_path, JSON.stringify(geojson));
 console.log(`Wrote ${places_path}`);
+
+fs.writeFileSync(redirect_path, csvFormat(redirect.filter(r => r.id_old)));
+console.log(`Wrote ${redirect_path}`);
