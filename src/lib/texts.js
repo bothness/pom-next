@@ -13,7 +13,7 @@ export default {
 		"View past and present maps side-by-side": "قارن/ي خرائط من الماضي والحاضر جنبًا إلى جنب",
 		"View the topography of Palestine in 3D": "استكشف/ي تضاريس فلسطين ثلاثية الأبعاد",
 		"Overlay historical and present day maps": "استكشف/ي التغييرات بين الماضي والحاضر من خلال تركيب الخرائط من حقبات مختلفة",
-		"Initiated and supported by Visualising Palestine": "بمُبادرة ودَعم من Visualising Palestine",
+		"Initiated and supported by": "بمُبادرة ودَعم من",
 		"Home": "الصّفحة الرئيسيّة",
 		"Explore maps": "استكشف/ي الخرائط",
 		"About": "عن خرائط فلسطين المفتوحة",
