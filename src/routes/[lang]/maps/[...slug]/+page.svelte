@@ -69,7 +69,6 @@
 			goto(`${base}/${$lang}/maps/${slug}/${window.location.search}`);
 		}
 	}
-	$: console.log(place);
 
 	async function unSelect(status = null) {
 		panel_status = status;

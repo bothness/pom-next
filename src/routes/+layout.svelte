@@ -3,7 +3,8 @@
   import { writable } from 'svelte/store';
 	import { setContext } from "svelte";
 	import { page } from '$app/stores';
-  import { texts, base_url } from "$lib/config";
+  import { base_url } from "$lib/config";
+  import texts from "$lib/texts";
   import { i18n } from "$lib/utils";
   import Header from "$lib/ui/Header.svelte";
 
