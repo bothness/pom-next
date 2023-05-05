@@ -34,7 +34,7 @@
     flex: 1;
   }
   .sheet-info {
-    padding-left: 8px;
+    padding-inline-start: 8px;
   }
   img {
     width: 100%;

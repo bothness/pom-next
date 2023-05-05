@@ -69,6 +69,7 @@
 			goto(`${base}/${$lang}/maps/${slug}/${window.location.search}`);
 		}
 	}
+	$: console.log(place);
 
 	async function unSelect(status = null) {
 		panel_status = status;
@@ -232,7 +233,7 @@
 		{:else}
 		{$t('Click anywhere on the map to see sheets available to download covering that location')}
 		{/if}
-		<button class="btn btn-primary" on:click={() => {toggles.download = false; sheets_selected = [];}}>{$t('Close downloads')}</button>
+		<button class="btn btn-primary" style:display="block" on:click={() => {toggles.download = false; sheets_selected = [];}}>{$t('Close downloads')}</button>
 	</Accordion>
 	<Links>
 		<label><input type="checkbox" bind:checked={toggles.split}/><span>{$t('Toggle split-screen')}</span></label>
@@ -381,7 +382,7 @@
 			</h2>
 			<InfoBlock label="{$t('Change since 1948')}">
 				<div>
-					<div class="bullet" style:background-color="{place.properties.color}"/>
+					<div class="bullet" style:background-color="{statuses[place.properties.change_2016].color}"/>
 					{$t(statuses[place.properties.change_2016].name)}
 				</div>
 			</InfoBlock>

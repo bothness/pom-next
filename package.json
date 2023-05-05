@@ -16,7 +16,8 @@
     "get-data": "node ./scripts/get-data.js",
     "get-poha": "node ./scripts/get-poha.js",
     "get-og-images": "node ./scripts/get-og-images.js",
-    "make-places": "node ./scripts/make-places.js"
+    "make-places": "node ./scripts/make-places.js",
+    "update-places": "node ./scripts/get-data.js && node ./scripts/make-places.js"
   },
   "devDependencies": {
     "@fontsource/fira-mono": "^4.5.0",
