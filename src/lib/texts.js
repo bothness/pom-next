@@ -185,5 +185,8 @@ export default {
 		"This map layer displays different Survey of Palestine maps, depending on the zoom level. It includes all of the 1940s maps for 1:250,000, 1:100,000 and 1:20,000 scales, and includes more detailed maps from the 1930s and 1940s for the larger cities, including Jerusalem, Haifa and Jaffa (scales vary depending on the city, from 1:10,000 up to 1:1,000).": "تعرض هذه الطبقة خرائط أخرى من خرائط مسح فلسطين بعدة مقاييس، بما في ذلك جميع خرائط الأربعينيات بمقياس 1: 25.000 و 1: 100.00 و 1: 20.000. كما تحتوي على خرائط أكثر تفصيلاً من ثلاثينيات وأربعينيات القرن العشرين في المُدن الكُبرى، بما في ذلك القدس وحيفا ويافا (تختلف المقاييس حسب المدينة، من 1: 10000 حتى 1: 1000).",
 		"Present day geographic features derived from OpenStreetMap, Wikidata and Natural Earth. Vector tiles generated using OpenMapTiles tools.": "تم الاعتماد على عدة مصادر في رسم الخصائص الجغرافية المعاصرة مثل: OpenStreetMap, Wikidata, Natural Earth. وتم إعداد الرّسوم المتّجهة من خلال أداة OpenMapTiles.",
 		"Crowd-sourced digitisation of \"Palestine 1:20,000\" Survey of Palestine map series from the 1940s. Vector tiles generated using OpenMapTiles tools.": "تمت رقمنة خريطة \"Palestine 1:20000\" ضمن خرائط مَسح فلسطين لعقد 1940 بدعم من مصادر جماهيرية . تم إعداد الرّسوم المتّجهة من خلال أداة OpenMapTiles.",
+		"We use Google Analytics to understand how people use Palestine Open Maps. Is this okay with you?": "نستخدم جوجل أناليتكس لفهم كيفية استخدام الناس لخرائط فلسطين المفتوحة. هل هذا مقبول بالنسبة لك؟",
+		"Accept": "مقبول",
+		"Reject": "مرفوض",
 	}
 };

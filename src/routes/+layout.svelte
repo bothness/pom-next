@@ -6,6 +6,7 @@
   import { base_url } from "$lib/config";
   import texts from "$lib/texts";
   import { i18n } from "$lib/utils";
+	import AnalyticsBanner from "$lib/ui/AnalyticsBanner.svelte";
   import Header from "$lib/ui/Header.svelte";
 
   let lang = writable();
@@ -40,6 +41,7 @@
 	{/if}
 </svelte:head>
 
+<AnalyticsBanner/>
 <Header/>
 <slot/>
 
