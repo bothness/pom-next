@@ -16,14 +16,14 @@
 
   function setPref(option) {
     setCookie("ga", option, 365);
-    checkPref();
+    if (option === "accept") enabled = true;
+    banner = false;
   }
 
   function init() {
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-NEGGMBFE7X');
     console.log("Analytics enabled");
   }
