@@ -19,7 +19,7 @@ export const overlays = [
 
 export const layer_aerial = {
 	"id": 16,
-	"name": "Aerial imagery, 1944-48",
+	"name": "Aerial imagery, 1940s",
 	"description": "A layer compiled from black and white aerial photographs captured by the British military in the 1940s. It is color-corrected and merged together into a single raster tileset.",
 	"boundaries": null,
 	"scale": 1,
