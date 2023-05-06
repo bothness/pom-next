@@ -10,6 +10,8 @@
   export let items = [];
   export let colorBorder = "rgba(255,255,255,0)";
   export let colorIndicator = "grey";
+
+	$: _items = [...items].sort((a, b) => a[`name_${$lang}`].localeCompare(b[`name_${$lang}`], $lang))
 </script>
 
 <div id="search" class:search-rtl={$rtl}
@@ -17,7 +19,7 @@
   style:--border="2px solid {colorBorder}"
 	style:--indicatorFill="{colorIndicator}">
     <Select
-      {value} {items}
+      {value} items={_items}
       optionIdentifier="slug"
       labelIdentifier="name_{$lang}"
       placeholder="{$t('Find a place')}"

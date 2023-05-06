@@ -1,4 +1,4 @@
-const prerender = true;
+// export const prerender = true;
   
 export async function load({ parent }) {
 	const stuff = await parent();

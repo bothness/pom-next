@@ -372,11 +372,11 @@
 				{#if $lang == "ar"}
 				{$t(place.properties.type)}
 				{$t(place.properties.group)} {$t('in')}
-				{$t('sub-district')} {$t(place.properties.district_1945)}
+				{$t('sub-district')} {$t(place.properties.subdistrict_1945)}
 				{:else}
 				{place.properties.group}
 				{place.properties.type.toLowerCase()} in
-				{place.properties.district_1945} {$t('sub-district')}
+				{place.properties.subdistrict_1945} {$t('sub-district')}
 				{/if}
 			</h2>
 			<InfoBlock label="{$t('Change since 1948')}">

@@ -2,6 +2,9 @@ export default {
 	"ar": {
 		"العربية": "English",
 		"ع": "en",
+		"Arabic": "العربية",
+		"Language": "اللغة",
+		"Duration": "المدة الزمنية",
 		"Explore, search and download historical maps and spatial data on Palestine": "استكشِف/ي وتصفّح/ي وحمّل/ي خرائط وبيانات مَكانيّة عَن فِلسطين",
 		"Welcome to<br>Palestine Open Maps": "أهلًا بكم/ن في منصّة<br>خرائط فلسطين المفتوحة",
 		"Explore maps": "استكشف/ي الخرائط",
@@ -152,7 +155,7 @@ export default {
 		"Ramle": "الرملة",
 		"Safad": "صفد",
 		"Tiberias": "طبريه",
-		"Tulkarm": "طولكرم",
+		"Tulkarem": "طولكرم",
 		"Welcome to Palestine Open Maps": "أهلًا بكم/ن في خَرائط فِلسطين المَفتوحة",
 		"Explore, search and download historical maps and spatial data on Palestine": "استكشِف/ي وتصفّح/ي وحمّل/ي خرائط وبيانات مَكانيّة عَن فلسطين",
 		"Read more": "اقرأ/ي المزيد",

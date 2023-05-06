@@ -1,4 +1,4 @@
-const prerender = true;
+// export const prerender = true;
 
 import { pages } from "$lib/config";
 

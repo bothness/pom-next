@@ -1,6 +1,6 @@
-import { getPlace } from "$lib/utils";
+// export const prerender = true;
 
-const prerender = true;
+import { getPlace } from "$lib/utils";
   
 export async function load({ params, parent, fetch }) {
 	const stuff = await parent();

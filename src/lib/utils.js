@@ -1,5 +1,5 @@
-// import { csvParse, autoType } from "d3-dsv";
 import { base } from "$app/paths";
+import { layer_aerial } from "$lib/layers";
 
 export async function getPlaces(url, fetch = window.fetch) {
 	let res = await fetch(url);
@@ -19,6 +19,13 @@ export function makeColors(statuses) {
 	});
 	cols.push("rgba(0,0,0,0)");
 	return cols;
+}
+
+export async function getLayers(url, fetch = window.fetch) {
+	let layers = await (await fetch(url)).json();
+	layers = layers.filter(l => l.is_active && !l.is_overlay);
+	if (!layers.map(l => l.id).includes(16)) layers = [layers[0], layer_aerial, ...layers.slice(1)];
+	return layers;
 }
 
 export async function getSheets(url, layers, fetch = window.fetch) {
