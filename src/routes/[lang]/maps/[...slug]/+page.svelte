@@ -138,7 +138,7 @@
 
 <svelte:head>
 	<title>{place ? place.properties[`name_${$lang}`] : 'Historical map viewer'} - {$t('Palestine Open Maps')}</title>
-  <meta property="og:title" content="{place ? place.properties[`name_${$lang}`] : 'Explore historical maps'} - ${$t('Palestine Open Maps')}" />
+  <meta property="og:title" content="{place ? place.properties[`name_${$lang}`] : 'Explore historical maps'} - {$t('Palestine Open Maps')}" />
   <meta property="og:image" content="{base_url}/img/{place ? `og/${place.properties.slug}` : 'haifa-crop'}.jpg" />
 	{#if $rtl}
 	<style>
@@ -371,11 +371,11 @@
 			<h2>
 				{#if $lang == "ar"}
 				{$t(place.properties.type)}
-				{$t(place.properties.group)} {$t('in')}
+				{place.properties.change_2016 !== "Appropriated" ? $t(place.properties.group) : ""} {$t('in')}
 				{$t('sub-district')} {$t(place.properties.subdistrict_1945)}
 				{:else}
-				{place.properties.group}
-				{place.properties.type.toLowerCase()} in
+				{place.properties.change_2016 !== "Appropriated" ? place.properties.group : ""}
+				{place.properties.change_2016 !== "Appropriated" ? place.properties.type.toLowerCase() : place.properties.type} in
 				{place.properties.subdistrict_1945} {$t('sub-district')}
 				{/if}
 			</h2>

@@ -13,10 +13,14 @@ export async function load({ fetch, params }) {
   let str = await res.text();
   let arr = csvParse(str, autoType);
 
-  let slug = null;
-  let place = arr.find(p => +p.id_old == +params.slug);
+  let par = params.slug.replace("/@", "|").replace("/","").split("|");
+	let id = par[0];
+	let coords = par[1] ? par[1].split(",") : null;
+  let place = arr.find(p => +p.id_old == +id);
 
-  if (place) slug = place.slug;
+  let slug = place ? `${place.slug}/` : "";
+  let hash = coords ? `#13.00,${coords[1]},${coords[0]}` : "";
+  console.log(params.slug, par, id, coords, slug, hash)
 
-  throw redirect(301, `${base}/en/maps/${slug}/`);
+  throw redirect(301, `${base}/en/maps/${slug}${hash}`);
 }

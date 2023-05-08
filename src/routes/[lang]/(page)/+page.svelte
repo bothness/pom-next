@@ -2,6 +2,7 @@
   import { getContext } from "svelte";
 	import { goto } from "$app/navigation";
 	import { base } from "$app/paths";
+	import { base_url } from "$lib/config";
   import Select from "$lib/ui/Select.svelte";
   import Tile from "$lib/ui/Tile.svelte";
   import Icon from "$lib/ui/Icon.svelte";
@@ -23,6 +24,7 @@
 <svelte:head>
   <title>{$t('Palestine Open Maps')}</title>
   <meta property="og:title" content="{$t('Palestine Open Maps')}" />
+  <meta property="og:image" content="{base_url}/img/haifa-crop.jpg" />
 </svelte:head>
 
 <h1>{@html $t('Welcome to<br>Palestine Open Maps')}</h1>
