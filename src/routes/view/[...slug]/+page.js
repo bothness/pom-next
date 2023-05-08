@@ -20,7 +20,6 @@ export async function load({ fetch, params }) {
 
   let slug = place ? `${place.slug}/` : "";
   let hash = coords ? `#13.00,${coords[1]},${coords[0]}` : "";
-  console.log(params.slug, par, id, coords, slug, hash)
 
   throw redirect(301, `${base}/en/maps/${slug}${hash}`);
 }
