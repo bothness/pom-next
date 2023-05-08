@@ -5,8 +5,8 @@ export const locs_url = `${base}/data/places.json`;
 export const redirect_url = `${base}/data/redirects.csv`;
 // export const layers_url = `${base_url}/api/layers/?format=json `;
 // export const sheets_url = `${base_url}/api/sheets/?format=json `;
-export const layers_url = `${base}/data/sheets.json`;
-export const sheets_url = `${base}/data/layers.json`;
+export const layers_url = `${base}/data/layers.json`;
+export const sheets_url = `${base}/data/sheets.json`;
 
 
 export const maxBounds = [[33.5, 29.0], [36.4, 33.9]];
