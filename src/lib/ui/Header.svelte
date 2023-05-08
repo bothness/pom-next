@@ -18,7 +18,7 @@
 	<a class="lang-toggle"
 		class:lang-toggle-rtl={$rtl}
 		title="{$t('العربية')}"
-		href="{String($page.url).replace(...($lang === 'en' ? ['en', 'ar'] : ['ar', 'en']))}">
+		href="{String($page.url.href).replace(...($lang === 'en' ? ['/en', '/ar'] : ['/ar', '/en']))}">
 		{$t('ع')}
 	</a>
 </header>
