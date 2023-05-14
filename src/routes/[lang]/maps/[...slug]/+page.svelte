@@ -105,7 +105,7 @@
 
 	afterNavigate(() => {
 		if (place) {
-			if (map['left']) map['left'].flyTo({center: place.geometry.coordinates, zoom: 13});
+			if (map['left']) map['left'].flyTo({center: place.geometry.coordinates, zoom: 1});
 			panel_status = "place";
 		} else if (panel_status != "layer") {
 			panel_status = null;
@@ -236,7 +236,7 @@
 	</Accordion>
 	<Links>
 		<label><input type="checkbox" bind:checked={toggles.split}/><span>{$t('Toggle split-screen')}</span></label>
-		<label><input type="checkbox" bind:checked={toggles.threed} on:change={() => map.left.flyTo(toggles.threed ? {pitch: 40} : {pitch: 0, bearing: 0})}/><span>{$t('Toggle 3D (experimental)')}</span></label>
+		<label><input type="checkbox" bind:checked={toggles.threed} on:change={() => map.left.jumpTo(toggles.threed ? {pitch: 40} : {pitch: 0, bearing: 0})}/><span>{$t('Toggle 3D (experimental)')}</span></label>
 	</Links>
 </Menu>
 <main>
@@ -358,7 +358,7 @@
 		<label title="{$t('Toggle places')}" class:checked={toggles.places}><input type="checkbox" bind:checked={toggles.places} /><Icon type="marker" /></label>
 		<label title="{$t('Toggle overlays')}" class:checked={toggles.overlay}><input type="checkbox" bind:checked={toggles.overlay} /><Icon type="layers" /></label>
 		<label title="{$t('Toggle split-screen')}" class:checked={toggles.split}><input type="checkbox" bind:checked={toggles.split} /><Icon type="split" rotation={90}/></label>
-		<label title="{$t('Toggle 3D (experimental)')}" class:checked={toggles.threed}><input type="checkbox" bind:checked={toggles.threed} on:change={() => map.left.flyTo(toggles.threed ? {pitch: 40} : {pitch: 0, bearing: 0})}/><Icon type="3d"/></label>
+		<label title="{$t('Toggle 3D (experimental)')}" class:checked={toggles.threed}><input type="checkbox" bind:checked={toggles.threed} on:change={() => map.left.jumpTo(toggles.threed ? {pitch: 40} : {pitch: 0, bearing: 0})}/><Icon type="3d"/></label>
 		<button title="{$t('Show layer information')}" class:checked={toggles.info} on:click={() => {unSelect("layer"); menu_active.set(false);}}><Icon type="info" /></button>
 	</div>
 	{#if panel_status}
