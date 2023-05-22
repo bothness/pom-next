@@ -105,7 +105,7 @@
 
 	afterNavigate(() => {
 		if (place) {
-			if (map['left']) map['left'].flyTo({center: place.geometry.coordinates, zoom: 1});
+			if (map['left']) map['left'].flyTo({center: place.geometry.coordinates, zoom: 13});
 			panel_status = "place";
 		} else if (panel_status != "layer") {
 			panel_status = null;
