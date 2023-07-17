@@ -17,25 +17,6 @@ export const overlays = [
   }
 ];
 
-export const layer_aerial = {
-	"id": 16,
-	"name": "Aerial imagery, 1940s",
-	"description": "A layer compiled from black and white aerial photographs captured by the British military in the 1940s. It is color-corrected and merged together into a single raster tileset.",
-	"boundaries": null,
-	"scale": 1,
-	"start_year": "1944-01-01",
-	"end_year": "1948-05-15",
-	"url": "https://cdn.jsdelivr.net/gh/bothness/pom-tiles/aerial1940s/{z}/{x}/{y}.png",
-	"attribution": "Royal Air Force, 1940s",
-	"is_active": false,
-	"is_default": false,
-	"is_overlay": false,
-	"order": -1,
-	"author": 10,
-	"sources": [36],
-	"further_readings": []
-};
-
 export const overlayers = [
   {
     "id": "building",

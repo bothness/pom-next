@@ -1,6 +1,5 @@
 // export const prerender = true;
 
-import { dev } from '$app/environment';
 import { locs_url, layers_url, sheets_url } from "$lib/config";
 import { getPlaces, getLayers, getSheets } from "$lib/utils";
 

@@ -1,5 +1,4 @@
 import { base } from "$app/paths";
-import { layer_aerial } from "$lib/layers";
 
 export async function getPlaces(url, fetch = window.fetch) {
 	let res = await fetch(url);
@@ -24,7 +23,6 @@ export function makeColors(statuses) {
 export async function getLayers(url, fetch = window.fetch) {
 	let layers = await (await fetch(url)).json();
 	layers = layers.filter(l => l.is_active && !l.is_overlay);
-	if (!layers.map(l => l.id).includes(16)) layers = [layers[0], layer_aerial, ...layers.slice(1)];
 	return layers;
 }
 
