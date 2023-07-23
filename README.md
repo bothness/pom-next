@@ -1,2 +1,2 @@
 # pom-next
-Repo for improved front-end for POM. In development
+Repo containing the front-end code for [Palestine Open Maps](https://palopenmaps.org).
