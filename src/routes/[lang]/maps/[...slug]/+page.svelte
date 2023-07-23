@@ -45,7 +45,7 @@
 	let panel_status = place ? "place" : null; // Control status of #content panel (options: place, layer, null)
 	let statuses_arr = Object.keys(statuses).map(key => ({key, ...statuses[key]}));
 	let statuses_active = [...statuses_arr.filter(s => s.key != "Newly built")];
-	let location = place ? {lng: place.geometry.coordinates[0], lat: place.geometry.coordinates[1], zoom: 13} : {bounds: [[34.75, 31.75], [35.25, 32.25]]};
+	let location = place ? {lng: place.geometry.coordinates[0], lat: place.geometry.coordinates[1], zoom: 14} : {bounds: [[34.75, 31.75], [35.25, 32.25]]};
 	let toggles = {
 		info: true,
 		places: true,
@@ -105,7 +105,7 @@
 
 	afterNavigate(() => {
 		if (place) {
-			if (map['left']) map['left'].flyTo({center: place.geometry.coordinates, zoom: 13});
+			if (map['left']) map['left'].flyTo({center: place.geometry.coordinates, zoom: 14});
 			panel_status = "place";
 		} else if (panel_status != "layer") {
 			panel_status = null;
