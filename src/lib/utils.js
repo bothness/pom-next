@@ -78,6 +78,7 @@ export function makeDataset(place) {
 export function makeStyle(layer, desaturate = false) {
 	return {
 		"version": 8,
+		"sprite": "https://cdn.jsdelivr.net/gh/bothness/basemaps/sprites/osm-tegola",
 		"glyphs": "https://cdn.jsdelivr.net/gh/bothness/basemaps/fonts/{fontstack}/{range}.pbf",
 		"sources": {
 			"source": {

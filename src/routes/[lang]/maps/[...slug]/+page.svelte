@@ -278,8 +278,8 @@
 						paint={l.paint}
 						minzoom={l.minzoom ? l.minzoom : null}
 						maxzoom={l.maxzoom ? l.maxzoom : null}
-						order={["building", "transport"].includes(l.group) ? "overlays-div" : null}
-						visible={toggles.overlay && overlay_groups[l.group]}/>
+						order={["building", "transport"].includes(l.metadata.group) ? "overlays-div" : null}
+						visible={toggles.overlay && overlay_groups[l.metadata.group]}/>
 					{/each}
 				</MapSource>
 				<MapSource id="places" type="geojson" data={places} promoteId="slug">
