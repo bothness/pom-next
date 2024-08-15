@@ -1,5 +1,6 @@
 // export const prerender = true;
 
+import { error } from '@sveltejs/kit';
 import { base } from "$app/paths";
 import { pages } from "$lib/config";
 import { parse } from "marked";
@@ -10,6 +11,12 @@ export async function load({ fetch, params }) {
   // const config = { method: 'get', headers: { origin: 'http://localhost:5173' } };
 
   const page = pages.find(p => p.key === params.page);
+  if (!page) {
+		throw error(404, {
+			message: 'Not found'
+		});
+	}
+
   const lang = params.lang;
   const t = (key) => i18n(key, texts, lang);
   const md = await (await fetch(`${base}/data/pages/${page.key}-${lang}.md`)).text();
