@@ -49,6 +49,7 @@ export const pages = [
 		key: "about",
 		label: "About",
 		icon: "info",
+		description: "",
 		id: { en: 3, ar: 7 }
 	},
 	// {
@@ -61,6 +62,7 @@ export const pages = [
 		key: "get-involved",
 		label: "Get involved",
 		icon: "hand",
+		description: "",
 		id: { en: 6, ar: 9 }
 	}
 ];

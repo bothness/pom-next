@@ -35,6 +35,7 @@
     "eslint-plugin-svelte3": "^3.2.1",
     "gh-pages": "^4.0.0",
     "maplibre-gl": "^2.4.0",
+    "marked": "^14.0.0",
     "prettier": "^2.5.1",
     "prettier-plugin-svelte": "^2.5.0",
     "svelte": "^3.46.0",

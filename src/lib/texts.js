@@ -1,5 +1,6 @@
 export default {
 	"ar": {
+		"": "",
 		"العربية": "English",
 		"ع": "en",
 		"Arabic": "العربية",
