@@ -12,7 +12,7 @@ export const overlays = [
     attribution: "Palestine Open Maps community",
     description: "Crowd-sourced digitisation of \"Palestine 1:20,000\" Survey of Palestine map series from the 1940s. Vector tiles generated using OpenMapTiles tools.",
     url: "https://tiler.palopenmaps.org/maps/osm/{z}/{x}/{y}.pbf",
-    edit: "http://data.palopenmaps.org/edit#background=custom:http://palopenmaps.org/tiles/pal20k-1940s/{z}/{x}/{y}@2x.jpg&disable_features=boundaries&map=",
+    edit: "https://pom.masrad.org/edit#background=custom:https://palopenmaps.org/tiles/pal20k-1940s/{z}/{x}/{y}@2x.jpg&disable_features=boundaries&map=",
     is_default: true
   }
 ];
