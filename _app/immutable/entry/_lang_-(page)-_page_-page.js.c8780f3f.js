@@ -1,1 +1,0 @@
-import"../chunks/paths.27bd7328.js";import"../chunks/config.8f6609d1.js";import{l as a}from"../chunks/_page.5adbf1ae.js";import"../chunks/texts.8ae4f439.js";import"../chunks/utils.d7f77c97.js";export{a as load};
