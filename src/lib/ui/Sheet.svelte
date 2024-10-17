@@ -20,7 +20,10 @@
       {$t('Scale')}: 1:{sheet.scale.toLocaleString()}<br/>
       {$t('Date')}: {sheet.year}
     </p>
-    <button name="Download sheet"><Icon type="download"/> {$t('Download')}</button>
+    <a name="Download sheet" href="{sheet.dropbox_link}">
+      <Icon type="download"/>
+      <span>{$t('Download')}</span>
+    </a>
   </div>
 </div>
 
@@ -46,7 +49,9 @@
     font-size: 0.85em;
     margin: 0;
   }
-  button {
+  .sheet-info > a {
+    display: inline-flex;
+    align-items: center;
     background-color: white;
     color: #333;
     border: 2px solid #333;
@@ -58,8 +63,11 @@
     font-size: 0.85em;
     font-weight: bold;
   }
-  button:hover {
+  .sheet-info > a:hover {
     color: white;
     background-color: black;
+  }
+  .sheet-info > a > span {
+    margin-left: 4px;
   }
 </style>
