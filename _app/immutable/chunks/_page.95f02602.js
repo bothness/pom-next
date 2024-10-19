@@ -1,1 +1,0 @@
-import{r as e}from"./index.b1f5b21f.js";import{b as o}from"./paths.393722bc.js";async function r(){throw e(301,`${o}/en/`)}const n=Object.freeze(Object.defineProperty({__proto__:null,load:r},Symbol.toStringTag,{value:"Module"}));export{n as _,r as l};

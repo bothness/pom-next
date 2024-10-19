@@ -1,1 +1,0 @@
-import{l,a as r,s as o}from"./config.1f6d3a9a.js";import{a as u,b as _,c as i}from"./utils.28d64462.js";async function n({fetch:e}){let t=await u(l,e),a=await _(r,e),s=await i(o,a,e);return{places:t,layers:a,sheets:s}}const p=Object.freeze(Object.defineProperty({__proto__:null,load:n},Symbol.toStringTag,{value:"Module"}));export{p as _,n as l};
