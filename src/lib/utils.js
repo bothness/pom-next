@@ -1,8 +1,13 @@
 import { base } from "$app/paths";
 
 export async function getPlaces(url, fetch = window.fetch) {
-	let res = await fetch(url);
-	return await res.json();
+	const places = await(await fetch(url)).json();
+	places.features = places.features.map(f => {
+		f.properties.end = f.properties.end || 10000;
+		f.properties.start = f.properties.start || 0;
+		return f;
+	});
+	return places;
 }
 
 export async function getPlace(slug, fetch = window.fetch) {
@@ -10,14 +15,20 @@ export async function getPlace(slug, fetch = window.fetch) {
 	return res ? await res.json() : null;
 }
 
-export function makeColors(statuses) {
-	let cols = ["match", ["get", "status"]];
-	Object.keys(statuses).forEach((s) => {
-		cols.push(s);
-		cols.push(statuses[s].color);
+export function makeColors(options, key) {
+	let cols = ["match", ["get", key]];
+	Object.keys(options).forEach((op) => {
+		cols.push(op);
+		cols.push(options[op].color);
 	});
 	cols.push("rgba(0,0,0,0)");
 	return cols;
+}
+
+export function makeFilter(statuses, groups, year) {
+	let filter = ['all', ['in', 'status', ...statuses.map(a => a.key)], ['in', 'group', ...groups.map(a => a.key)]];
+	if (year) filter = [...filter, ["<=", "start", year], [">=", "end", year]];
+	return filter;
 }
 
 export async function getLayers(url, fetch = window.fetch) {

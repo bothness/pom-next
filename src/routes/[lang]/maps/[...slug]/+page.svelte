@@ -7,8 +7,8 @@
 	import { page } from '$app/stores';
 	import { afterNavigate, goto } from "$app/navigation";
 	import mapStyle from "$lib/style.json";
-	import { makeDataset, makeColors } from "$lib/utils";
-	import { statuses, maxBounds, base_url } from "$lib/config";
+	import { makeDataset, makeColors, makeFilter } from "$lib/utils";
+	import { statuses, groups, maxBounds, base_url } from "$lib/config";
 	import { Map, MapSource, MapLayer, MapTooltip } from "@onsvisual/svelte-maps";
 
 	import MapCompare from "$lib/map/MapCompare.svelte";
@@ -22,6 +22,7 @@
 	import InfoHeader from "$lib/ui/InfoHeader.svelte";
 	import BarChart from '$lib/chart/BarChart.svelte';
 	import Sheet from "$lib/ui/Sheet.svelte";
+	import { each } from "svelte/internal";
 
 	export let data;
 	let { layers, sheets, places, place } = data;
@@ -43,12 +44,19 @@
 	let bearing = {};
 	let loaded = false; // Prevents map from being initiated until app is mounted
 	let panel_status = place ? "place" : null; // Control status of #content panel (options: place, layer, null)
+	let color_options = [{key: "status", label: "change since 1948"}, {key: "group", label: "population group"}];
+	let color_by = color_options[0];
+	let year = 1947;
+	let year_min_max = [1881, (new Date()).getFullYear()];
 	let statuses_arr = Object.keys(statuses).map(key => ({key, ...statuses[key]}));
-	let statuses_active = [...statuses_arr.filter(s => s.key != "Newly built")];
-	let location = place ? {lng: place.geometry.coordinates[0], lat: place.geometry.coordinates[1], zoom: 14} : {bounds: [[34.43, 31.48], [34.49, 31.51]]};
+	let statuses_active = [...statuses_arr];
+	let groups_arr = Object.keys(groups).map(key => ({key, ...groups[key]}));
+	let groups_active = [...groups_arr];
+	let location = place ? {lng: place.geometry.coordinates[0], lat: place.geometry.coordinates[1], zoom: 14} : {lng: 34.4660, lat: 31.5019, zoom: 13.5};
 	let toggles = {
-		info: true,
+		info: true,	
 		places: true,
+		year: true,
 		overlay: false,
 		split: false,
 		download: false,
@@ -59,7 +67,7 @@
 		transport: true,
 		place: true
 	};
-	$: filter = statuses_active ? ['any', ['in', 'status', ...statuses_active.map(s => s.key)]] : [];
+	$: filter = makeFilter(statuses_active, groups_active, toggles.year ? year : null);
 
 	function doSelect(e) {
 		const slug = e.detail.slug ? e.detail.slug : e.detail.id;
@@ -115,7 +123,8 @@
 	function readQuery() {
 		let params = $page.url.searchParams;
 		if (params.get("basemap")) layer = layers.find(l => +l.id === +params.get("basemap"));
-		if (params.get("overlay")) overlay = overlays.find(l => l.key === params.get("overlay"));
+		if (params.get("overlay")) overlay = overlays.find(o => o.key === params.get("overlay"));
+		if (params.get("color")) color_by = color_options.find(c => c.key === params.get("color"));
 		if (params.get("toggles")) {
 			let togs = params.get("toggles").split("|");
 			Object.keys(toggles).forEach(key => {
@@ -124,8 +133,8 @@
 		}
 	}
 
-	function updateQuery(layer, overlay, toggles) {
-		let search = `?basemap=${layer.id}&overlay=${overlay.key}&toggles=${
+	function updateQuery(layer, overlay, color_by, toggles) {
+		let search = `?basemap=${layer.id}&overlay=${overlay.key}&color=${color_by.key}&toggles=${
 			Object.keys(toggles).filter(key => toggles[key] && !["info", "download"].includes(key)).join('|')
 		}`;
 		let loc = $page.url;
@@ -133,7 +142,7 @@
 		history.replaceState(null, "", url);
 	}
 
-	$: if (loaded) updateQuery(layer, overlay, toggles);
+	$: if (loaded) updateQuery(layer, overlay, color_by, toggles);
 </script>
 
 <svelte:head>
@@ -210,9 +219,25 @@
 	<Accordion label="{$t('Places')}">
 		<label><input type="checkbox" bind:checked={toggles.places} /><span>{$t('Show places')}</span></label>
 		<hr/>
-		{#each statuses_arr as s}
-		<label><input type="checkbox" disabled={!toggles.places} bind:group={statuses_active} value={s} /><span><div class="bullet" style:background-color="{s.color}"/>{$t(s.name)}</span></label>
+		{#each color_options as option}
+		<label><input type="radio" value={option} bind:group={color_by} disabled={!toggles.places} /><span>{$t(`Colour by ${option.label}`)}</span></label>
 		{/each}
+		<hr/>
+		{#if color_by.key === "status"}
+			{#each statuses_arr as s}
+			<label><input type="checkbox" bind:group={statuses_active} value={s} disabled={!toggles.places} /><span><div class="bullet" style:background-color="{s.color}"/>{$t(s.name)}</span></label>
+			{/each}
+		{:else}
+			{#each groups_arr as g}
+			<label><input type="checkbox" bind:group={groups_active} value={g} disabled={!toggles.places} /><span><div class="bullet" style:background-color="{g.color}"/>{$t(g.name)}</span></label>
+			{/each}
+		{/if}
+		<hr/>
+		<label><input type="checkbox" bind:checked={toggles.year} disabled={!toggles.places}/><span>{$t('Filter by year')}</span></label>
+		<div class="year-filter">
+			<input type="range" min={year_min_max[0]} max={year_min_max[1]} step={1} bind:value={year} disabled={!toggles.places || !toggles.year}/>
+			<input type="number" bind:value={year} min={year_min_max[0]} max={year_min_max[1]} disabled={!toggles.places || !toggles.year}/>
+		</div>
 	</Accordion>
 	<Accordion label="{$t('Download maps')}" bind:open={toggles.download}>
 		{#if sheets_selected[0]}
@@ -288,7 +313,7 @@
 						type="circle"
 						paint={{
 							'circle-radius': {'base': 1, 'stops': [[5, 1], [12, 5]]},
-							'circle-color': makeColors(statuses),
+							'circle-color': makeColors(color_by.key === 'status' ? statuses : groups, color_by.key),
 							'circle-stroke-color': ['case',
 								['==', ['feature-state', 'selected'], true], 'black',
 								['==', ['feature-state', 'hovered'], true], 'black',
@@ -619,4 +644,17 @@
 	img.thumbnail {
     width: 100% !important;
   }
+	.year-filter {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.year-filter > input[type=range] {
+		width: 100%;
+		flex-grow: 1;
+	}
+	.year-filter > input[type=number] {
+		margin-left: 6px;
+	}
 </style>

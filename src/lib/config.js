@@ -9,7 +9,7 @@ export const sheets_url = `${base}/data/sheets.json`;
 // export const layers_url = dev ? `${base}/data/layers.json` : `${base_url}/api/layers/?format=json`;
 // export const sheets_url = dev ? `${base}/data/sheets.json` : `${base_url}/api/sheets/?format=json`;
 
-export const maxBounds = [[33.5, 29.0], [36.4, 33.9]];
+export const maxBounds = [[30.5, 29.0], [39.4, 33.9]];
 
 export const statuses = {
 	Remaining: {
@@ -41,6 +41,24 @@ export const statuses = {
 		name: "New locality",
 		color: "#777777",
 		selected: false,
+	}
+};
+
+export const groups = {
+	Palestinian: {
+		name: "Palestinian",
+		color: "#2AAA8A",
+		selected: true,
+	},
+	Jewish: {
+		name: "Jewish",
+		color: "#FFBF00",
+		selected: true,
+	},
+	Mixed: {
+		name: "Mixed",
+		color: "#aaaaaa",
+		selected: true,
 	}
 };
 
