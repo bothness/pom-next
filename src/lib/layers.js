@@ -19,11 +19,59 @@ export const overlays = [
 
 export const overlayers = [
   {
+    "id": "orchard",
+    "type": "fill",
+    "source-layer": "landuse_areas",
+    "minzoom": 0,
+    "maxzoom": 24,
+    "metadata": {
+      "group": "landcover"
+    },
+    "filter": [
+      "==",
+        "type",
+        "orchard"
+    ],
+    "paint": {
+      "fill-color": "rgba(50, 168, 82, 0.5)",
+      // "fill-outline-color": "rgba(50, 168, 82, 1)"
+    }
+  },
+  {
+    "id": "orchard_outline",
+    "type": "line",
+    "source-layer": "landuse_areas",
+    "minzoom": 0,
+    "maxzoom": 24,
+    "metadata": {
+      "group": "landcover"
+    },
+    "filter": [
+      "==",
+        "type",
+        "orchard"
+    ],
+    "paint": {
+      "line-color": "rgba(35, 118, 57, 0.5)",
+      "line-width": {
+        "stops": [
+          [
+            12,
+            0
+          ],
+          [
+            14,
+            1
+          ]
+        ]
+      }
+    }
+  },
+  {
     "id": "building",
     "type": "fill",
     "source-layer": "buildings",
-    "minzoom": 0,
-    "maxzoom": 24,
+    "minzoom": 13,
     "metadata": {
       "group": "building"
     },
@@ -31,8 +79,22 @@ export const overlayers = [
       "all"
     ],
     "paint": {
-      "fill-color": "rgba(188, 191, 184, 1)",
-      "fill-outline-color": "rgba(167, 167, 148, 1)"
+      "fill-color": "rgba(128, 128, 128, 0.7)"
+    }
+  },
+  {
+    "id": "building_outline",
+    "type": "line",
+    "source-layer": "buildings",
+    "minzoom": 13,
+    "metadata": {
+      "group": "building"
+    },
+    "filter": [
+      "all"
+    ],
+    "paint": {
+      "line-color": "rgba(96, 96, 96, 1)"
     }
   },
   {
@@ -308,7 +370,7 @@ export const overlayers = [
       "line-join": "round"
     },
     "paint": {
-      "line-color": "rgba(181, 177, 169, 1)",
+      "line-color": "rgba(240, 240, 240, 1)",
       "line-width": {
         "stops": [
           [
@@ -391,7 +453,7 @@ export const overlayers = [
       "line-join": "round"
     },
     "paint": {
-      "line-color": "rgba(216, 213, 207, 1)",
+      "line-color": "rgba(240, 240, 240, 1)",
       "line-width": {
         "stops": [
           [
@@ -467,7 +529,7 @@ export const overlayers = [
       "line-join": "round"
     },
     "paint": {
-      "line-color": "hsla(0, 0%, 80%, 0.8)",
+      "line-color": "rgba(240, 240, 240, 1)",
       "line-width": {
         "stops": [
           [
@@ -841,6 +903,479 @@ export const overlayers = [
       "text-halo-color": "rgba(98, 117, 98, 1)",
       "text-halo-width": 0,
       "text-color": "rgba(30, 30, 32, 1)"
+    }
+  },
+  {
+    "id": "poi",
+    "type": "symbol",
+    "source-layer": "amenity_points",
+    "minzoom": 14.5,
+    "metadata": {
+      "group": "poi"
+    },
+    "filter": [
+      "any",
+      [
+        "==",
+        "type",
+        "school"
+      ],
+      [
+        "==",
+        "type",
+        "college"
+      ],
+      [
+        "==",
+        "type",
+        "place_of_worship"
+      ]
+    ],
+    "layout": {
+      "text-line-height": 1.5,
+      "text-size": [
+        "interpolate",
+        [
+          "linear"
+        ],
+        [
+          "zoom"
+        ],
+        6,
+        4,
+        10,
+        10,
+        16,
+        12
+      ],
+      "icon-offset": [
+        0,
+        0
+      ],
+      "icon-image": "{type}_11",
+      "text-font": [
+        "Noto Sans Regular"
+      ],
+      "text-offset": [
+        0,
+        0.7
+      ],
+      "icon-size": 1,
+      "text-anchor": "top",
+      "text-field": [
+        "concat",
+        [
+          "case",
+          [
+            "boolean",
+            [
+              "has",
+              "name_ar"
+            ]
+          ],
+          [
+            "concat",
+            [
+              "get",
+              "name_ar"
+            ],
+            "\n"
+          ],
+          ""
+        ],
+        [
+          "case",
+          [
+            "boolean",
+            [
+              "has",
+              "name_en"
+            ]
+          ],
+          [
+            "get",
+            "name_en"
+          ],
+          [
+            "get",
+            "name"
+          ]
+        ]
+      ]
+    },
+    "paint": {
+      "text-color": "rgba(92, 63, 8, 1)",
+      "text-halo-color": "rgba(255, 255, 255, 1)",
+      "text-halo-blur": 2,
+      "text-halo-width": 1
+    }
+  },
+  {
+    "id": "university",
+    "type": "symbol",
+    "source-layer": "amenity_points",
+    "minzoom": 14.5,
+    "metadata": {
+      "group": "poi"
+    },
+    "filter": [
+      "==",
+      "type",
+      "university"
+    ],
+    "layout": {
+      "text-line-height": 1.5,
+      "text-size": [
+        "interpolate",
+        [
+          "linear"
+        ],
+        [
+          "zoom"
+        ],
+        6,
+        4,
+        10,
+        10,
+        16,
+        12
+      ],
+      "icon-offset": [
+        0,
+        0
+      ],
+      "icon-image": "college_11",
+      "text-font": [
+        "Noto Sans Regular"
+      ],
+      "text-offset": [
+        0,
+        0.7
+      ],
+      "icon-size": 1,
+      "text-anchor": "top",
+      "text-field": [
+        "concat",
+        [
+          "case",
+          [
+            "boolean",
+            [
+              "has",
+              "name_ar"
+            ]
+          ],
+          [
+            "concat",
+            [
+              "get",
+              "name_ar"
+            ],
+            "\n"
+          ],
+          ""
+        ],
+        [
+          "case",
+          [
+            "boolean",
+            [
+              "has",
+              "name_en"
+            ]
+          ],
+          [
+            "get",
+            "name_en"
+          ],
+          [
+            "get",
+            "name"
+          ]
+        ]
+      ]
+    },
+    "paint": {
+      "text-color": "rgba(92, 63, 8, 1)",
+      "text-halo-color": "rgba(255, 255, 255, 1)",
+      "text-halo-blur": 2,
+      "text-halo-width": 1
+    }
+  },
+  {
+    "id": "cinema",
+    "type": "symbol",
+    "source-layer": "amenity_points",
+    "minzoom": 14.5,
+    "metadata": {
+      "group": "poi"
+    },
+    "filter": [
+      "==",
+      "type",
+      "cinema"
+    ],
+    "layout": {
+      "text-line-height": 1.5,
+      "text-size": [
+        "interpolate",
+        [
+          "linear"
+        ],
+        [
+          "zoom"
+        ],
+        6,
+        4,
+        10,
+        10,
+        16,
+        12
+      ],
+      "icon-offset": [
+        0,
+        0
+      ],
+      "icon-image": "cinema_11",
+      "text-font": [
+        "Noto Sans Regular"
+      ],
+      "text-offset": [
+        0,
+        0.7
+      ],
+      "icon-size": 1,
+      "text-anchor": "top",
+      "text-field": [
+        "concat",
+        [
+          "case",
+          [
+            "boolean",
+            [
+              "has",
+              "name_ar"
+            ]
+          ],
+          [
+            "concat",
+            [
+              "get",
+              "name_ar"
+            ],
+            "\n"
+          ],
+          ""
+        ],
+        [
+          "case",
+          [
+            "boolean",
+            [
+              "has",
+              "name_en"
+            ]
+          ],
+          [
+            "get",
+            "name_en"
+          ],
+          [
+            "get",
+            "name"
+          ]
+        ]
+      ]
+    },
+    "paint": {
+      "text-color": "rgba(21, 43, 110, 1)",
+      "text-halo-color": "rgba(255, 255, 255, 1)",
+      "text-halo-blur": 2,
+      "text-halo-width": 1
+    }
+  },
+  {
+    "id": "hospital",
+    "type": "symbol",
+    "source-layer": "amenity_points",
+    "minzoom": 14.5,
+    "metadata": {
+      "group": "poi"
+    },
+    "filter": [
+      "==",
+      "type",
+      "hospital"
+    ],
+    "layout": {
+      "text-line-height": 1.5,
+      "text-size": [
+        "interpolate",
+        [
+          "linear"
+        ],
+        [
+          "zoom"
+        ],
+        6,
+        4,
+        10,
+        10,
+        16,
+        12
+      ],
+      "icon-offset": [
+        0,
+        0
+      ],
+      "icon-image": "hospital_11",
+      "text-font": [
+        "Noto Sans Regular"
+      ],
+      "text-offset": [
+        0,
+        0.7
+      ],
+      "icon-size": 1,
+      "text-anchor": "top",
+      "text-field": [
+        "concat",
+        [
+          "case",
+          [
+            "boolean",
+            [
+              "has",
+              "name_ar"
+            ]
+          ],
+          [
+            "concat",
+            [
+              "get",
+              "name_ar"
+            ],
+            "\n"
+          ],
+          ""
+        ],
+        [
+          "case",
+          [
+            "boolean",
+            [
+              "has",
+              "name_en"
+            ]
+          ],
+          [
+            "get",
+            "name_en"
+          ],
+          [
+            "get",
+            "name"
+          ]
+        ]
+      ]
+    },
+    "paint": {
+      "text-color": "rgba(107, 27, 13, 1)",
+      "text-halo-color": "rgba(255, 255, 255, 1)",
+      "text-halo-blur": 2,
+      "text-halo-width": 1
+    }
+  },
+  {
+    "id": "mountain",
+    "type": "symbol",
+    "source-layer": "landuse_points",
+    "minzoom": 12,
+    "metadata": {
+      "group": "poi"
+    },
+    "filter": [
+      "==",
+      "type",
+      "peak"
+    ],
+    "layout": {
+      "text-line-height": 1.5,
+      "text-size": [
+        "interpolate",
+        [
+          "linear"
+        ],
+        [
+          "zoom"
+        ],
+        6,
+        4,
+        10,
+        10,
+        16,
+        12
+      ],
+      "icon-offset": [
+        0,
+        0
+      ],
+      "icon-image": "mountain_11",
+      "text-font": [
+        "Noto Sans Regular"
+      ],
+      "text-offset": [
+        0,
+        0.7
+      ],
+      "icon-size": 1,
+      "text-anchor": "top",
+      "text-field": [
+        "concat",
+        [
+          "case",
+          [
+            "boolean",
+            [
+              "has",
+              "name_ar"
+            ]
+          ],
+          [
+            "concat",
+            [
+              "get",
+              "name_ar"
+            ],
+            "\n"
+          ],
+          ""
+        ],
+        [
+          "case",
+          [
+            "boolean",
+            [
+              "has",
+              "name_en"
+            ]
+          ],
+          [
+            "get",
+            "name_en"
+          ],
+          [
+            "get",
+            "name"
+          ]
+        ]
+      ]
+    },
+    "paint": {
+      "text-color": "rgba(63, 107, 13, 1)",
+      "text-halo-color": "rgba(255, 255, 255, 1)",
+      "text-halo-blur": 2,
+      "text-halo-width": 1
     }
   },
   {
@@ -1232,13 +1767,13 @@ export const overlayers = [
         0,
         0
       ],
-      "icon-image": "capital-18",
+      "icon-image": "dot_11",
       "text-font": [
         "Noto Sans Regular"
       ],
       "text-offset": [
         0,
-        0.25
+        0
       ],
       "icon-size": 1,
       "text-anchor": "top",
@@ -1331,13 +1866,13 @@ export const overlayers = [
         0,
         0
       ],
-      "icon-image": "city-18",
+      "icon-image": "dot_9",
       "text-font": [
         "Noto Sans Regular"
       ],
       "text-offset": [
         0,
-        0.25
+        0
       ],
       "icon-size": 1,
       "text-anchor": "top",
@@ -1852,7 +2387,7 @@ export const overlayers = [
       ]
     ],
     "layout": {
-      "icon-image": "topo_heliport-15",
+      "icon-image": "heliport_15",
       "icon-size": 1,
       "icon-optional": false
     },
@@ -1878,7 +2413,7 @@ export const overlayers = [
       ]
     ],
     "layout": {
-      "icon-image": "topo_airport-15",
+      "icon-image": "airport_15",
       "icon-size": 1,
       "icon-optional": false,
       "text-field": [

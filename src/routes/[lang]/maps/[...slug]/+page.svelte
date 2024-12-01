@@ -63,9 +63,11 @@
 		threed: false
 	};
 	let overlay_groups = {
+		landcover: false,
 		building: false,
 		transport: true,
-		place: true
+		place: true,
+		poi: false
 	};
 	$: filter = makeFilter(statuses_active, groups_active, toggles.year ? year : null);
 
@@ -212,9 +214,11 @@
 		</label>
 		{/each}
 		<hr/>
+		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.landcover} /><span>{$t('Land cover')}</span></label>
 		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.building} /><span>{$t('Buildings')}</span></label>
 		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.transport} /><span>{$t('Roads/rail')}</span></label>
 		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.place} /><span>{$t('Place names')}</span></label>
+		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.poi} /><span>{$t('Points of interest')}</span></label>
 	</Accordion>
 	<Accordion label="{$t('Places')}">
 		<label><input type="checkbox" bind:checked={toggles.places} /><span>{$t('Show places')}</span></label>
@@ -303,7 +307,7 @@
 						paint={l.paint}
 						minzoom={l.minzoom ? l.minzoom : null}
 						maxzoom={l.maxzoom ? l.maxzoom : null}
-						order={["building", "transport"].includes(l.metadata.group) ? "overlays-div" : null}
+						order={["building", "transport", "landcover"].includes(l.metadata.group) ? "overlays-div" : null}
 						visible={toggles.overlay && overlay_groups[l.metadata.group]}/>
 					{/each}
 				</MapSource>
