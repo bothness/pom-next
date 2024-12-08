@@ -28,13 +28,20 @@ export const overlayers = [
       "group": "landcover"
     },
     "filter": [
-      "==",
+      "any",
+      [
+        "==",
         "type",
         "orchard"
+      ],
+      [
+        "==",
+        "type",
+        "vineyard"
+      ]
     ],
     "paint": {
-      "fill-color": "rgba(50, 168, 82, 0.5)",
-      // "fill-outline-color": "rgba(50, 168, 82, 1)"
+      "fill-color": "rgba(50, 168, 82, 0.5)"
     }
   },
   {
@@ -68,6 +75,58 @@ export const overlayers = [
     }
   },
   {
+    "id": "building_area",
+    "type": "fill",
+    "source-layer": "landuse_areas",
+    "minzoom": 13,
+    "metadata": {
+      "group": "building",
+      "unique": "pal1940"
+    },
+    "filter": [
+      "all",
+      [
+        "==",
+        "class",
+        "landuse"
+      ],
+      [
+        "==",
+        "type",
+        "residential"
+      ]
+    ],
+    "paint": {
+      "fill-color": "rgba(128, 128, 128, 0.7)"
+    }
+  },
+  {
+    "id": "building_area_outline",
+    "type": "line",
+    "source-layer": "landuse_areas",
+    "minzoom": 13,
+    "metadata": {
+      "group": "building",
+      "unique": "pal1940"
+    },
+    "filter": [
+      "all",
+      [
+        "==",
+        "class",
+        "landuse"
+      ],
+      [
+        "==",
+        "type",
+        "residential"
+      ]
+    ],
+    "paint": {
+      "line-color": "rgba(96, 96, 96, 1)"
+    }
+  },
+  {
     "id": "building",
     "type": "fill",
     "source-layer": "buildings",
@@ -79,7 +138,7 @@ export const overlayers = [
       "all"
     ],
     "paint": {
-      "fill-color": "rgba(128, 128, 128, 0.7)"
+      "fill-color": "rgba(64, 64, 64, 0.8)"
     }
   },
   {
@@ -94,7 +153,7 @@ export const overlayers = [
       "all"
     ],
     "paint": {
-      "line-color": "rgba(96, 96, 96, 1)"
+      "line-color": "rgba(64, 64, 64, 1)"
     }
   },
   {
@@ -906,6 +965,187 @@ export const overlayers = [
     }
   },
   {
+    "id": "village_boundary_casing",
+    "type": "line",
+    "source-layer": "land_osm",
+    "minzoom": 11,
+    "filter": [
+      "all",
+      [
+        "==",
+        "type",
+        "administrative"
+      ],
+      [
+        "==",
+        "admin_level",
+        8
+      ],
+    ],
+    "metadata": {
+      "group": "boundary"
+    },
+    "paint": {
+      "line-width": {
+        "stops": [
+          [
+            9,
+            2
+          ],
+          [
+            14,
+            3
+          ]
+        ]
+      },
+      "line-color": "rgba(255, 255, 255, 0.5)"
+    }
+  },
+  {
+    "id": "village_boundary",
+    "type": "line",
+    "source-layer": "land_osm",
+    "minzoom": 10,
+    "filter": [
+      "all",
+      [
+        "==",
+        "type",
+        "administrative"
+      ],
+      [
+        "==",
+        "admin_level",
+        8
+      ],
+    ],
+    "metadata": {
+      "group": "boundary"
+    },
+    "paint": {
+      "line-width": {
+        "stops": [
+          [
+            9,
+            0.7
+          ],
+          [
+            14,
+            1.5
+          ]
+        ]
+      },
+      "line-color": "#999999"
+    }
+  },
+  {
+    "id": "cistern",
+    "type": "symbol",
+    "source-layer": "other_points",
+    "minzoom": 14.5,
+    "metadata": {
+      "group": "poi"
+    },
+    "filter": [
+      "==",
+      "type",
+      "water_well"
+    ],
+    "layout": {
+      "icon-image": "water_11",
+      "icon-size": 0.8
+    },
+    "paint": {}
+  },
+  {
+    "id": "shrine",
+    "type": "symbol",
+    "source-layer": "other_points",
+    "minzoom": 14.5,
+    "metadata": {
+      "group": "poi"
+    },
+    "filter": [
+      "==",
+      "type",
+      "wayside_shrine"
+    ],
+    "layout": {
+      "text-line-height": 1.5,
+      "text-size": [
+        "interpolate",
+        [
+          "linear"
+        ],
+        [
+          "zoom"
+        ],
+        6,
+        4,
+        10,
+        10,
+        16,
+        12
+      ],
+      "icon-image": "place_of_worship_11",
+      "text-font": [
+        "Noto Sans Regular"
+      ],
+      "text-offset": [
+        0,
+        0.3
+      ],
+      "icon-size": 0.8,
+      "text-anchor": "top",
+      "text-field": [
+        "concat",
+        [
+          "case",
+          [
+            "boolean",
+            [
+              "has",
+              "name_ar"
+            ]
+          ],
+          [
+            "concat",
+            [
+              "get",
+              "name_ar"
+            ],
+            "\n"
+          ],
+          ""
+        ],
+        [
+          "case",
+          [
+            "boolean",
+            [
+              "has",
+              "name_en"
+            ]
+          ],
+          [
+            "get",
+            "name_en"
+          ],
+          [
+            "get",
+            "name"
+          ]
+        ]
+      ]
+    },
+    "paint": {
+      "text-color": "rgba(21, 43, 110, 1)",
+      "text-halo-color": "rgba(255, 255, 255, 1)",
+      "text-halo-blur": 2,
+      "text-halo-width": 1
+    }
+  },
+  {
     "id": "poi",
     "type": "symbol",
     "source-layer": "amenity_points",
@@ -947,10 +1187,6 @@ export const overlayers = [
         10,
         16,
         12
-      ],
-      "icon-offset": [
-        0,
-        0
       ],
       "icon-image": "{type}_11",
       "text-font": [
@@ -1040,10 +1276,6 @@ export const overlayers = [
         16,
         12
       ],
-      "icon-offset": [
-        0,
-        0
-      ],
       "icon-image": "college_11",
       "text-font": [
         "Noto Sans Regular"
@@ -1131,10 +1363,6 @@ export const overlayers = [
         10,
         16,
         12
-      ],
-      "icon-offset": [
-        0,
-        0
       ],
       "icon-image": "cinema_11",
       "text-font": [
@@ -1224,10 +1452,6 @@ export const overlayers = [
         16,
         12
       ],
-      "icon-offset": [
-        0,
-        0
-      ],
       "icon-image": "hospital_11",
       "text-font": [
         "Noto Sans Regular"
@@ -1315,10 +1539,6 @@ export const overlayers = [
         10,
         16,
         12
-      ],
-      "icon-offset": [
-        0,
-        0
       ],
       "icon-image": "mountain_11",
       "text-font": [
@@ -1763,17 +1983,9 @@ export const overlayers = [
         10,
         15
       ],
-      "icon-offset": [
-        0,
-        0
-      ],
       "icon-image": "dot_11",
       "text-font": [
         "Noto Sans Regular"
-      ],
-      "text-offset": [
-        0,
-        0
       ],
       "icon-size": 1,
       "text-anchor": "top",
@@ -1862,17 +2074,9 @@ export const overlayers = [
         10,
         15
       ],
-      "icon-offset": [
-        0,
-        0
-      ],
       "icon-image": "dot_9",
       "text-font": [
         "Noto Sans Regular"
-      ],
-      "text-offset": [
-        0,
-        0
       ],
       "icon-size": 1,
       "text-anchor": "top",

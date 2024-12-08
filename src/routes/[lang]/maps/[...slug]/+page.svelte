@@ -66,6 +66,7 @@
 		landcover: false,
 		building: false,
 		transport: true,
+		boundary: false,
 		place: true,
 		poi: false
 	};
@@ -217,6 +218,7 @@
 		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.landcover} /><span>{$t('Land cover')}</span></label>
 		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.building} /><span>{$t('Buildings')}</span></label>
 		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.transport} /><span>{$t('Roads/rail')}</span></label>
+		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.boundary} /><span>{$t('Boundaries')}</span></label>
 		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.place} /><span>{$t('Place names')}</span></label>
 		<label><input type="checkbox" disabled={!toggles.overlay} bind:checked={overlay_groups.poi} /><span>{$t('Points of interest')}</span></label>
 	</Accordion>
@@ -307,8 +309,8 @@
 						paint={l.paint}
 						minzoom={l.minzoom ? l.minzoom : null}
 						maxzoom={l.maxzoom ? l.maxzoom : null}
-						order={["building", "transport", "landcover"].includes(l.metadata.group) ? "overlays-div" : null}
-						visible={toggles.overlay && overlay_groups[l.metadata.group]}/>
+						order={["building", "transport", "landcover", "boundary"].includes(l.metadata.group) ? "overlays-div" : null}
+						visible={toggles.overlay && overlay_groups[l.metadata.group] && (!l.metadata.unique || l.metadata.unique === overlay.key)}/>
 					{/each}
 				</MapSource>
 				<MapSource id="places" type="geojson" data={places} promoteId="slug">
