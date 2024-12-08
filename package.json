@@ -1,7 +1,7 @@
 {
-  "name": "pom-next",
+  "name": "pom-frontend",
   "version": "0.0.1",
-  "homepage": "http://bothness.github.io/pom-next",
+  "homepage": "http://palopenmaps.github.io/pom-frontend",
   "author": "Ahmad Barclay",
   "license": "MIT",
   "scripts": {

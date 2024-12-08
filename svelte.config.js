@@ -27,7 +27,7 @@ const config = node ?
 			handleHttpError: 'warn'
 		},
 		paths: {
-			base: production ? '/pom-next' : ''
+			base: production ? '/pom-frontend' : ''
 		}
 	}
 };
